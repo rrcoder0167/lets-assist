@@ -3,7 +3,7 @@
 
 A personalized local volunteering portal where you give back to your community, your way, in your time.
 
-#### ⚠️ This application is currently in development, many features may not be implemented or working. Submit bugs in the issues section. ⚠️
+#### ⚠️ This application is currently in development, many features may not be implemented or working. Submit bugs in the issues section.
 
 ## Features:
 
