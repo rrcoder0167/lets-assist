@@ -19,6 +19,7 @@
 # misc
 .DS_Store
 *.pem
+README_tmp.html
 
 # debug
 npm-debug.log*
