@@ -1,6 +1,7 @@
 :root {
     --dark-theme-box-fill: #01A24C;
     --dark-theme-bckg: #303030;
+    --dark-theme-text-color: #FFFFFF;
 }
 
 body {
@@ -8,11 +9,12 @@ body {
 }
 
 .text-box {
-    background-color: var(--dark-theme-box-box-fill);
+    background-color: var(--dark-theme-box-fill);
     text-align: justify;
-    color: white;
+    color: var(--dark-theme-text-color);
     font-family: monospace;
-    border-radius: 11px;
+    border-radius: 2px;
+    outline: none;
     
     padding-top: 1px;
     padding-left: 1px;
