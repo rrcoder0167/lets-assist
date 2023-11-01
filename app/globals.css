@@ -1,5 +1,6 @@
 :root {
     --dark-theme-box-fill: #01A24C;
+    --dark-theme-box-fill-hover: #027a3a;
     --dark-theme-bckg: #303030;
     --dark-theme-text-color: #FFFFFF;
 }
@@ -22,6 +23,15 @@ body {
     padding-bottom: 1px;
 }
 
-.page-heading {
+.nav-bar {
+    background-color: var(--dark-theme-box-fill);
 
+    padding-top: 1px;
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-bottom: 1px;
+}
+
+.nav-bar .button:hover {
+    background-color: var(--dark-theme-box-fill-hover);
 }
