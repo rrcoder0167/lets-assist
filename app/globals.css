@@ -1,39 +1,27 @@
-@import url('https://unpkg.com/@catppuccin/palette/css/catppuccin.css');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-    --dark-theme-box-fill: #01A24C;
-    --dark-theme-box-fill-hover: #027a3a;
-    --dark-theme-bckg: #303030;
-    --dark-theme-text-color: #FFFFFF;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
 }
 
 body {
-    background-color: var(--dark-theme-bckg);
-}
-
-.text-box {
-    background-color: var(--dark-theme-box-fill);
-    text-align: justify;
-    color: var(--dark-theme-text-color);
-    font-family: monospace;
-    border-radius: 2px;
-    outline: none;
-    
-    padding-top: 1px;
-    padding-left: 1px;
-    padding-right: 1px;
-    padding-bottom: 1px;
-}
-
-.nav-bar {
-    background-color: var(--dark-theme-box-fill);
-
-    padding-top: 1px;
-    padding-left: 1px;
-    padding-right: 1px;
-    padding-bottom: 1px;
-}
-
-.nav-bar .button:hover {
-    background-color: var(--dark-theme-box-fill-hover);
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
 }
