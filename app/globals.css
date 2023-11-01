@@ -1,27 +1,45 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://unpkg.com/@catppuccin/palette/css/catppuccin.css');
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
+/* Global styles for the entire application */
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+    font-family: Inter, sans-serif;
+    background: var(--ctp-macchiato-base);
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Navbar styles */
+  .navbar {
+    background-color: var(--ctp-macchiato-base);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  
+  .brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .nav-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+  }
+  
+  .nav-links li {
+    margin-right: 15px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: var(--ctp-macchiato-text);
+    transition: color 0.3s;
+  }
+  
+  .nav-links a:hover {
+    color: #fff; /* Change color on hover */
+  }
+  
