@@ -4,7 +4,9 @@ import Image from 'next/image'
 export default function Home() {
   return (
     <main>
-      <h1>Hello World!</h1>
+      <div className="text-box">
+        <p>Bonjour, je suis ton ordinateur. Je suis tres intellegent.</p>
+      </div>
     </main>
   )
 }
