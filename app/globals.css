@@ -3,14 +3,14 @@
 /* Global styles for the entire application */
 body {
     font-family: Inter, sans-serif;
-    background: var(--ctp-macchiato-base);
+    background: var(--ctp-frappe-base);
     margin: 0;
     padding: 0;
   }
   
   /* Navbar styles */
   .navbar {
-    background-color: var(--ctp-macchiato-base);
+    background-color: var(--ctp-frappe-base);
     color: #fff;
     display: flex;
     justify-content: space-between;
