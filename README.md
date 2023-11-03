@@ -13,4 +13,3 @@ A personalized local volunteering portal where you give back to your community, 
 ### Backend: 
 #### Deployed using Vercel
 
-
