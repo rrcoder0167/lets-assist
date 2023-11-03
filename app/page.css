@@ -1,21 +1,26 @@
+body {
+    color: var(--ctp-mocha-text);
+    background: var(--ctp-frappe-base);
+}
+
 .landing-text {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 5em;
-    color: green;
+    color: var(--ctp-frappe-green);
     text-align: center;
   }
 
-  .sub-text {
-    font-weight: 500;
-    font-size: 1.7em;
-    color: black;
-    padding-top: 25px;
-    text-align: center;
-  }
-  
-  .highlight {
-    background: linear-gradient(45deg, lightgreen, green);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+.sub-text {
+  font-weight: 500;
+  font-size: 1.7em;
+  color: var();
+  padding-top: 25px;
+  text-align: center;
+}
+
+.highlight {
+  background: linear-gradient(45deg, lightgreen, green);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
