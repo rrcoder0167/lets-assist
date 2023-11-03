@@ -5,7 +5,7 @@ import './globals.css';
 import React from 'react';
 import { GeistSans, GeistMono } from 'geist/font';
 const inter = Inter({ subsets: ['latin'] });
-import ImportBsJS from "@/components/importBsJs";
+import bootstrapJS from "@/components/bootstrapJS";
 
 export const metadata: Metadata = {
   title: "Let's Assist",
@@ -19,7 +19,7 @@ children: React.ReactNode;}) {
   return (
     <html lang="en" className={`${GeistSans.className} ${GeistMono.className}`}>
       <body className = {GeistSans.className}>
-        <ImportBsJS />
+        <bootstrapJS/>
         {children}
       </body>
     </html>
