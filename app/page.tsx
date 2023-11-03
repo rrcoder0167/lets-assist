@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light px-3">
-        <a className="navbar-brand font-weight-bold" href="#">
+        <a className="navbar-brand" href="#">
           <Image src="/letsassist-logo.svg" width="30" height="30" alt="Let's Assist"/>
           Let&apos;s Assist
         </a>
