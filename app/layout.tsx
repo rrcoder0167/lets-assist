@@ -11,11 +11,7 @@ export const metadata: Metadata = {
   description: 'Volunteering for everyone',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({children,}: {children: React.ReactNode;}) {
   return (
     <html lang="en">
       <body>
