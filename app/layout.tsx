@@ -12,10 +12,13 @@ export const metadata: Metadata = {
   description: 'Volunteering for everyone',
 }
 
-export default function RootLayout({children,}: {children: React.ReactNode;}) {
+export default function RootLayout({
+  children,
+}: {
+children: React.ReactNode;}) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
-      <body>
+    <html lang="en" className={`${GeistSans.className} ${GeistMono.className}`}>
+      <body className = {GeistSans.className}>
         <ImportBsJS />
         {children}
       </body>
