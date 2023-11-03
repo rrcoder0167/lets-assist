@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.css';
 import React from 'react';
 import { GeistSans, GeistMono } from 'geist/font';
-const inter = Inter({ subsets: ['latin'] });
 import bootstrapJS from "@/components/bootstrapJS";
 
 export const metadata: Metadata = {
