@@ -12,9 +12,8 @@ body {
   }
 
 .sub-text {
-  font-weight: 500;
+  font-family: var(--font-geist-mono);
   font-size: 1.7em;
-  color: var();
   padding-top: 25px;
   text-align: center;
 }
