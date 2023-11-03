@@ -1,7 +1,4 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-//import ImportBsJS from "@/components/importBsJs";
-
 export default function Home() {
   return (
     <>
