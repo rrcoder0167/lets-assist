@@ -27,3 +27,14 @@
 .navbar-brand-image {
     margin-right: 3px;
 }
+
+.dropdown-menu {
+    background-color: var(--ctp-frappe-surface0);
+}
+
+.dropdown-item {
+    transition: ease-in-out 0.1s;
+}
+.dropdown-item:hover {
+    background-color: var(--ctp-frappe-base);
+}
