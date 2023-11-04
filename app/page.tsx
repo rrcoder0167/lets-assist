@@ -21,15 +21,15 @@ function ProjectMatchmaking() {
   return (
     <section className="section-container">
       <div className="section-content">
-        <h2 className="section-title">Find what you <span className="section-highlight">love</span>, give when you can.</h2>
+        <h2 className="section-title">Find what you <span className="section-highlight-love">love</span>, give when <span className="section-highlight-green">you can.</span></h2>
         <p className="section-subtext">This is some subtext for the Project Matchmaking section.</p>
         <div className="section-details">
           <div className="section-image">
-            <img src="https://placehold.co/500x300" alt="Placeholder" />
+            <img src="https://placehold.co/500x300" alt="Placeholder"/>
           </div>
           <div className="section-description">
-            <h3 className="description-title">Image Description</h3>
-            <p className="description-subtext">This is some subtext for the image description.</p>
+            <h3 className="description-title">Personalized Project Matching</h3>
+            <p className="description-subtext">Connect with causes close to your heart with our smart matching system that aligns your passions and skills with community needs.</p>
           </div>
         </div>
       </div>
@@ -39,27 +39,54 @@ function ProjectMatchmaking() {
 
 function RealTimeProjectUpdates() {
   return (
-    <section>
-      <h2>Real-Time Project Updates</h2>
-      <p>Description for Real-Time Project Updates...</p>
+    <section className="section-container">
+      <div className="section-content">
+        <div className="section-flex-container">
+          <div className="section-description">
+            <h3 className="description-title">Stay Updated, Stay Involved</h3>
+            <p className="description-subtext">Never miss a chance to make a difference with real-time alerts for new projects and updates.</p>
+          </div>
+          <div className="section-image">
+            <img src="https://placehold.co/500x300" alt="Placeholder" />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
 
 function VolunteerRecognition() {
   return (
-    <section>
-      <h2>Volunteer Recognition</h2>
-      <p>Description for Volunteer Recognition...</p>
+    <section className="section-container">
+      <div className="section-content">
+        <div className="section-details">
+          <div className="section-image">
+            <img src="https://placehold.co/500x300" alt="Placeholder"/>
+          </div>
+          <div className="section-description">
+            <h3 className="description-title">Celebrate Your Contributions</h3>
+            <p className="description-subtext">Get recognized for your volunteer work with achievement badges, certificates, and a spotlight in our volunteer community.</p>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
 
 function CommunityForums() {
   return (
-    <section>
-      <h2>Community Forums</h2>
-      <p>Description for Community Forums...</p>
+    <section className="section-container">
+      <div className="section-content">
+        <div className="section-flex-container">
+          <div className="section-description">
+            <h3 className="description-title">Join the Conversation</h3>
+            <p className="description-subtext">Share stories, advice, and support in our community forums where volunteers unite to make a bigger impact.</p>
+          </div>
+          <div className="section-image">
+            <img src="https://placehold.co/500x300" alt="Placeholder" />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
