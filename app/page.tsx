@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import "./pages.css";
+import "./page.css";
 
 export default function Home() {
   return (
