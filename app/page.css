@@ -1,6 +1,9 @@
+/*
+font-family: var(--font-geist-mono); Use for geist stuff
+*/
 body {
-    color: var(--ctp-mocha-text);
-    background: var(--ctp-frappe-base);
+  color: var(--ctp-frappe-text);
+  background: var(--ctp-frappe-base);
 }
 
 .landing-text {
@@ -12,7 +15,6 @@ body {
   }
 
 .sub-text {
-  font-family: var(--font-geist-mono);
   font-size: 1.7em;
   padding-top: 25px;
   text-align: center;
