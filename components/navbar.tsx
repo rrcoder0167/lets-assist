@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image'; // Make sure to import Image from 'next/image'
+import Image from 'next/image';
 
 const Navbar = () => {
   return (
@@ -24,7 +24,7 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
-      <div className="ml-auto">
+      <div className="button-array">
         <button className="btn btn-outline-primary mr-3">Login</button>
         <button className="btn btn-primary ml-3">Sign Up</button>
       </div>
