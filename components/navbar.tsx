@@ -17,9 +17,10 @@ const Navbar = () => {
       <li className="nav-item dropdown">
         <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Features</a>
         <ul className='dropdown-menu'>
-          <li><a className="dropdown-item" href="#">Your Privacy</a></li>
-          <li><a className="dropdown-item" href="#">Easy to use UI</a></li>
-          <li><a className="dropdown-item" href="#">Inspire Change within others</a></li>
+          <li><a className="dropdown-item" href="#">Project Matchmaking</a></li>
+          <li><a className="dropdown-item" href="#">Real-Time Project Updates</a></li>
+          <li><a className="dropdown-item" href="#">Volunteer Recognition</a></li>
+          <li><a className="dropdown-item" href="#">Community Forums</a></li>
         </ul>
       </li>
       <li className="nav-item">
