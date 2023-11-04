@@ -13,6 +13,7 @@ export default function Home() {
       <RealTimeProjectUpdates />
       <VolunteerRecognition />
       <CommunityForums />
+      <EndingSection />
     </>
   );
 }
@@ -28,6 +29,7 @@ function ProjectMatchmaking() {
             <img src="https://placehold.co/500x300" alt="Placeholder"/>
           </div>
           <div className="section-description">
+            <img className="description-icon" src="https://placehold.co/32x32" alt="Heart Icon" />
             <h3 className="description-title">Personalized Project Matching</h3>
             <p className="description-subtext">Connect with causes close to your heart with our smart matching system that aligns your passions and skills with community needs.</p>
           </div>
@@ -86,6 +88,16 @@ function CommunityForums() {
             <img src="https://placehold.co/500x300" alt="Placeholder" />
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+function EndingSection() {
+  return (
+    <section className="ending-section">
+      <div className="ending-content">
+        <h2 className="ending-text">Who will you help today?</h2>
       </div>
     </section>
   );

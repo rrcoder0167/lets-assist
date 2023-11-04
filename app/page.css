@@ -68,12 +68,22 @@ body {
 .description-title {
   font-weight: bold;
 }
-
-.description-subtext {
-  /* Add any styles for the description subtext here */
-}
-
 .section-highlight-love {
   color: var(--ctp-frappe-red);
   text-shadow: 0 0 4px var(--ctp-frappe-red);
+}
+.description-icon {
+  margin-right: 10px; /* This adds space to the right of the icon */
+}
+.ending-section {
+  background-image: linear-gradient(to bottom, var(--ctp-frappe-surface0), var(--ctp-latte-green));
+  padding: 100px 0;
+  text-align: center;
+}
+
+.ending-text {
+  font-family: 'Poppins';
+  font-weight: 600;
+  font-size: 3.5em;
+  color: whitesmoke;
 }
