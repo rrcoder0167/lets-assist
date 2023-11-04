@@ -13,7 +13,7 @@ const Navbar = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       <li className="nav-item">
         <a className="nav-link custom-link" href="#">Features</a>
       </li>
@@ -24,10 +24,10 @@ const Navbar = () => {
         <a className="nav-link custom-link" href="#">Contact</a>
       </li>
     </ul>
-      </div>
-      <div className="button-array">
+      <div className="d-flex">
       <a type="button" className="btn custom-btn-outline" href="#">Login</a>
       <a type="button" className="btn custom-btn-fill" href="#">Sign Up</a>
+    </div>
     </div>
     </nav>
   );
