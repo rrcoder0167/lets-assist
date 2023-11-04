@@ -19,9 +19,20 @@ export default function Home() {
 
 function ProjectMatchmaking() {
   return (
-    <section>
-      <h2>Project Matchmaking</h2>
-      <p>Description for Project Matchmaking...</p>
+    <section className="section-container">
+      <div className="section-content">
+        <h2 className="section-title">Find what you <span className="section-highlight">love</span>, give when you can.</h2>
+        <p className="section-subtext">This is some subtext for the Project Matchmaking section.</p>
+        <div className="section-details">
+          <div className="section-image">
+            <img src="https://placehold.co/500x300" alt="Placeholder" />
+          </div>
+          <div className="section-description">
+            <h3 className="description-title">Image Description</h3>
+            <p className="description-subtext">This is some subtext for the image description.</p>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
