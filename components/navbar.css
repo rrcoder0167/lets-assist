@@ -1,43 +1,19 @@
-.custom-navbar {
-    background-color: var(--ctp-frappe-surface0);
+.custom-btn-outline {
+    background-color: var(--ctp-frappe-base);
     color: var(--ctp-frappe-text);
-    height: 50px;
-  }
-  
-  .navbar-brand {
-    color: var(--ctp-frappe-text);
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1.5em;
-    transition: color 0.3s;
-  }
+    border: 1.5px solid var(--ctp-frappe-surface1);
+}
 
-  .navbar-brand:hover {
-    color: var(--ctp-frappe-subtext1);
-  }
-
-  .custom-btn {
-    background-color: lightgray;
-    color: black;
-  }
-  
-  .custom-btn:hover {
-    background-color: darkgray;
-  }
-  
-  .custom-btn-outline {
+.custom-btn-outline:hover {
     background-color: var(--ctp-frappe-surface0);
-    color: var(--ctp-frappe-text);
-    border: 1.5px solid var(--ctp-frappe-surface2);
-  }
-  
-  .custom-btn-outline:hover {
-    background-color: var(--ctp-frappe-surface2);
-  }
-  .custom-link {
-    color: var(--ctp-frappe-text);
-  }
-  
-  .custom-link:hover {
-    color: var(--ctp-frappe-subtext0);
-  }
+}
+
+.custom-btn-fill {
+    background-color: var(--ctp-frappe-text);
+    color: var(--ctp-frappe-base);
+}
+
+.custom-btn-fill:hover {
+    background-color: var(--ctp-frappe-subtext1);
+    color: var(--ctp-frappe-base);
+}
