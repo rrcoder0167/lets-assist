@@ -14,6 +14,7 @@ export default function Home() {
       <VolunteerRecognition />
       <CommunityForums />
       <EndingSection />
+      <Footer />
     </>
   );
 }
@@ -103,3 +104,33 @@ function EndingSection() {
   );
 }
 
+function Footer() {
+  return (
+    <footer className="footer">
+      <h3 className="developers-title">Meet the Developers</h3>
+      <div className="profiles">
+        <div className="profile">
+          <a href="https://github.com/rrcoder0167">
+            <img src="https://avatars.githubusercontent.com/u/106852975?v=4" alt="Profile 1"/>
+          </a>
+          <p>Riddhiman Rana</p>
+        </div>
+        <div className="profile">
+          <a href="https://github.com/vkeshav300">
+            <img src="https://avatars.githubusercontent.com/u/70541603?v=4" alt="Profile 2"/>
+          </a>
+          <p>Keshav Varma</p>
+        </div>
+        <div className="profile">
+          <a href="https://github.com/errorcodezero">
+            <img src="https://avatars.githubusercontent.com/u/74121237?v=4" alt="Profile 3"/>
+          </a>
+          <p>Abhinav Venkat</p>
+        </div>
+      </div>
+      <div className="credits">
+        <p>Copyright 2023, Powered by Vercel.</p>
+      </div>
+    </footer>
+  );
+}
