@@ -18,3 +18,12 @@
     background-color: var(--ctp-frappe-subtext1);
     color: var(--ctp-frappe-base);
 }
+
+.navbar-brand {
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 1.4em;
+}
+.navbar-brand-image {
+    margin-right: 3px;
+}
