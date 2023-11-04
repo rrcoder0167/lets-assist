@@ -3,7 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.css';
 import React from 'react';
 import { GeistSans, GeistMono } from 'geist/font';
-import bootstrapJS from "@/components/bootstrapJS";
+import BootstrapJS from "@/components/bootstrapJS";
+import Navbar from '@/components/navbar';
 
 export const metadata: Metadata = {
   title: "Let's Assist",
@@ -17,7 +18,8 @@ children: React.ReactNode;}) {
   return (
     <html lang="en" className={`${GeistSans.className} ${GeistMono.className}`}>
       <body className = {GeistSans.className}>
-        <bootstrapJS/>
+        <BootstrapJS />
+        <Navbar />
         {children}
       </body>
     </html>
