@@ -50,12 +50,21 @@ body {
   display: flex; /* This makes the image and description side by side */
 }
 
-.section-image img {
-  max-width: 100%; /* This makes the image responsive */
-  margin-right: 100px;
-  border-radius: 20px;
+.section-flex-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
+.section-description, .section-image {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.section-image img {
+  max-width: 100%; /* This makes the image responsive */
+  border-radius: 20px;
+}
 .description-title {
   font-weight: bold;
 }
@@ -64,7 +73,7 @@ body {
   /* Add any styles for the description subtext here */
 }
 
-.section-highlight {
+.section-highlight-love {
   color: var(--ctp-frappe-red);
   text-shadow: 0 0 4px var(--ctp-frappe-red);
 }
