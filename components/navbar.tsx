@@ -26,8 +26,8 @@ const Navbar = () => {
     </ul>
       </div>
       <div className="button-array">
-      <button className="btn custom-btn-outline ml-3">Login</button>
-      <button className="btn custom-btn ml-3">Sign Up</button>
+      <button className="btn custom-btn-outline">Login</button>
+      <button className="btn custom-btn-fill">Sign Up</button>
     </div>
     </nav>
   );
