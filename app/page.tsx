@@ -2,10 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import './page.css'
 
-export default function Home() {
-  return (
-    <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light px-3">
+let navbar = (
+  <nav className="navbar navbar-expand-lg navbar-light bg-light px-3">
         <a className="navbar-brand" href="#">
           <Image src="/letsassist-logo.svg" width="30" height="30" alt="Let's Assist"/>
           Let&apos;s Assist
@@ -28,9 +26,15 @@ export default function Home() {
         </div>
         <div className="ml-auto">
           <button className="btn btn-outline-primary mr-3">Login</button>
-          <button className="btn btn-primary">Sign Up</button>
+          <button className="btn btn-primary ml-3">Sign Up</button>
         </div>
       </nav>
+);
+
+export default function Home() {
+  return (
+    <>
+      {navbar}
       <main className="d-flex align-items-center justify-content-center flex-column" style={{height: '80vh'}}>
         <h1 className="landing-text">Give back to your<br/>community, your way</h1>
         <p className="sub-text">Find local volunteering opportunities <span className="highlight">today</span> with Let&apos;s Assist, and give back to your community</p>
