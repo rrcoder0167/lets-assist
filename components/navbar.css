@@ -6,11 +6,6 @@
     width:85px;
 }
 
-.dropdown-menu {
-    background-color: var(--ctp-latte-green);
-    padding: 10px;
-}
-
 .custom-btn-outline:hover {
     background-color: var(--ctp-frappe-surface0);
 }

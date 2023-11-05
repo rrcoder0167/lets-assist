@@ -28,11 +28,6 @@ body {
     display: none;
   }
 
-  .dropdown-menu {
-    background-color: var(--ctp-latte-green);
-    padding: 10px;
-  }
-
   .btn-get-started {
     position: relative;
     top: 0;
@@ -53,11 +48,6 @@ body {
 
   .section-image {
     display: block;
-  }
-
-  .dropdown-menu {
-    background-color: transparent;
-    padding: 0;
   }
 
   .btn-get-started {
@@ -82,10 +72,6 @@ body {
     display: block;
   }
 
-  .dropdown-menu {
-    background-color: transparent;
-    padding: 0;
-  }
 
   .btn-get-started {
     position: absolute;
