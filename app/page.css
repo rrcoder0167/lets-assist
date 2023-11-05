@@ -1,5 +1,6 @@
 /*
 font-family: var(--font-geist-mono); Use for geist stuff
+var(--font-geist-sans); geist sans
 */
 body {
   color: var(--ctp-frappe-text);
