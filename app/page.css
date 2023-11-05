@@ -14,6 +14,31 @@ body {
     text-align: center;
   }
 
+.section-image {
+  display: block;
+}
+
+/* CSS for mobile devices */
+@media (max-width: 768px) {
+  .landing-text {
+    font-size: 3em;
+  }
+
+  .section-image {
+    display: none;
+  }
+
+  .dropdown-menu {
+    background-color: var(--ctp-latte-green);
+    padding: 10px;
+  }
+
+  .btn-get-started {
+    position: relative;
+    top: 0;
+  }
+}
+
 .sub-text {
   font-size: 1.7em;
   padding-top: 25px;
@@ -32,9 +57,9 @@ body {
 }
 
 .section-content {
-  max-width: 1200px; /* This limits the width of the content */
-  margin: 0 auto; /* This centers the content */
-  padding: 0 20px; /* This adds some space on the left and right */
+  /*max-width: 1200px; /* This limits the width of the content */
+  /*margin: 0 auto; /* This centers the content */
+  padding: 0 65px; /* This adds some space on the left and right */
 }
 
 .section-title {
