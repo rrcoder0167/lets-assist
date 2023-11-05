@@ -19,9 +19,9 @@ body {
 }
 
 /* CSS for mobile devices */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .landing-text {
-    font-size: 3em;
+    font-size: 2.2em;
   }
 
   .section-image {
@@ -37,12 +37,67 @@ body {
     position: relative;
     top: 0;
   }
+
+  .sub-text {
+    font-size: 1em;
+    padding-top: 25px;
+    text-align: center;
+  }
+
 }
 
-.sub-text {
-  font-size: 1.7em;
-  padding-top: 25px;
-  text-align: center;
+@media (min-width: 601px) and (max-width: 1024px) {
+  .landing-text {
+    font-size: 3.5em;
+  }
+
+  .section-image {
+    display: block;
+  }
+
+  .dropdown-menu {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  .btn-get-started {
+    position: absolute;
+    top: -50px;
+  }
+
+  .sub-text {
+    font-size: 1.4em;
+    padding-top: 25px;
+    text-align: center;
+  }
+
+}
+
+@media (min-width: 1025px) {
+  .landing-text {
+    font-size: 5em;
+  }
+
+  .section-image {
+    display: block;
+  }
+
+  .dropdown-menu {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  .btn-get-started {
+    position: absolute;
+    top: -50px;
+  }
+
+  .sub-text {
+    font-size: 1.7em;
+    padding-top: 25px;
+    text-align: center;
+  }
+
 }
 
 .highlight {
