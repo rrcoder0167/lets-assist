@@ -31,8 +31,8 @@ const Navbar = () => {
       </li>
     </ul>
       <div className="d-flex">
-      <a type="button" className="btn custom-btn-outline" href="#">Login</a>
-      <a type="button" className="btn custom-btn-fill" href="#">Sign Up</a>
+      <a type="button" className="btn custom-btn-outline" href="/api/auth/signin">Login</a>
+      <a type="button" className="btn custom-btn-fill" href="/api/auth/signout">Sign Up</a>
     </div>
     </div>
     </nav>
