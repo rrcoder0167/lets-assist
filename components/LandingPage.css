@@ -6,7 +6,7 @@ body {
     color: var(--ctp-frappe-text);
     background: var(--ctp-frappe-base);
   }
-  
+
   .landing-text {
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
@@ -37,6 +37,7 @@ body {
     .sub-text {
       font-size: 1em;
       padding-top: 25px;
+      padding: 10px;
       text-align: center;
     }
   
@@ -101,7 +102,7 @@ body {
   .section-content {
     /*max-width: 1200px; /* This limits the width of the content */
     /*margin: 0 auto; /* This centers the content */
-    padding: 0 65px; /* This adds some space on the left and right */
+    margin: 0 65px; /* This adds some space on the left and right */
   }
   
   .section-title {
@@ -111,6 +112,7 @@ body {
   
   .section-subtext {
     font-size: 1.2em; /* This makes the subtext larger */
+    margin-bottom: 70px;
   }
   
   .section-details {
@@ -133,8 +135,14 @@ body {
     border-radius: 20px;
   }
   .description-title {
-    font-weight: bold;
+    font-size: 2em;
+    font-weight: 700;
   }
+
+    .description-subtext {
+        font-size:1.2em;
+    }
+
   .section-highlight-love {
     color: var(--ctp-frappe-red);
     text-shadow: 0 0 4px var(--ctp-frappe-red);
