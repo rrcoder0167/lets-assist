@@ -126,7 +126,7 @@ function ProjectMatchmaking() {
             <a href="https://github.com/errorcodezero">
               <img src="https://avatars.githubusercontent.com/u/74121237?v=4" alt="Profile 3"/>
             </a>
-            <p>Abhinav Venkat</p>
+            <p>Abinav Venkit</p>
           </div>
         </div>
         <div className="credits">
