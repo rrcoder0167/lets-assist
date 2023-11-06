@@ -3,202 +3,214 @@ font-family: var(--font-geist-mono); Use for geist stuff
 var(--font-geist-sans); geist sans
 */
 body {
-    color: var(--ctp-frappe-text);
-    background: var(--ctp-frappe-base);
+  color: var(--ctp-frappe-text);
+  background: var(--ctp-frappe-base);
+}
+
+.landing-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 5em;
+  color: var(--ctp-frappe-green);
+  text-align: center;
+}
+
+.section-image {
+  display: block;
+}
+
+/* CSS for mobile devices */
+@media (max-width: 600px) {
+  .landing-text {
+    font-size: 2.2em;
   }
 
+  .section-image {
+    display: none;
+  }
+
+  .btn-get-started {
+    position: relative;
+    top: 0;
+  }
+
+  .sub-text {
+    font-size: 1em;
+    padding-top: 25px;
+    padding: 10px;
+    text-align: center;
+  }
+
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
   .landing-text {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 5em;
-      color: var(--ctp-frappe-green);
-      text-align: center;
-    }
-  
+    font-size: 3.5em;
+  }
+
   .section-image {
     display: block;
   }
-  
-  /* CSS for mobile devices */
-  @media (max-width: 600px) {
-    .landing-text {
-      font-size: 2.2em;
-    }
-  
-    .section-image {
-      display: none;
-    }
-  
-    .btn-get-started {
-      position: relative;
-      top: 0;
-    }
-  
-    .sub-text {
-      font-size: 1em;
-      padding-top: 25px;
-      padding: 10px;
-      text-align: center;
-    }
-  
-  }
-  
-  @media (min-width: 601px) and (max-width: 1024px) {
-    .landing-text {
-      font-size: 3.5em;
-    }
-  
-    .section-image {
-      display: block;
-    }
-  
-    .btn-get-started {
-      position: absolute;
-      top: -50px;
-    }
-  
-    .sub-text {
-      font-size: 1.4em;
-      padding-top: 25px;
-      text-align: center;
-    }
-  
-  }
-  
-  @media (min-width: 1025px) {
-    .landing-text {
-      font-size: 5em;
-    }
-  
-    .section-image {
-      display: block;
-    }
-  
-  
-    .btn-get-started {
-      position: absolute;
-      top: -50px;
-    }
-  
-    .sub-text {
-      font-size: 1.7em;
-      padding-top: 25px;
-      text-align: center;
-    }
-  
-  }
-  
-  .highlight {
-    background: linear-gradient(45deg, lightgreen, darkgreen);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  .section-container {
-    background-color: var(--ctp-frappe-surface0); /* Change this to your preferred color */
-    padding: 50px 0; /* This adds space at the top and bottom of the section */
-  }
-  
-  .section-content {
-    /*max-width: 1200px; /* This limits the width of the content */
-    /*margin: 0 auto; /* This centers the content */
-    margin: 0 65px; /* This adds some space on the left and right */
-  }
-  
-  .section-title {
-    font-weight: bold;
-    font-size: 2.8em; /* This makes the title larger */
-  }
-  
-  .section-subtext {
-    font-size: 1.2em; /* This makes the subtext larger */
-    margin-bottom: 70px;
-  }
-  
-  .section-details {
-    display: flex; /* This makes the image and description side by side */
-  }
-  
-  .section-flex-container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-  
-  .section-description, .section-image {
-    flex: 1;
-    padding: 0 20px;
-  }
-  
-  .section-image img {
-    max-width: 100%; /* This makes the image responsive */
-    border-radius: 20px;
-  }
-  .description-title {
-    font-size: 2em;
-    font-weight: 700;
+
+  .btn-get-started {
+    position: absolute;
+    top: -50px;
   }
 
-    .description-subtext {
-        font-size:1.2em;
-    }
+  .sub-text {
+    font-size: 1.4em;
+    padding-top: 25px;
+    text-align: center;
+  }
 
-  .section-highlight-love {
-    color: var(--ctp-frappe-red);
-    text-shadow: 0 0 4px var(--ctp-frappe-red);
+}
+
+@media (min-width: 1025px) {
+  .landing-text {
+    font-size: 5em;
   }
-  .description-icon {
-    margin-right: 10px; /* This adds space to the right of the icon */
+
+  .section-image {
+    display: block;
   }
-  .ending-section {
-    background-image: linear-gradient(to bottom, var(--ctp-frappe-surface0), var(--ctp-latte-green));
-    padding: 100px 0;
-    text-align: center;
+
+
+  .btn-get-started {
+    position: absolute;
+    top: -50px;
   }
-  
-  .ending-text {
-    font-family: 'Poppins';
-    font-weight: 600;
-    font-size: 3.5em;
-    color: whitesmoke;
-  }
-  
-  .footer {
-    background-color: var(--ctp-latte-green);
-    padding: 50px 0;
-    text-align: center;
-  }
-  
-  .profiles {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 50px;
-  }
-  
-  .profile img {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    border: 3px solid white;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .profile img:hover {
-    transform: scale(1.1);
-  }
-  
-  
-  .profile p {
-    color: var(--ctp-latte-crust)
-  }
-  
-  .credits {
-    color: white;
-  }
-  
-  .developers-title {
+
+  .sub-text {
     font-size: 1.7em;
-    color: white;
-    font-weight: bold;
-    margin-bottom: 20px;
+    padding-top: 25px;
+    text-align: center;
   }
+
+}
+
+.highlight {
+  background: linear-gradient(45deg, lightgreen, darkgreen);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-container {
+  background-color: var(--ctp-frappe-surface0);
+  /* Change this to your preferred color */
+  padding: 50px 0;
+  /* This adds space at the top and bottom of the section */
+}
+
+.section-content {
+  /*max-width: 1200px; /* This limits the width of the content */
+  /*margin: 0 auto; /* This centers the content */
+  margin: 0 65px;
+  /* This adds some space on the left and right */
+}
+
+.section-title {
+  font-weight: bold;
+  font-size: 2.8em;
+  /* This makes the title larger */
+}
+
+.section-subtext {
+  font-size: 1.2em;
+  /* This makes the subtext larger */
+  margin-bottom: 70px;
+}
+
+.section-details {
+  display: flex;
+  /* This makes the image and description side by side */
+}
+
+.section-flex-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.section-description,
+.section-image {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.section-image img {
+  max-width: 100%;
+  /* This makes the image responsive */
+  border-radius: 20px;
+}
+
+.description-title {
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.description-subtext {
+  font-size: 1.2em;
+}
+
+.section-highlight-love {
+  color: var(--ctp-frappe-red);
+  text-shadow: 0 0 4px var(--ctp-frappe-red);
+}
+
+.description-icon {
+  margin-right: 10px;
+  /* This adds space to the right of the icon */
+}
+
+.ending-section {
+  background-image: linear-gradient(to bottom, var(--ctp-frappe-surface0), var(--ctp-latte-green));
+  padding: 100px 0;
+  text-align: center;
+}
+
+.ending-text {
+  font-family: 'Poppins';
+  font-weight: 600;
+  font-size: 3.5em;
+  color: whitesmoke;
+}
+
+.footer {
+  background-color: var(--ctp-latte-green);
+  padding: 50px 0;
+  text-align: center;
+}
+
+.profiles {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 50px;
+}
+
+.profile img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  border: 3px solid white;
+  transition: transform 0.3s ease-in-out;
+}
+
+.profile img:hover {
+  transform: scale(1.1);
+}
+
+
+.profile p {
+  color: var(--ctp-latte-crust)
+}
+
+.credits {
+  color: white;
+}
+
+.developers-title {
+  font-size: 1.7em;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
