@@ -1,0 +1,124 @@
+body {
+    color: var(--ctp-frappe-text); /* Light grey for text to stand out against the dark background */
+    background: var(--ctp-frappe-base); /* Your specified background color */
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 6%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    color: #e0e0e0;
+}
+
+.oauth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.oauth-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+/* GitHub button */
+.oauth-button.github {
+    background-color: #414141;
+    color: white;
+}
+
+.oauth-button.github:hover {
+    background-color: #b3b3b3;
+}
+
+/* Google button */
+.oauth-button.google {
+    background-color: rgb(207, 243, 255);
+    color: black;
+}
+
+.oauth-button.google:hover {
+    background-color: rgb(150, 204, 255);
+}
+
+.oauth-button img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Apple button */
+.oauth-button.apple {
+    background-color: #f1f1f1;
+}
+
+.oauth-button.apple:hover {
+    background-color: #d1d1d1;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-field {
+    padding: 10px;
+    border: 1px solid #404857;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #3a3f55;
+    color: #cfcfcf;
+    transition: ease-in-out 0.3s;
+}
+
+.input-field:hover {
+    border: 3px solid #8ab3ff;
+}
+
+
+.login-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--ctp-frappe-green);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #91b675;
+}
+
+.login-container p {
+    margin-top: 20px;
+    color: #e0e0e0;
+}
+
+.login-container a {
+    color: rgb(13, 145, 253);
+    text-decoration: none;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}

@@ -5,7 +5,7 @@ import "./navbar.css"
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg custom-navbar px-4"  data-bs-theme="dark">
-      <a className="navbar-brand" href="#">
+      <a className="navbar-brand" href="/">
         <Image src="/letsassist-logo.svg" width={30} height={26} alt="Logo" className='navbar-brand-image'/>
         Let&apos;s Assist
       </a>
@@ -31,8 +31,8 @@ const Navbar = () => {
       </li>
     </ul>
       <div className="d-flex">
-      <a type="button" className="btn custom-btn-outline" href="/api/auth/signin">Login</a>
-      <a type="button" className="btn custom-btn-fill" href="/api/auth/signout">Sign Up</a>
+      <a type="button" className="btn custom-btn-outline" href="/login">Login</a>
+      <a type="button" className="btn custom-btn-fill" href="#">Sign Up</a>
     </div>
     </div>
     </nav>
