@@ -4,6 +4,7 @@ import './globals.css';
 import React from 'react';
 import { GeistSans, GeistMono } from 'geist/font';
 import BootstrapJS from "@/components/bootstrapJS";
+import Image from 'next/image';
 //import Navbar from '@/components/navbar'; once we figure out the login, we do this
 
 export const metadata: Metadata = {
@@ -14,10 +15,11 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-children: React.ReactNode;}) {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" className={`${GeistSans.className} ${GeistMono.className}`}>
-      <body className = {GeistSans.className}>
+      <body className={GeistSans.className}>
         <BootstrapJS />
         {children}
       </body>

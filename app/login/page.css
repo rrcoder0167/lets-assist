@@ -1,6 +1,8 @@
 body {
-    color: var(--ctp-frappe-text); /* Light grey for text to stand out against the dark background */
-    background: var(--ctp-frappe-base); /* Your specified background color */
+    color: var(--ctp-frappe-text);
+    /* Light grey for text to stand out against the dark background */
+    background: var(--ctp-frappe-base);
+    /* Your specified background color */
 }
 
 .login-container {
