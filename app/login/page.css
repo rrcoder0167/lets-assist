@@ -33,6 +33,7 @@ body {
     font-weight: 500;
     position: relative;
     transition: background-color 0.3s;
+    text-decoration: none;
 }
 
 /* GitHub button */
@@ -110,16 +111,16 @@ body {
     background-color: #91b675;
 }
 
-.login-container p {
+.signup-link p {
     margin-top: 20px;
     color: #e0e0e0;
 }
 
-.login-container a {
+.signup-link a {
     color: rgb(13, 145, 253);
     text-decoration: none;
 }
 
-.login-container a:hover {
+.signup-link a:hover {
     text-decoration: underline;
 }

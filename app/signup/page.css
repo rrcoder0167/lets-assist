@@ -15,6 +15,11 @@ body {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
+    color: #e0e0e0;
+}
+
+.container h2 {
+    color: #e0e0e0;
 }
 
 .oauth-buttons {
@@ -25,6 +30,7 @@ body {
 }
 
 .oauth-button {
+    display: inline-block;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -32,6 +38,8 @@ body {
     font-weight: 500;
     position: relative;
     transition: background-color 0.3s;
+    text-decoration: none;
+    text-align: center;
 }
 
 /* GitHub button */
@@ -66,6 +74,7 @@ body {
 
 /* Apple button */
 .oauth-button.apple {
+    color: black;
     background-color: #f1f1f1;
 }
 
@@ -109,16 +118,16 @@ body {
     background-color: #91b675;
 }
 
-.login-container p {
+.signup-link p {
     margin-top: 20px;
     color: #e0e0e0;
 }
 
-.login-container a {
+.signup-link a {
     color: rgb(13, 145, 253);
     text-decoration: none;
 }
 
-.login-container a:hover {
+.signup-link a:hover {
     text-decoration: underline;
 }
