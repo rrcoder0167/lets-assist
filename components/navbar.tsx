@@ -32,7 +32,7 @@ const Navbar = () => {
     </ul>
       <div className="d-flex">
       <a type="button" className="btn custom-btn-outline" href="/login">Login</a>
-      <a type="button" className="btn custom-btn-fill" href="#">Sign Up</a>
+      <a type="button" className="btn custom-btn-fill" href="/signup">Sign Up</a>
     </div>
     </div>
     </nav>

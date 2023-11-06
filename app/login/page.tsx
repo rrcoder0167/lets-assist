@@ -3,17 +3,18 @@ import './page.css';
 
 const LoginPage = () => {
   return (
+    <>
     <div className="login-container">
-      <h2>Login to Let&apos;s Assist</h2>
+    <h2>Login to Let&apos;s Assist</h2>
       <div className="oauth-buttons">      
         <button className="oauth-button github">Sign in with GitHub
-        <img src="/github-logo.png" class="github-icon" alt="Google sign-in"></img>
+        <img src="/github-logo.png" className="github-icon" alt="Google sign-in"></img>
         </button>
         <button className="oauth-button google">Sign in with Google
-        <img src="/google-logo.png" class="google-icon" alt="Google sign-in"></img>
+        <img src="/google-logo.png" className="google-icon" alt="Google sign-in"></img>
         </button>
         <button className="oauth-button apple">Sign in with Apple
-        <img src="/apple-logo.png" class="apple-icon" alt="Apple sign-in"></img>
+        <img src="/apple-logo.png" className="apple-icon" alt="Apple sign-in"></img>
         </button>
       </div>
       <form className="login-form">
@@ -23,6 +24,7 @@ const LoginPage = () => {
       </form>
       <p>Don&apos;t have an account? <a href="/signup">Sign up here</a></p>
     </div>
+    </>
   );
 };
 
