@@ -7,7 +7,7 @@ const RegisterPage = () => {
     <>
       <Navbar />
       <div className="container">
-        <h2>Never made an Account before? No Problem!</h2>
+        <h2>Don&apos;t have an account? No Problem!</h2>
         <div className="login-container">
           <div className="oauth-buttons">
             <a href="#" className="oauth-button github">
