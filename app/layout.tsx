@@ -5,6 +5,7 @@ import React from 'react';
 import { GeistSans, GeistMono } from 'geist/font';
 import BootstrapJS from "@/components/bootstrapJS";
 import Image from 'next/image';
+import 'bootstrap-icons/font/bootstrap-icons.css'
 //import Navbar from '@/components/navbar'; once we figure out the login, we do this
 
 export const metadata: Metadata = {
