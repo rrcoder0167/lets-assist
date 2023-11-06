@@ -3,7 +3,7 @@
     color: var(--ctp-frappe-text);
     border: 1.5px solid var(--ctp-frappe-surface1);
     margin-right: 10px;
-    width:85px;
+    width: 85px;
 }
 
 .custom-btn-outline:hover {
@@ -26,6 +26,7 @@
     font-weight: 600;
     font-size: 1.4em;
 }
+
 .navbar-brand-image {
     margin-right: 3px;
 }
@@ -37,6 +38,7 @@
 .dropdown-item {
     transition: ease-in-out 0.1s;
 }
+
 .dropdown-item:hover {
     background-color: var(--ctp-frappe-base);
 }
