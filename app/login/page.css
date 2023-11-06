@@ -94,10 +94,6 @@ body {
     transition: ease-in-out 0.3s;
 }
 
-.input-field:hover {
-    border: 3px solid #8ab3ff;
-}
-
 
 .login-button {
     padding: 10px 20px;
