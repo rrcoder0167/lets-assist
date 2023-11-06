@@ -120,7 +120,7 @@ function ProjectMatchmaking() {
             <a href="https://github.com/vkeshav300">
               <img src="https://avatars.githubusercontent.com/u/70541603?v=4" alt="Profile 2"/>
             </a>
-            <p>Keshav Varma</p>
+            <p>Keshav Verma</p>
           </div>
           <div className="profile">
             <a href="https://github.com/errorcodezero">
