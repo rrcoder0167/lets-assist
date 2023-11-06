@@ -4,7 +4,7 @@ import './globals.css';
 import React from 'react';
 import { GeistSans, GeistMono } from 'geist/font';
 import BootstrapJS from "@/components/bootstrapJS";
-import Navbar from '@/components/navbar';
+//import Navbar from '@/components/navbar'; once we figure out the login, we do this
 
 export const metadata: Metadata = {
   title: "Let's Assist",
@@ -19,7 +19,6 @@ children: React.ReactNode;}) {
     <html lang="en" className={`${GeistSans.className} ${GeistMono.className}`}>
       <body className = {GeistSans.className}>
         <BootstrapJS />
-        <Navbar />
         {children}
       </body>
     </html>

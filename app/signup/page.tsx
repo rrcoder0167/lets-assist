@@ -1,8 +1,11 @@
 import React from 'react';
 import './page.css';
+import Navbar from '@/components/navbar';
 
 const RegisterPage = () => {
   return (
+    <>
+    <Navbar />
     <div className="container">
     <h2>Never made an Account before? No Problem!</h2>
     <div className="login-container">
@@ -32,6 +35,7 @@ const RegisterPage = () => {
       </div>
     </div>
     </div>
+    </>
   );
 };
 
