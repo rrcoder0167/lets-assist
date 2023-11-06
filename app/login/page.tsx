@@ -1,9 +1,11 @@
 import React from 'react';
 import './page.css';
+import Navbar from '@/components/navbar';
 
 const LoginPage = () => {
   return (
     <>
+    <Navbar />
     <div className="login-container">
     <h2>Login to Let&apos;s Assist</h2>
       <div className="oauth-buttons">      
