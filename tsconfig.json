@@ -35,7 +35,7 @@
     ".next/types/**/*.ts",
     "components/bootstrap.js",
     "app/api/auth/[...nextauth]/route.tsx"
-, "app/providers.js"  ],
+, "app/providers.js", "lib/mongodb.js", "app/api/user/route.js", "models/user.js", "app/api/auth/[...nextauth]/route.js"  ],
   "exclude": [
     "node_modules"
   ]

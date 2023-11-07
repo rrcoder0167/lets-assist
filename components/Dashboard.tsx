@@ -32,6 +32,9 @@ export default function dashboard() {
     </div>
     <div className="d-flex">
       <a href="#" className="btn btn-danger">Sign Out</a>
+        <div>Name: <span>{session?.user?.name}</span>
+        Email: <span>{session?.user?.email}</span>
+        </div>
         <Image src={session?.user?.image} className="profile-picture" width={60} height={60} alt="Profile"/>
     </div>
     </nav>
