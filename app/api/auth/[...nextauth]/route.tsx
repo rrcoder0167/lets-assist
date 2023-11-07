@@ -14,7 +14,7 @@ const authOptions = {
             clientId: googleClientId,
             clientSecret: googleClientSecret,
         }),
-    ]
+    ],
 };
 
 const handler = NextAuth(authOptions);
