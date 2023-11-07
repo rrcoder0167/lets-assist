@@ -1,8 +1,8 @@
 import React from "react";
-import SignInButton from "@/components/signInButton";
+import SignInButtons from "@/components/signInButtons";
 
 export default function UserInfo() {
     return (
-        <SignInButton />
+        <SignInButtons />
     );
 }

@@ -5,7 +5,8 @@ import React from 'react';
 import { GeistSans, GeistMono } from 'geist/font';
 import BootstrapJS from "@/components/bootstrapJS";
 import Image from 'next/image';
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import { NextAuthProvider } from "./providers";
 //import Navbar from '@/components/navbar'; once we figure out the login, we do this
 
 export const metadata: Metadata = {
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.className} ${GeistMono.className}`}>
       <body className={GeistSans.className}>
         <BootstrapJS />
-        {children}
+        <NextAuthProvider>
+          {children}
+        </NextAuthProvider>
       </body>
     </html>
   );
