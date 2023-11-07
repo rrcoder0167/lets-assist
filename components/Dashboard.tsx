@@ -2,9 +2,9 @@
 import React from 'react';
 import Image from 'next/image';
 import "./Dashboard.css"
-import { signOut, useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
-export default function dashboard() {
+export default function Dashboard() {
     const { status, data: session } = useSession();
   return (
     <>
@@ -35,7 +35,7 @@ export default function dashboard() {
         <div>Name: <span>{session?.user?.name}</span>
         Email: <span>{session?.user?.email}</span>
         </div>
-        <Image src={session?.user?.image} className="profile-picture" width={60} height={60} alt="Profile"/>
+        <Image src={session?.user?.image!} className="profile-picture" width={60} height={60} alt="Profile"/>
     </div>
     </nav>
     <div className='projects-container'>
