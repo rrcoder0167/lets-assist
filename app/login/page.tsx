@@ -1,8 +1,13 @@
+"use client"
 import React from 'react';
 import './page.css';
 import Navbar from '@/components/navbar';
+import { signIn } from 'next-auth/react';
 
 const LoginPage = () => {
+    const handleGoogleSignIn = () => {
+      signIn("google");
+    };
   return (
     <>
       <Navbar />
@@ -13,10 +18,10 @@ const LoginPage = () => {
             Sign in with GitHub
             <img src="/github-logo.png" className="github-icon" alt="GitHub sign-in" />
           </a>
-          <a href="https://accounts.google.com/o/oauth2/v2/auth" className="oauth-button google">
+          <button onClick={handleGoogleSignIn} className="oauth-button google">
             Sign in with Google
             <img src="/google-logo.png" className="google-icon" alt="Google sign-in" />
-          </a>
+          </button>
           <a href="https://appleid.apple.com/auth/authorize" className="oauth-button apple">
             Sign in with Apple
             <img src="/apple-logo.png" className="apple-icon" alt="Apple sign-in" />
