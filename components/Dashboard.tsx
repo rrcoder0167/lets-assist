@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import "./Dashboard.css"
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 export default function dashboard() {
     const { status, data: session } = useSession();
@@ -31,7 +31,7 @@ export default function dashboard() {
     </ul>
     </div>
     <div className="d-flex">
-      <a href="#" className="btn btn-danger">Sign Out</a>
+      <button onClick={() => signOut()} className="btn btn-danger">Sign Out</button>
         <div>Name: <span>{session?.user?.name}</span>
         Email: <span>{session?.user?.email}</span>
         </div>
