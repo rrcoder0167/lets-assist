@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import Image from 'next/image';
-import "./page.css"
+import "./Dashboard.css"
 import { useSession } from "next-auth/react";
 
 export default function dashboard() {
