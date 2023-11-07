@@ -5,6 +5,7 @@ import "./Dashboard.css"
 import { useSession } from "next-auth/react";
 
 export default function dashboard() {
+    const { status, data: session } = useSession();
   return (
     <>
     <nav className="navbar navbar-expand-lg custom-navbar px-2"  data-bs-theme="dark">
@@ -31,7 +32,7 @@ export default function dashboard() {
     </div>
     <div className="d-flex">
       <a href="#" className="btn btn-danger">Sign Out</a>
-        <img src="https://placehold.co/35x35" className="profile-picture" alt="Profile" />
+        <Image src={session?.user?.image} className="profile-picture" width={60} height={60} alt="Profile"/>
     </div>
     </nav>
     <div className='projects-container'>
