@@ -54,6 +54,7 @@
   --bs-body-color: var(--bs-text);
   /* Add other bootstrap components customizations here */
 }
+
 [data-bs-theme='catppuccin-frappe'] .accordion-button {
   background-color: var(--bs-surface1);
   color: var(--bs-text);
@@ -73,6 +74,7 @@
 [data-bs-theme='catppuccin-frappe'] .accordion-header {
   border-bottom: 1px solid var(--bs-overlay0);
 }
+
 [data-bs-theme='catppuccin-frappe'] .alert-primary {
   background-color: var(--bs-mauve);
   color: var(--bs-crust);
@@ -120,6 +122,7 @@
   color: var(--bs-rosewater);
   border-color: var(--bs-mantle);
 }
+
 [data-bs-theme='catppuccin-frappe'] .badge-primary {
   background-color: var(--bs-mauve);
   color: var(--bs-crust);
@@ -159,12 +162,13 @@
   background-color: var(--bs-base);
   color: var(--bs-rosewater);
 }
+
 [data-bs-theme='catppuccin-frappe'] .breadcrumb {
   background-color: var(--bs-surface0);
   color: var(--bs-text);
 }
 
-[data-bs-theme='catppuccin-frappe'] .breadcrumb-item + .breadcrumb-item::before {
+[data-bs-theme='catppuccin-frappe'] .breadcrumb-item+.breadcrumb-item::before {
   color: var(--bs-overlay1);
 }
 
@@ -175,6 +179,7 @@
 [data-bs-theme='catppuccin-frappe'] .breadcrumb-item.active {
   color: var(--bs-subtext0);
 }
+
 [data-bs-theme='catppuccin-frappe'] .btn-primary {
   background-color: var(--bs-primary);
   border-color: var(--bs-primary);
@@ -232,6 +237,7 @@
   background-color: var(--bs-primary);
   color: var(--bs-crust);
 }
+
 [data-bs-theme='catppuccin-frappe'] .btn-outline-secondary {
   border-color: var(--bs-secondary);
   color: var(--bs-secondary);
@@ -301,6 +307,7 @@
   background-color: var(--bs-dark);
   color: var(--bs-rosewater);
 }
+
 [data-bs-theme='catppuccin-frappe'] .btn-group .btn-primary {
   background-color: var(--bs-primary);
   border-color: var(--bs-primary);
@@ -357,6 +364,7 @@
 [data-bs-theme='catppuccin-frappe'] .btn-group .btn:not(:last-child) {
   border-right-color: var(--bs-crust);
 }
+
 [data-bs-theme='catppuccin-frappe'] .card {
   background-color: var(--bs-surface1);
   color: var(--bs-text);
@@ -400,6 +408,7 @@
 [data-bs-theme='catppuccin-frappe'] .card-img-overlay {
   background-color: rgba(var(--bs-overlay2), 0.6);
 }
+
 [data-bs-theme='catppuccin-frappe'] .carousel-control-prev,
 [data-bs-theme='catppuccin-frappe'] .carousel-control-next {
   color: var(--bs-base);
@@ -433,6 +442,7 @@
 [data-bs-theme='catppuccin-frappe'] .carousel-item.active {
   transition: transform 0.5s ease-in-out;
 }
+
 [data-bs-theme='catppuccin-frappe'] .btn-close {
   filter: invert(72%) sepia(5%) saturate(749%) hue-rotate(179deg) brightness(89%) contrast(91%);
 }
@@ -448,6 +458,7 @@
 [data-bs-theme='catppuccin-frappe'] .btn-close:focus {
   box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
 }
+
 [data-bs-theme='catppuccin-frappe'] .collapse:not(.show) {
   display: none;
 }
@@ -462,6 +473,7 @@
 [data-bs-theme='catppuccin-frappe'] .collapse.show {
   display: block;
 }
+
 [data-bs-theme='catppuccin-frappe'] .list-group-item {
   background-color: var(--bs-surface1);
   color: var(--bs-text);
@@ -474,7 +486,7 @@
   border-color: var(--bs-primary);
 }
 
-[data-bs-theme='catppuccin-frappe'] .list-group-item + .list-group-item {
+[data-bs-theme='catppuccin-frappe'] .list-group-item+.list-group-item {
   border-top-color: var(--bs-overlay0);
 }
 
@@ -491,6 +503,7 @@
   background-color: var(--bs-primary);
   color: var(--bs-crust);
 }
+
 [data-bs-theme='catppuccin-frappe'] .modal-content {
   background-color: var(--bs-surface1);
   color: var(--bs-text);
@@ -526,6 +539,7 @@
 [data-bs-theme='catppuccin-frappe'] .modal-header .btn-close {
   filter: invert(72%) sepia(5%) saturate(749%) hue-rotate(179deg) brightness(89%) contrast(91%);
 }
+
 [data-bs-theme='catppuccin-frappe'] .navbar {
   background-color: var(--bs-base);
   border-bottom: 1px solid var(--bs-overlay0);
@@ -600,6 +614,7 @@
 [data-bs-theme='catppuccin-frappe'] .navbar-text a:focus {
   color: var(--bs-surface0);
 }
+
 [data-bs-theme='catppuccin-frappe'] .nav-link {
   color: var(--bs-subtext0);
   background-color: var(--bs-surface0);
@@ -637,6 +652,7 @@
   color: var(--bs-crust);
   background-color: var(--bs-primary);
 }
+
 [data-bs-theme='catppuccin-frappe'] .offcanvas-header {
   background-color: var(--bs-surface2);
   border-bottom: 1px solid var(--bs-overlay1);
@@ -658,6 +674,7 @@
 [data-bs-theme='catppuccin-frappe'] .offcanvas-header .btn-close {
   filter: invert(72%) sepia(5%) saturate(749%) hue-rotate(179deg) brightness(89%) contrast(91%);
 }
+
 [data-bs-theme='catppuccin-frappe'] .pagination {
   color: var(--bs-text);
 }
@@ -689,6 +706,7 @@
   background-color: var(--bs-surface0);
   border-color: var(--bs-overlay1);
 }
+
 [data-bs-theme='catppuccin-frappe'] .placeholder {
   background-color: var(--bs-surface2);
   color: var(--bs-overlay1);
@@ -709,9 +727,11 @@
   0% {
     background-color: var(--bs-surface2);
   }
+
   50% {
     background-color: var(--bs-surface1);
   }
+
   100% {
     background-color: var(--bs-surface2);
   }
@@ -727,10 +747,12 @@
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
 }
+
 [data-bs-theme='catppuccin-frappe'] .popover-header {
   background-color: var(--bs-surface2);
   color: var(--bs-text);
@@ -751,25 +773,26 @@
 }
 
 /* You may need to adjust the arrow color based on the placement of the popover */
-[data-bs-theme='catppuccin-frappe'] .bs-popover-top > .arrow::after,
-[data-bs-theme='catppuccin-frappe'] .bs-popover-auto[x-placement^="top"] > .arrow::after {
+[data-bs-theme='catppuccin-frappe'] .bs-popover-top>.arrow::after,
+[data-bs-theme='catppuccin-frappe'] .bs-popover-auto[x-placement^="top"]>.arrow::after {
   border-top-color: var(--bs-surface1);
 }
 
-[data-bs-theme='catppuccin-frappe'] .bs-popover-right > .arrow::after,
-[data-bs-theme='catppuccin-frappe'] .bs-popover-auto[x-placement^="right"] > .arrow::after {
+[data-bs-theme='catppuccin-frappe'] .bs-popover-right>.arrow::after,
+[data-bs-theme='catppuccin-frappe'] .bs-popover-auto[x-placement^="right"]>.arrow::after {
   border-right-color: var(--bs-surface1);
 }
 
-[data-bs-theme='catppuccin-frappe'] .bs-popover-bottom > .arrow::after,
-[data-bs-theme='catppuccin-frappe'] .bs-popover-auto[x-placement^="bottom"] > .arrow::after {
+[data-bs-theme='catppuccin-frappe'] .bs-popover-bottom>.arrow::after,
+[data-bs-theme='catppuccin-frappe'] .bs-popover-auto[x-placement^="bottom"]>.arrow::after {
   border-bottom-color: var(--bs-surface1);
 }
 
-[data-bs-theme='catppuccin-frappe'] .bs-popover-left > .arrow::after,
-[data-bs-theme='catppuccin-frappe'] .bs-popover-auto[x-placement^="left"] > .arrow::after {
+[data-bs-theme='catppuccin-frappe'] .bs-popover-left>.arrow::after,
+[data-bs-theme='catppuccin-frappe'] .bs-popover-auto[x-placement^="left"]>.arrow::after {
   border-left-color: var(--bs-surface1);
 }
+
 [data-bs-theme='catppuccin-frappe'] .progress {
   background-color: var(--bs-surface2);
 }
@@ -791,10 +814,12 @@
   from {
     background-position: 1rem 0;
   }
+
   to {
     background-position: 0 0;
   }
 }
+
 [data-bs-theme='catppuccin-frappe'] .spinner-border {
   color: var(--bs-primary);
 }
@@ -842,6 +867,7 @@
 [data-bs-theme='catppuccin-frappe'] .spinner-grow.text-secondary {
   color: var(--bs-secondary);
 }
+
 [data-bs-theme='catppuccin-frappe'] .spinner-grow.text-success {
   color: var(--bs-success);
 }
@@ -865,6 +891,7 @@
 [data-bs-theme='catppuccin-frappe'] .spinner-grow.text-dark {
   color: var(--bs-dark);
 }
+
 [data-bs-theme='catppuccin-frappe'] .toast {
   background-color: var(--bs-surface1);
   color: var(--bs-text);
