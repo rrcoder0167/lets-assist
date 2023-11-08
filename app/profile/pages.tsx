@@ -1,4 +1,4 @@
-import './page.css';
+import './pages.css';
 import { useSession } from 'next-auth/react';
 import LoginRequired from "@/components/loginRequired";
 
