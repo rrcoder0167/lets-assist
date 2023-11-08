@@ -1,7 +1,6 @@
 "use client"
 import React from 'react';
 import './page.css';
-import Navbar from '@/components/navbar';
 import { signIn } from 'next-auth/react';
 
 const LoginPage = () => {
@@ -10,20 +9,19 @@ const LoginPage = () => {
   };
   return (
     <>
-      <Navbar />
       <div className="login-container">
         <h2>Login to Let&apos;s Assist</h2>
         <div className="oauth-buttons">
           <a href="https://github.com/login/oauth/authorize" className="oauth-button github">
-            Sign in with GitHub
+            Log in with GitHub
             <img src="/github-logo.png" className="github-icon" alt="GitHub sign-in" />
           </a>
           <button onClick={handleGoogleSignIn} className="oauth-button google">
-            Sign in with Google
+            Log in with Google
             <img src="/google-logo.png" className="google-icon" alt="Google sign-in" />
           </button>
           <a href="https://appleid.apple.com/auth/authorize" className="oauth-button apple">
-            Sign in with Apple
+            Log in with Apple
             <img src="/apple-logo.png" className="apple-icon" alt="Apple sign-in" />
           </a>
         </div>
