@@ -23,8 +23,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.className} ${GeistMono.className}`}>
       <body className={GeistSans.className}>
-      <NextAuthProvider>
-        <BootstrapJS />
+        <NextAuthProvider>
+          <BootstrapJS />
           {children}
         </NextAuthProvider>
       </body>

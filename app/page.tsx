@@ -7,15 +7,15 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 export default function Home() {
-    const { status, data: session } = useSession();
-    if (status === "authenticated") {
-      return <>
-      <Dashboard/>
-      </>;
-    } else {
-      return <>
+  const { status, data: session } = useSession();
+  if (status === "authenticated") {
+    return <>
+      <Dashboard />
+    </>;
+  } else {
+    return <>
       <Navbar />
       <LandingPage />
-      </>;
-    }
+    </>;
   }
+}
