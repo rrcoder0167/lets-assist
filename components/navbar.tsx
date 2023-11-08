@@ -44,7 +44,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              {/* <button onClick={() => signOut()} className="btn btn-danger">Sign Out</button> --> move to profile page when created */}
+              <button onClick={() => signOut()} className="btn btn-danger">Sign Out</button>
               <div className="mx-1 my-auto">
                 Welcome, <span>{session?.user?.name}</span>.
               </div>
