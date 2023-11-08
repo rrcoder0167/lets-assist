@@ -1,9 +1,14 @@
+"use client";
 import React from 'react';
 import Image from 'next/image';
 import "./navbar.css"
 import Link from 'next/link';
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
+  const { status, data: session } = useSession();
+  const authenticated = (status == "authenticated") ? false : true;
+
   return (
     <nav className="navbar navbar-expand-lg custom-navbar px-4" data-bs-theme="dark">
       <a className="navbar-brand" href="/">
@@ -32,8 +37,20 @@ const Navbar = () => {
           </li>
         </ul>
         <div className="d-flex">
-          <a type="button" className="btn custom-btn-outline" href="/login">Login</a>
-          <a type="button" className="btn custom-btn-fill" href="/signup">Sign Up</a>
+          {authenticated ? (
+            <>
+              <a type="button" className="btn custom-btn-outline" href="/login">Login</a>
+              <a type="button" className="btn custom-btn-fill" href="/signup">Sign Up</a>
+            </>
+          ) : (
+            <>
+              {/* <button onClick={() => signOut()} className="btn btn-danger">Sign Out</button> --> move to profile page when created */}
+              <div className="mx-1 my-auto">
+                Welcome, <span>{session?.user?.name}</span>.
+              </div>
+              <Image src={session?.user?.image!} className="mx-1 my-auto profile-picture" width={60} height={60} alt="Profile" />
+            </>
+          )}
         </div>
       </div>
     </nav>

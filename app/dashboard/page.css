@@ -3,7 +3,7 @@ body {
   color: var(--ctp-frappe-text);
 }
 
-.nav-item a{
+.nav-item a {
   color: #8a8fa7;
   border-radius: 5px;
   padding-left: 5px;
@@ -22,6 +22,7 @@ body {
   font-weight: 600;
   font-size: 1.4em;
 }
+
 .navbar-brand-image {
   margin-right: 3px;
 }
@@ -36,6 +37,7 @@ body {
 .custom-navbar {
   border-bottom: 1px solid var(--ctp-frappe-text);
 }
+
 .projects-container {
   margin-top: 2%;
   margin-right: 2%;
@@ -47,9 +49,8 @@ body {
   margin-right: 6px;
 }
 
-.createbtn{
+.createbtn {
   position: absolute;
   right: 0;
   top: 0;
 }
-
