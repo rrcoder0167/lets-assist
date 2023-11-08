@@ -8,6 +8,9 @@ const LoginPage = () => {
     const handleGoogleSignIn = () => {
       signIn("google");
     };
+    const handlgeGithubSignIn = () => {
+      signIn("github")
+    }
   return (
     <>
       <Navbar />

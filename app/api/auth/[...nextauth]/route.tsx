@@ -1,13 +1,16 @@
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from  "next-auth/providers/github";
 import { connectMongoDB } from "@/lib/mongodb";
 import User from "@/models/user";
 
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const githubClientId = process.env.GITHUB_CLIENTID;
+const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 
-if (!googleClientId || !googleClientSecret) {
-  throw new Error("Google client ID or client secret is not provided in the environment variables.");
+if ((!googleClientId || !googleClientSecret) || (!githubClientId || !githubClientSecret)) {
+  throw new Error("Google/Github client ID or client secret is not provided in the environment variables.");
 }
 
 const authOptions = {
@@ -16,6 +19,10 @@ const authOptions = {
             clientId: googleClientId,
             clientSecret: googleClientSecret,
         }),
+        GithubProvider({
+          clientId: githubClientId,
+          clientSecret: githubClientSecret,
+        })
     ],
     callbacks: {
         async signIn({ user, account }: any) {
