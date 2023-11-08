@@ -7,7 +7,7 @@ import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const { status, data: session } = useSession();
-  const authenticated = (status == "authenticated") ? true : false;
+  const authenticated = (status == "authenticated") ? false : true;
 
   return (
     <nav className="navbar navbar-expand-lg custom-navbar px-4" data-bs-theme="dark">
@@ -37,7 +37,7 @@ const Navbar = () => {
           </li>
         </ul>
         <div className="d-flex">
-          {!authenticated ? (
+          {authenticated ? (
             <>
               <a type="button" className="btn custom-btn-outline" href="/login">Login</a>
               <a type="button" className="btn custom-btn-fill" href="/signup">Sign Up</a>
