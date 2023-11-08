@@ -9,7 +9,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { NextAuthProvider } from "./providers";
 import '../public/catppuccin-frappe.css';
 import Navbar from '@/components/navbar';
-//import Navbar from '@/components/navbar'; once we figure out the login, we do this
 
 export const metadata: Metadata = {
   title: "Let's Assist",
