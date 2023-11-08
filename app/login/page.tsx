@@ -5,9 +5,9 @@ import Navbar from '@/components/navbar';
 import { signIn } from 'next-auth/react';
 
 const LoginPage = () => {
-    const handleGoogleSignIn = () => {
-      signIn("google");
-    };
+  const handleGoogleSignIn = () => {
+    signIn("google");
+  };
   return (
     <>
       <Navbar />
