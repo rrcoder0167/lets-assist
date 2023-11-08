@@ -8,6 +8,7 @@ import Image from 'next/image';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { NextAuthProvider } from "./providers";
 import '../public/catppuccin-frappe.css';
+import Navbar from '@/components/navbar';
 //import Navbar from '@/components/navbar'; once we figure out the login, we do this
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={GeistSans.className}>
         <NextAuthProvider>
           <BootstrapJS />
+          <Navbar />
           {children}
         </NextAuthProvider>
       </body>
