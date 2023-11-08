@@ -2,7 +2,7 @@
 import React from 'react';
 import "./LandingPage.css";
 import "./signInButtons";
-import SignInButtons from './signInButtons';
+import Image from 'next/image';
 
 export default function LandingPage() {
   return (
@@ -30,10 +30,10 @@ function ProjectMatchmaking() {
         <p className="section-subtext">This is some subtext for the Project Matchmaking section.</p>
         <div className="section-details">
           <div className="section-image">
-            <img src="https://placehold.co/500x300" alt="Placeholder" />
+            <Image src="https://placehold.co/500x300" alt="Placeholder" width={500} height={300} />
           </div>
           <div className="section-description">
-            <img className="description-icon" src="https://placehold.co/32x32" alt="Heart Icon" />
+            <Image className="description-icon" src="https://placehold.co/32x32" alt="Heart Icon" width={32} height={32} />
             <h3 className="description-title">Personalized Project Matching</h3>
             <p className="description-subtext">Connect with causes close to your heart with our smart matching system that aligns your passions and skills with community needs.</p>
           </div>
@@ -53,7 +53,7 @@ function RealTimeProjectUpdates() {
             <p className="description-subtext">Never miss a chance to make a difference with real-time alerts for new projects and updates.</p>
           </div>
           <div className="section-image">
-            <img src="https://placehold.co/500x300" alt="Placeholder" />
+            <Image src="https://placehold.co/500x300" alt="Placeholder" width={500} height={300} />
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@ function VolunteerRecognition() {
       <div className="section-content">
         <div className="section-details">
           <div className="section-image">
-            <img src="https://placehold.co/500x300" alt="Placeholder" />
+            <Image src="https://placehold.co/500x300" alt="Placeholder" width={500} height={300} />
           </div>
           <div className="section-description">
             <h3 className="description-title">Celebrate Your Contributions</h3>
@@ -89,7 +89,7 @@ function CommunityForums() {
             <p className="description-subtext">Share stories, advice, and support in our community forums where volunteers unite to make a bigger impact.</p>
           </div>
           <div className="section-image">
-            <img src="https://placehold.co/500x300" alt="Placeholder" />
+            <Image src="https://placehold.co/500x300" alt="Placeholder" width={500} height={300} />
           </div>
         </div>
       </div>
@@ -108,25 +108,27 @@ function EndingSection() {
 }
 
 function Footer() {
+  const profilePictureSize = 128;
+
   return (
     <footer className="footer">
       <h3 className="developers-title">Meet the Developers</h3>
       <div className="profiles">
         <div className="profile">
           <a href="https://github.com/rrcoder0167">
-            <img src="https://avatars.githubusercontent.com/u/106852975?v=4" alt="Profile 1" />
+            <Image src="https://avatars.githubusercontent.com/u/106852975?v=4" width={profilePictureSize} height={profilePictureSize} alt="Profile 1" />
           </a>
           <p>Riddhiman Rana</p>
         </div>
         <div className="profile">
           <a href="https://github.com/vkeshav300">
-            <img src="https://avatars.githubusercontent.com/u/70541603?v=4" alt="Profile 2" />
+            <Image src="https://avatars.githubusercontent.com/u/70541603?v=4" width={profilePictureSize} height={profilePictureSize} alt="Profile 2" />
           </a>
           <p>Keshav Verma</p>
         </div>
         <div className="profile">
           <a href="https://github.com/errorcodezero">
-            <img src="https://avatars.githubusercontent.com/u/74121237?v=4" alt="Profile 3" />
+            <Image src="https://avatars.githubusercontent.com/u/74121237?v=4" width={profilePictureSize} height={profilePictureSize} alt="Profile 3" />
           </a>
           <p>Abinav Venkit</p>
         </div>
