@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function RegisterForm() {
-  const [username, setUsername] = useState("");
+  const [name, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,19 +14,34 @@ export default function RegisterForm() {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
 
-    if (!username || !email || !password) {
+    if (!name || !email || !password) {
       setError("All fields are necessary.");
       return;
     }
 
     try {
+      const resUserExists = await fetch('api/userExists', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email })
+      });
+
+      const { user } = await resUserExists.json();
+
+      if (user) {
+        setError("User already exists.");
+        return;
+      }
+
       const res = await fetch('api/register', {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            username,
+            name,
             email,
             password,
         })
@@ -63,7 +78,7 @@ export default function RegisterForm() {
             </a>
           </div>
           <form onSubmit={handleSubmit} className="login-form">
-            <input onChange={e => setUsername(e.target.value)} type="text" placeholder="Username" className="input-field" />
+            <input onChange={e => setUsername(e.target.value)} type="text" placeholder="Name" className="input-field" />
             <input onChange={e => setEmail(e.target.value)} type="email" placeholder="Email" className="input-field" />
             <input onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" className="input-field" />
             <input type="password" placeholder="Confirm Password" className="input-field" />
