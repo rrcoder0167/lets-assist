@@ -33,7 +33,7 @@ const LoginPage = () => {
           return;
         }
       
-        router.replace("");
+        router.replace("/");
       } catch (error) {
         console.log(error);
 

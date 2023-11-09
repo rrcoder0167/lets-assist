@@ -1,12 +1,12 @@
-"use client";
-import { useRouter } from "next/navigation";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from  "next-auth/providers/github";
 import { connectMongoDB } from "@/lib/mongodb";
 import CredentialsProvider from "next-auth/providers/credentials";
-import User from "@/models/user";
-
+import User from "@/models/user"
+import { useRouter } from "next/navigation";
+import bcrypt from "bcryptjs";
+import Email from "next-auth/providers/email";
 /*
 const { PrismaClient } = require("@prisma/client");
 
@@ -31,13 +31,13 @@ const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const githubClientId = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
-const router = useRouter();
+const credentialsSecret = process.env.NEXTAUTH_SECRET;
 
-if (!googleClientId || !googleClientSecret || !githubClientId || !githubClientSecret) {
+if (!googleClientId || !googleClientSecret || !githubClientId || !githubClientSecret || !credentialsSecret) {
   throw new Error("Google/Github client ID or client secret is not provided in the environment variables.");
 }
 
-const authOptions = {
+export const authOptions = {
     providers: [
         GoogleProvider({
             clientId: googleClientId,
@@ -50,17 +50,35 @@ const authOptions = {
         CredentialsProvider({
             name: "credentials",
             credentials: {},
-
+      
             async authorize(credentials) {
-                const user = { id: "1" };
+              const { email, password } = credentials
+      
+              try {
+                await connectMongoDB();
+                const user = await User.findOne({ email });
+      
+                if (!user) {
+                  return null;
+                }
+      
+                const passwordsMatch = await bcrypt.compare(password, user.password);
+      
+                if (!passwordsMatch) {
+                  return null;
+                }
+      
                 return user;
+              } catch (error) {
+                console.log("Error: ", error);
+              }
             },
-        }),
+          }),
     ],
     session: {
         strategy: "jwt",
       },
-      secret: process.env.NEXTAUTH_SECRET,
+      secret: credentialsSecret,
       pages: {
         signIn: "/",
       },
@@ -84,7 +102,7 @@ const authOptions = {
                       });
   
                       if (isNewUser) {
-                        router.push('/dashboard/get-started');
+                        Promise.resolve("/dashboard");
                       }
                   }
               } catch (error) {
