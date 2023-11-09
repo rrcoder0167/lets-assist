@@ -9,7 +9,7 @@ const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const githubClientId = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 
-if ((!googleClientId || !googleClientSecret) || (!githubClientId || !githubClientSecret)) {
+if (!googleClientId || !googleClientSecret || !githubClientId || !githubClientSecret) {
   throw new Error("Google/Github client ID or client secret is not provided in the environment variables.");
 }
 
