@@ -4,6 +4,7 @@ import Image from 'next/image';
 import "./navbar.css"
 import Link from 'next/link';
 import { useSession, signOut } from "next-auth/react";
+import { useState } from "react";
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -48,7 +49,8 @@ const Navbar = () => {
               <div className="mx-1 my-auto">
                 Welcome, <span>{session?.user?.name}</span>.
               </div>
-              <Image src={session?.user?.image!} className="mx-1 my-auto profile-picture" width={60} height={60} alt="Profile" />
+              <Image src={session?.user?.image! || ""} className="mx-1 my-auto profile-picture" width={60} height={60} alt="Profile" />
+
             </>
           )}
         </div>
