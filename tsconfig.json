@@ -40,7 +40,7 @@
     "app/api/user/route.js",
     "models/user.js",
     "app/api/auth/[...nextauth]/route.js"
-  ],
+, "app/signup/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]

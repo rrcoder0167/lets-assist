@@ -2,6 +2,7 @@ import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from  "next-auth/providers/github";
 import { connectMongoDB } from "@/lib/mongodb";
+/*
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
@@ -20,7 +21,7 @@ async function createUser(_name: string, _email: string) {
     })
     return user;
 }
-
+*/
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const githubClientId = process.env.GITHUB_CLIENT_ID;
