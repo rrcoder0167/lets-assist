@@ -2,7 +2,24 @@ import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from  "next-auth/providers/github";
 import { connectMongoDB } from "@/lib/mongodb";
-import User from "@/models/user";
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
+
+const { User } = prisma;
+
+async function getUsers() {
+    const users = await User.findMany();
+    return users;
+}
+
+async function createUser(_name: string, _email: string) {
+    const user = await User.create({
+        name: _name,
+        email: _email
+    })
+    return user;
+}
 
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
