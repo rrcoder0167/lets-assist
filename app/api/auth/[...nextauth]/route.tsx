@@ -1,7 +1,12 @@
+"use client";
+import { useRouter } from "next/navigation";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from  "next-auth/providers/github";
 import { connectMongoDB } from "@/lib/mongodb";
+import CredentialsProvider from "next-auth/providers/credentials";
+import User from "@/models/user";
+
 /*
 const { PrismaClient } = require("@prisma/client");
 
@@ -26,6 +31,7 @@ const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const githubClientId = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+const router = useRouter();
 
 if (!googleClientId || !googleClientSecret || !githubClientId || !githubClientSecret) {
   throw new Error("Google/Github client ID or client secret is not provided in the environment variables.");
@@ -40,8 +46,24 @@ const authOptions = {
         GithubProvider({
           clientId: githubClientId,
           clientSecret: githubClientSecret,
-        })
+        }),
+        CredentialsProvider({
+            name: "credentials",
+            credentials: {},
+
+            async authorize(credentials) {
+                const user = { id: "1" };
+                return user;
+            },
+        }),
     ],
+    session: {
+        strategy: "jwt",
+      },
+      secret: process.env.NEXTAUTH_SECRET,
+      pages: {
+        signIn: "/",
+      },
     callbacks: {
       async signIn({ user, account, isNewUser }: any) {
           if (account.provider === "google" || account.provider === "github") {
@@ -49,7 +71,6 @@ const authOptions = {
               try {
                   await connectMongoDB();
                   const userExists = await User.findOne({ email });
-  
                   if (!userExists) {
                       const res = await fetch("http://localhost:3000/api/user", {
                           method: "POST",
@@ -63,7 +84,7 @@ const authOptions = {
                       });
   
                       if (isNewUser) {
-                          return Promise.resolve('/dashboard/get-started');
+                        router.push('/dashboard/get-started');
                       }
                   }
               } catch (error) {
