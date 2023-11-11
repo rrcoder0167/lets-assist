@@ -4,9 +4,7 @@ import GithubProvider from  "next-auth/providers/github";
 import { connectMongoDB } from "@/lib/mongodb";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/models/user"
-import { useRouter } from "next/navigation";
 import bcrypt from "bcryptjs";
-import Email from "next-auth/providers/email";
 /*
 const { PrismaClient } = require("@prisma/client");
 
@@ -32,6 +30,7 @@ const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const githubClientId = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 const credentialsSecret = process.env.NEXTAUTH_SECRET;
+
 
 if (!googleClientId || !googleClientSecret || !githubClientId || !githubClientSecret || !credentialsSecret) {
   throw new Error("Google/Github client ID or client secret is not provided in the environment variables.");
@@ -103,7 +102,9 @@ export const authOptions = {
                       });
   
                       if (isNewUser) {
-                        Promise.resolve("/dashboard");
+                        //const router = useRouter();
+                        //router.push('/')
+                        Promise.resolve('/dashboard');
                       }
                   }
               } catch (error) {

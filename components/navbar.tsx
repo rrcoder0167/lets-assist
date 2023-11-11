@@ -1,12 +1,10 @@
 "use client";
+import "./Navbar.css"
 import React from 'react';
 import Image from 'next/image';
-import "./navbar.css"
-import Link from 'next/link';
 import { useSession, signOut } from "next-auth/react";
-import { useState } from "react";
 
-const Navbar = () => {
+export default function Navbar() {
   const { status, data: session } = useSession();
   const authenticated = (status == "authenticated") ? false : true;
 
@@ -19,7 +17,10 @@ const Navbar = () => {
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
+          {authenticated ? (
+            // This if if you're not authenticated
+            <>
+            <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item dropdown">
             <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Features</a>
@@ -37,26 +38,36 @@ const Navbar = () => {
             <a className="nav-link" href="#">Contact</a>
           </li>
         </ul>
-        <div className="d-flex">
-          {authenticated ? (
-            <>
+        </div>
               <a type="button" className="btn custom-btn-outline" href="/login">Login</a>
               <a type="button" className="btn custom-btn-fill" href="/signup">Sign Up</a>
             </>
           ) : (
+            // This if if you're authenticated
             <>
+            <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Features</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">Volunteering Projects</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">Featured</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">Community Forums</a>
+              </li>
+            </ul>
+            </div>
               <button onClick={() => signOut()} className="btn btn-danger">Sign Out</button>
               <div className="mx-1 my-auto">
                 Welcome, <span>{session?.user?.name}</span>.
               </div>
               <Image src={session?.user?.image! || ""} className="mx-1 my-auto profile-picture" width={60} height={60} alt="Profile" />
-
             </>
           )}
-        </div>
-      </div>
     </nav>
   );
 }
-
-export default Navbar;

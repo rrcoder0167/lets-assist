@@ -1,12 +1,12 @@
 "use client";
-import React from 'react';
 import './page.css';
-import { signIn } from 'next-auth/react';
+import React from 'react';
 import Image from "next/image";
+import { signIn } from 'next-auth/react';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const LoginPage = () => {
+export default function LoginPage() {
     const handleGoogleSignIn = () => {
       signIn("google");
     };
@@ -77,5 +77,3 @@ const LoginPage = () => {
     </>
   );
 };
-
-export default LoginPage;

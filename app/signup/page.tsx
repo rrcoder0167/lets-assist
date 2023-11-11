@@ -1,8 +1,6 @@
 "use client";
-
-import React from 'react';
 import './page.css';
-import Link from "next/link";
+import React from 'react';
 import { useState } from "react";
 import { useRouter} from "next/navigation";
 
