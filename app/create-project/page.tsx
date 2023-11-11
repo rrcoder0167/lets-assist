@@ -1,3 +1,4 @@
+import "./page.css";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
@@ -14,17 +15,17 @@ export default async function CreateProject() {
       <h1>Create a Project</h1>
       <form>
         <div className="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">
+          <label htmlFor="project-title-input" className="form-label">
             Project Title
           </label>
           <input
-            type="email"
+            type="text"
             className="form-control"
-            id="exampleFormControlInput1"
-            placeholder="name@example.com"
+            id="project-title-input"
+            placeholder="What do you want to name your project?"
           />
 
-          <label for="exampleFormControlTextarea1" class="form-label">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">
             Project Description
           </label>
           <textarea
@@ -33,7 +34,7 @@ export default async function CreateProject() {
             rows="3"
           ></textarea>
 
-          <label for="exampleFormControlInput1" class="form-label">
+          <label htmlFor="exampleFormControlInput1" className="form-label">
             Date & Time
           </label>
           <input
@@ -43,7 +44,7 @@ export default async function CreateProject() {
             placeholder="name@example.com"
           />
 
-          <label for="exampleFormControlInput1" class="form-label">
+          <label htmlFor="exampleFormControlInput1" className="form-label">
             Location
           </label>
           <input
@@ -53,7 +54,7 @@ export default async function CreateProject() {
             placeholder="name@example.com"
           />
         </div>
-        <label for="customRange1" class="form-label">
+        <label htmlFor="customRange1" className="form-label">
           About how many people do you want?
         </label>
         <input type="range" className="form-range" id="customRange1" />

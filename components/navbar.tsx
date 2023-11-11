@@ -3,10 +3,15 @@ import "./Navbar.css"
 import React from 'react';
 import Image from 'next/image';
 import { useSession, signOut } from "next-auth/react";
+import { useState } from 'react';
 
 export default function Navbar() {
   const { status, data: session } = useSession();
   const authenticated = (status == "authenticated") ? false : true;
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const handleButtonClick = () => {
+    setMenuOpen(!isMenuOpen);
+  };
 
   return (
     <nav className="navbar navbar-expand-lg custom-navbar px-4" data-bs-theme="dark">
@@ -47,11 +52,8 @@ export default function Navbar() {
             <>
             <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Features</a>
-              </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Volunteering Projects</a>
+                <a className="nav-link active" href="#">Volunteering Projects</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">Featured</a>
@@ -61,13 +63,44 @@ export default function Navbar() {
               </li>
             </ul>
             </div>
-              <button onClick={() => signOut()} className="btn btn-danger">Sign Out</button>
-              <div className="mx-1 my-auto">
-                Welcome, <span>{session?.user?.name}</span>.
-              </div>
-              <Image src={session?.user?.image! || ""} className="mx-1 my-auto profile-picture" width={60} height={60} alt="Profile" />
+              <Image src={session?.user?.image! || ""} onClick={handleButtonClick} className="mx-1 my-auto profile-picture" width={60} height={60} alt="Profile" />
+              {isMenuOpen && (
+        <div className="menu">
+            <div className="user-name">{session?.user?.name}</div>
+            <div className="user-email">{session?.user?.email}</div>
+            <a href="#">Account Settings</a>
+            <a href="#">Send Feedback</a>
+            <a href="#">Report a Bug</a>
+            <hr></hr>
+            <button onClick={() => signOut()} className="signout-btn">Sign Out</button>
+        </div>
+      )}
             </>
           )}
     </nav>
   );
 }
+
+/*
+<div class = "profile-btn-container">
+            <button class="profile-btn">
+            <div class="profile-img-container">
+              <img src="https://avatars.githubusercontent.com/u/106852975?s=100&v=4" alt="profile image">
+            </div>
+            <ul class="dropdown-menu">
+              <div class="user-details">
+              <br>
+              <span class="email">{session?.user.email}</span>
+              </div>
+              <hr />
+            <a href="#">Account Settings</a>
+            <a href="#">Send Feedback</a>
+            <a href="#">Report a Bug</a>
+              <hr />
+              <div class="logout-btn">
+              <button onClick={() => signOut()}>Sign Out</button>
+              </div>
+          </ul>
+          </button>
+          </div>
+*/
