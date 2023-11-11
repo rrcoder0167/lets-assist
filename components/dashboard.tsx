@@ -1,13 +1,9 @@
-import Oppertunity from "@/components/oppertunity";
 import "./dashboard.css";
-import "@/components/oppertunity";
 
-const Dashboard = () => {
+export default function Dashboard(){
     return (
         <>
-            <Oppertunity />
+            <button className="btn btn-primary">Create a Volunteering Opportunity</button>
         </>
     )
 };
-
-export default Dashboard;

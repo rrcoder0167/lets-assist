@@ -14,5 +14,5 @@ const oppertunitySchema = new Schema(
   { timestamps: true }
 );
 
-const Oppertunity = models.Oppertunity || mongoose.model("Oppertunity", oppertunitySchema);
-export default Oppertunity;
+const Opportunity = models.Oppertunity || mongoose.model("Opportunity", oppertunitySchema);
+export default Opportunity;

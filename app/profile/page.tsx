@@ -1,8 +1,9 @@
-import './pages.css';
+"use client";
+import './page.css';
 import { useSession } from 'next-auth/react';
-import LoginRequired from "@/components/loginRequired";
+import LoginRequired from "@/components/LoginRequired";
 
-const ProfilePage = () => {
+export default function ProfilePage() {
     const { status, data: session } = useSession();
 
     return (
@@ -13,5 +14,3 @@ const ProfilePage = () => {
         </>
     );
 }
-
-export default ProfilePage;

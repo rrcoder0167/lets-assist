@@ -1,14 +1,13 @@
-import type { Metadata } from 'next';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import BootstrapJS from "@/components/BootstrapJS";
 import './globals.css';
+import '../public/catppuccin-frappe.css';
 import React from 'react';
 import { GeistSans, GeistMono } from 'geist/font';
-import BootstrapJS from "@/components/bootstrapJS";
-import Image from 'next/image';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { NextAuthProvider } from "./providers";
-import '../public/catppuccin-frappe.css';
-import Navbar from '@/components/navbar';
+import type { Metadata } from 'next';
+import Navbar from '@/components/Navbar';
 
 export const metadata: Metadata = {
   title: "Let's Assist",

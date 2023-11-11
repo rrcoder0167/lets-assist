@@ -17,7 +17,7 @@ model User {
   createdAt DateTime @default(now())
 }
 
-model Oppertunity {
+model Opportunity {
   id         Int     @unique @default(autoincrement())
   title      String?
   hostUserId Int

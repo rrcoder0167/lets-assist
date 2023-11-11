@@ -1,7 +1,5 @@
-// LandingPage.tsx
-import React from 'react';
 import "./LandingPage.css";
-import "./signInButtons";
+import React from 'react';
 import Image from 'next/image';
 
 export default function LandingPage() {
