@@ -1,0 +1,4 @@
+body {
+    color: var(--ctp-frappe-text);
+    background: var(--ctp-frappe-base);
+}
