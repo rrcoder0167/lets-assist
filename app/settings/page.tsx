@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useSession} from "next-auth/react";
 
 export default function LoginPage() {
-    const fileInput = useRef(null);
+    const fileInput = useRef<HTMLInputElement | null>(null);
     const { status, data: session } = useSession();
 
     const handleProfilePictureClick = () => {
@@ -30,8 +30,9 @@ export default function LoginPage() {
                     <input type="password" className="form-control" id="password" placeholder="Enter your password" />
                 </div>
                 <div className="mb-3 profilepic">
-                    <Image src={session?.user?.image! || ""} alt="Profile" onClick={handleProfilePictureClick} width={100} height={100} className="profilepic-settings"/><i className="fas fa-camera"></i>
-                    <div className="profilepic-content">
+                    <input type='file' id='file' ref={fileInput} style={{display: 'none'}}/>
+                    <Image src={session?.user?.image! || ""} alt="Profile" width={100} height={100} className="profilepic-image"/><i className="fas fa-camera"></i>
+                    <div className="profilepic-content" onClick={handleProfilePictureClick}>
                     <span className="profilepic-icon"><i className="fas fa-camera"></i></span>
                     <span className="profilepic-text">Edit Profile</span>
                     </div>

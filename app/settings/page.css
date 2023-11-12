@@ -4,6 +4,7 @@
     height: 100px;
     border-radius: 50%;
     overflow: hidden;
+    cursor: pointer;
     background-color: #111;
   }
   
@@ -12,7 +13,7 @@
   }
   
   .profilepic:hover .profilepic-image {
-    opacity: .5;
+    opacity: 0.5;
   }
   
   .profilepic-image {
@@ -29,13 +30,14 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: white;
+    align-items: center;
+    color: var(--ctp-frappe-text);
     opacity: 0;
     transition: opacity .2s ease-in-out;
   }
   
   .profilepic-icon {
-    color: white;
+    color: var(--ctp-frappe-text);
     padding-bottom: 8px;
   }
   
@@ -44,8 +46,7 @@
   }
   
   .profilepic-text {
-    text-transform: uppercase;
-    font-size: 12px;
+    font-size: 14px;
     width: 50%;
     text-align: center;
   }
