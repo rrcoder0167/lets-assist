@@ -7,7 +7,7 @@ import { GeistSans, GeistMono } from 'geist/font';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { NextAuthProvider } from "./providers";
 import type { Metadata } from 'next';
-import Navbar from '@/components/Navbar';
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Let's Assist",
