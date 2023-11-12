@@ -4,7 +4,7 @@ import React from 'react';
 import Image from "next/image";
 import { useState } from "react";
 import { signIn } from 'next-auth/react';
-import { useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const [name, setUsername] = useState("");
@@ -21,7 +21,7 @@ export default function RegisterForm() {
 
   const router = useRouter();
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (!name || !email || !password) {
@@ -51,9 +51,9 @@ export default function RegisterForm() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            name,
-            email,
-            password,
+          name,
+          email,
+          password,
         })
       });
 
@@ -65,7 +65,7 @@ export default function RegisterForm() {
         console.log("User registration failed.");
       }
     } catch (error) {
-        console.log("Error during registration: ", error);
+      console.log("Error during registration: ", error);
     }
   };
 
@@ -75,14 +75,14 @@ export default function RegisterForm() {
         <h2>Don&apos;t have an account? No Problem!</h2>
         <div className="login-container">
           <div className="oauth-buttons">
-          <button onClick={handleGithubSignIn} className="oauth-button github">
-            Log in with GitHub
-            <Image src="/github-logo.png" className="github-icon" alt="GitHub sign-in" width={512} height={512}/>
-          </button>
-          <button onClick={handleGoogleSignIn} className="oauth-button google">
-            Log in with Google
-            <Image src="/google-logo.png" className="google-icon" alt="Google sign-in" width={512} height={512}/>
-          </button>
+            <button onClick={handleGithubSignIn} className="oauth-button github">
+              Log in with GitHub
+              <Image src="/github-logo.png" className="github-icon" alt="GitHub sign-in" width={512} height={512} />
+            </button>
+            <button onClick={handleGoogleSignIn} className="oauth-button google">
+              Log in with Google
+              <Image src="/google-logo.png" className="google-icon" alt="Google sign-in" width={512} height={512} />
+            </button>
             <button className="oauth-button apple">
               Signup with Apple
               <Image src="/apple-logo.png" className="apple-icon" alt="Apple sign-up" width={512} height={512}></Image>
