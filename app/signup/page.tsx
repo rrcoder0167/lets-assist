@@ -1,7 +1,9 @@
 "use client";
 import './page.css';
 import React from 'react';
+import Image from "next/image";
 import { useState } from "react";
+import { signIn } from 'next-auth/react';
 import { useRouter} from "next/navigation";
 
 export default function RegisterForm() {
@@ -9,6 +11,13 @@ export default function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const handleGoogleSignIn = () => {
+    signIn("google");
+  };
+  const handleGithubSignIn = () => {
+    signIn("github")
+  }
 
   const router = useRouter();
 
@@ -66,18 +75,18 @@ export default function RegisterForm() {
         <h2>Don&apos;t have an account? No Problem!</h2>
         <div className="login-container">
           <div className="oauth-buttons">
-            <a href="#" className="oauth-button github">
-              Signup with GitHub
-              <img src="/github-logo.png" className="github-icon" alt="GitHub sign-up"></img>
-            </a>
-            <a href="#" className="oauth-button google">
-              Signup with Google
-              <img src="/google-logo.png" className="google-icon" alt="Google sign-up"></img>
-            </a>
-            <a href="#" className="oauth-button apple">
+          <button onClick={handleGithubSignIn} className="oauth-button github">
+            Log in with GitHub
+            <Image src="/github-logo.png" className="github-icon" alt="GitHub sign-in" width={512} height={512}/>
+          </button>
+          <button onClick={handleGoogleSignIn} className="oauth-button google">
+            Log in with Google
+            <Image src="/google-logo.png" className="google-icon" alt="Google sign-in" width={512} height={512}/>
+          </button>
+            <button className="oauth-button apple">
               Signup with Apple
-              <img src="/apple-logo.png" className="apple-icon" alt="Apple sign-up"></img>
-            </a>
+              <Image src="/apple-logo.png" className="apple-icon" alt="Apple sign-up" width={512} height={512}></Image>
+            </button>
           </div>
           <form onSubmit={handleSubmit} className="login-form">
             <input onChange={e => setUsername(e.target.value)} type="text" placeholder="Name" className="input-field" />

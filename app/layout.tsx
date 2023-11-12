@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import BootstrapJS from "@/components/BootstrapJS";
 import './globals.css';
 import '../public/catppuccin-frappe.css';
+import BootstrapJS from "@/components/BootstrapJS";
 import React from 'react';
 import { GeistSans, GeistMono } from 'geist/font';
 import 'bootstrap-icons/font/bootstrap-icons.css';

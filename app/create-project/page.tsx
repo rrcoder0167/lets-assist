@@ -29,9 +29,9 @@ export default async function CreateProject() {
             Project Description
           </label>
           <textarea
-            class="form-control"
+            className="form-control"
             id="exampleFormControlTextarea1"
-            rows="3"
+            rows={3}
           ></textarea>
 
           <label htmlFor="exampleFormControlInput1" className="form-label">
