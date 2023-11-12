@@ -19,7 +19,7 @@ export default function LoginPage() {
 
     const router = useRouter();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e:any) => {
       e.preventDefault();
       try {
         const res = await signIn("credentials", {
@@ -28,19 +28,18 @@ export default function LoginPage() {
           redirect:false,
         });
 
-        if (res.error) {
+        if (!res?.ok) {
           setError("Invalid Credentials");
           return;
         }
-      
+        
         router.replace("/");
       } catch (error) {
         console.log(error);
+      }
 
       }
 
-
-    }
 
   return (
     <>
@@ -55,10 +54,10 @@ export default function LoginPage() {
             Log in with Google
             <Image src="/google-logo.png" className="google-icon" alt="Google sign-in" width={512} height={512}/>
           </button>
-          <a href="https://appleid.apple.com/auth/authorize" className="oauth-button apple">
+          <button className="oauth-button apple">
             Log in with Apple
             <Image src="/apple-logo.png" className="apple-icon" alt="Apple sign-in" width={512} height={512}/>
-          </a>
+          </button>
         </div>
         <form onSubmit={handleSubmit} className="login-form">
           <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" className="input-field" />
