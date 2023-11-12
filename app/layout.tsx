@@ -5,6 +5,7 @@ import BootstrapJS from '@/components/BootstrapJS';
 import React from 'react';
 import { GeistSans, GeistMono } from 'geist/font';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Script from 'next/script'
 import { NextAuthProvider } from "./providers";
 import type { Metadata } from 'next';
 import Navbar from "@/components/Navbar";
@@ -21,6 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.className} ${GeistMono.className}`}>
+      <head>
+        <Script src="https://kit.fontawesome.com/3e19042953.js" crossOrigin="anonymous"></Script>
+      </head>
       <body className={GeistSans.className}>
         <NextAuthProvider>
           <BootstrapJS />
