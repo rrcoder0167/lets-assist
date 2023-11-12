@@ -2,7 +2,7 @@ import { connectMongoDB } from "@/lib/mongodb";
 import User from "@/models/user";
 import { NextResponse } from "next/server";
 
-export async function POST(req:any) {
+export async function POST(req: any) {
   try {
     await connectMongoDB();
     const { email } = await req.json();

@@ -2,7 +2,7 @@
 import "./page.css"
 import React, { useState, useRef } from 'react';
 import Image from "next/image";
-import { useSession} from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export default function LoginPage() {
     const { status, data: session } = useSession();
@@ -49,10 +49,10 @@ export default function LoginPage() {
                     <span className="profilepic-icon"><i className="fas fa-camera"></i></span>
                     <span className="profilepic-text">Edit Profile</span>
                     </div>
-                </div>
-                <button type="submit" className="btn btn-primary">Save Changes</button>
-            </form>
-        </div>
+                    </div>
+                    <button type="submit" className="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
         </>
     );
 };
