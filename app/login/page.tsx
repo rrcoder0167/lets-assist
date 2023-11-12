@@ -7,38 +7,38 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-    const handleGoogleSignIn = () => {
-      signIn("google");
-    };
-    const handleGithubSignIn = () => {
-      signIn("github")
+  const handleGoogleSignIn = () => {
+    signIn("google");
+  };
+  const handleGithubSignIn = () => {
+    signIn("github")
+  }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (!res?.ok) {
+        setError("Invalid Credentials");
+        return;
+      }
+
+      router.replace("/");
+    } catch (error) {
+      console.log(error);
     }
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
 
-    const router = useRouter();
-
-    const handleSubmit = async (e:any) => {
-      e.preventDefault();
-      try {
-        const res = await signIn("credentials", {
-          email,
-          password,
-          redirect:false,
-        });
-
-        if (!res?.ok) {
-          setError("Invalid Credentials");
-          return;
-        }
-        
-        router.replace("/");
-      } catch (error) {
-        console.log(error);
-      }
-
-      }
+  }
 
 
   return (
@@ -48,15 +48,15 @@ export default function LoginPage() {
         <div className="oauth-buttons">
           <button onClick={handleGithubSignIn} className="oauth-button github">
             Log in with GitHub
-            <Image src="/github-logo.png" className="github-icon" alt="GitHub sign-in" width={512} height={512}/>
+            <Image src="/github-logo.png" className="github-icon" alt="GitHub sign-in" width={512} height={512} />
           </button>
           <button onClick={handleGoogleSignIn} className="oauth-button google">
             Log in with Google
-            <Image src="/google-logo.png" className="google-icon" alt="Google sign-in" width={512} height={512}/>
+            <Image src="/google-logo.png" className="google-icon" alt="Google sign-in" width={512} height={512} />
           </button>
           <button className="oauth-button apple">
             Log in with Apple
-            <Image src="/apple-logo.png" className="apple-icon" alt="Apple sign-in" width={512} height={512}/>
+            <Image src="/apple-logo.png" className="apple-icon" alt="Apple sign-in" width={512} height={512} />
           </button>
         </div>
         <form onSubmit={handleSubmit} className="login-form">
@@ -65,7 +65,7 @@ export default function LoginPage() {
           <button type="submit" className="login-button">Login</button>
           {error && (
             <div className="alert alert-danger" role="alert">
-            {error}
+              {error}
             </div>
           )}
         </form>
