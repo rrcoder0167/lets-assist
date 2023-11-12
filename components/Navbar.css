@@ -1,0 +1,158 @@
+.custom-btn-outline {
+    background-color: var(--ctp-frappe-base);
+    color: var(--ctp-frappe-text);
+    border: 1.5px solid var(--ctp-frappe-surface1);
+    margin-right: 10px;
+    width: 85px;
+}
+
+.custom-btn-outline:hover {
+    background-color: var(--ctp-frappe-surface0);
+}
+
+.custom-btn-fill {
+    background-color: var(--ctp-frappe-text);
+    color: var(--ctp-frappe-base);
+    width: 90px;
+}
+
+.custom-btn-fill:hover {
+    background-color: var(--ctp-frappe-subtext1);
+    color: var(--ctp-frappe-base);
+}
+
+.navbar-brand {
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 1.4em;
+}
+
+.navbar-brand-image {
+    margin-right: 3px;
+}
+
+.dropdown-menu {
+    background-color: var(--ctp-frappe-surface0);
+}
+
+.dropdown-item {
+    transition: ease-in-out 0.1s;
+}
+
+body {
+    background-color: var(--ctp-frappe-base);
+    color: var(--ctp-frappe-text);
+}
+
+.nav-item a {
+    color: #8a8fa7;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.nav-item a:hover {
+    background-color: #5a6480;
+    color: #c6d0f5;
+}
+
+.navbar-brand {
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 1.4em;
+}
+
+.navbar-brand-image {
+    margin-right: 3px;
+}
+
+.profile-picture {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.custom-navbar {
+    border-bottom: 1px solid var(--ctp-frappe-text);
+}
+
+.projects-container {
+    margin-top: 2%;
+    margin-right: 2%;
+    margin-left: 2%;
+    position: relative;
+}
+
+.projects-container i {
+    margin-right: 6px;
+}
+
+.createbtn {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.menu {
+    position: absolute;
+    width: 20%;
+    top: 70px; /* Adjust the top position as needed */
+    right: 10px; /* Adjust the right position as needed */
+    background-color: var(--ctp-frappe-base); /* Cappuccino frappe background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle lift */
+    padding: 20px;
+    font-weight: 400;
+    font-size: 14px;
+    border: 0.5px solid var(--ctp-frappe-subtext1);
+    z-index: 1; /* Ensure the menu is above other elements */
+  }
+  
+  .menu a {
+    display: block;
+    color: var(--ctp-frappe-subtext0); /* Dark brown text color */
+    text-decoration: none;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .menu a:hover {
+    background-color: var(--ctp-frappe-surface0); /* Lighter brown background color on hover */
+  }
+  
+
+.user-name {
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--ctp-frappe-text);
+}
+
+.user-email {
+    color: var(--ctp-frappe-subtext1)
+}
+
+  .menu hr {
+    margin: 8px 0;
+    border: none;
+    border-top: 1px solid var(--ctp-frappe-text); /* Light gray border color */
+  }
+  
+  .signout-btn {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    background-color: var(--ctp-frappe-red); /* Dark orange sign out button color */
+    color: #ffffff; /* White text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .signout-btn:hover {
+    background-color: var(--ctp-macchiato-red); /* Lighter orange background color on hover */
+  }
