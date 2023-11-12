@@ -63,7 +63,7 @@ export default function Navbar() {
               </li>
             </ul>
             </div>
-              <Image src={session?.user?.image! || ""} onClick={handleButtonClick} className="mx-1 my-auto profile-picture" width={60} height={60} alt="Profile" />
+              <Image src={session?.user?.image! || "/default-pfp.png"} onClick={handleButtonClick} className="mx-1 my-auto profile-picture" width={60} height={60} alt="Profile" />
               {isMenuOpen && (
         <div className="menu">
             <div className="user-name">{session?.user?.name}</div>
