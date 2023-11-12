@@ -80,27 +80,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
-/*
-<div class = "profile-btn-container">
-            <button class="profile-btn">
-            <div class="profile-img-container">
-              <img src="https://avatars.githubusercontent.com/u/106852975?s=100&v=4" alt="profile image">
-            </div>
-            <ul class="dropdown-menu">
-              <div class="user-details">
-              <br>
-              <span class="email">{session?.user.email}</span>
-              </div>
-              <hr />
-            <a href="#">Account Settings</a>
-            <a href="#">Send Feedback</a>
-            <a href="#">Report a Bug</a>
-              <hr />
-              <div class="logout-btn">
-              <button onClick={() => signOut()}>Sign Out</button>
-              </div>
-          </ul>
-          </button>
-          </div>
-*/
