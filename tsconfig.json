@@ -41,7 +41,7 @@
     "models/user.js",
     "app/api/auth/[...nextauth]/route.js",
     "app/signup/page.jsx",
-    "components/Dashboard.jsx"
+    "components/Dashboard.tsx"
   ],
   "exclude": [
     "node_modules"

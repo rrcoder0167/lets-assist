@@ -1,4 +1,7 @@
 import "./Dashboard.css";
+import CategoriesList from "./CategoriesList";
+import Projects from "@/components/Projects";
+import { projectsData } from "@/data";
 import React, { useState } from 'react';
 
 export default function Dashboard() {
@@ -8,7 +11,7 @@ export default function Dashboard() {
         location: '',
     });
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e:any) => {
         setOpportunityData({
             ...opportunityData,
             [e.target.name]: e.target.value,
@@ -33,17 +36,34 @@ export default function Dashboard() {
             });
 
             if (response.ok) {
-                console.log('Opportunity created successfully!');
+                console.log('Project created successfully!');
             } else {
-                console.error('Failed to create opportunity');
+                console.error('Failed to create project');
             }
         } catch (error) {
-            console.error('Error creating opportunity:', error);
+            console.error('Error creating project:', error);
         }
     };
 
     return (
         <>
+            <CategoriesList />
+            {projectsData && projectsData.length > 0 ? (
+                projectsData.map((project) => <Projects key={project.id}
+                                                        id={project.id}
+                                                        author={project.author}
+                                                        authorEmail={'test@gmail.com'}
+                                                        date={project.datepublished}
+                                                        image={project.image}
+                                                        location={project.location}
+                                                        category={project.category}
+                                                        title={project.title}
+                                                        description={project.description}
+                                                        />)
+            ) : (
+                <div>No Posts to display</div>
+            )
+            }
             <div>
                 <label>Title:</label>
                 <input type="text" name="title" value={opportunityData.title} onChange={handleInputChange} />
