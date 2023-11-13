@@ -6,6 +6,7 @@ interface PostProps {
     id: string,
     author: string,
     date:string,
+    spots: string,
     image?: string,
     authorEmail?: string, // ? means options
     title: string,
@@ -13,23 +14,19 @@ interface PostProps {
     description: string,
     category?: string;
 }
-
-export default function Project({id, author, date, image, authorEmail, title, description, location, category}: PostProps) {
+//col-sm-6 col-md-4 col-lg-3 col-xl-2
+export default function Project({id, author, date, image, authorEmail, spots, title, description, location, category}: PostProps) {
     return (
-    <div>
-        <div>
-            Initiated by: <span className="project-author">{author}</span> on {date}
+        <div className="card">
+        {/*image ? (<Image src={image} alt={title} fill />) : <Image src='/image-placeholder.png' alt={title} fill />*/}
+        <div className="card-body">
+            <h5 className="card-title">{title}</h5>
+            <p className="card-text">{description}</p>
+            <div className="d-flex justify-content-between">
+                <a href="#" className="btn btn-primary">Sign Up</a>
+                <a href="#" className="btn btn-success">Learn More</a>
+            </div>
         </div>
-
-        <div className="project-image">
-            {image ? (<Image src={image} alt={title} fill />) : <Image src='/image-placeholder.png' alt={title} fill />}
         </div>
-
-        {category && <Link href={`categories/${category}`}>{category}</Link>}
-        <h2>{title}</h2>
-        <p>{description}</p>
-        <span>{location}</span>
-
-    </div>
     )
 }
