@@ -1,0 +1,9 @@
+.project-author {
+    font-weight: 600;
+}
+
+.project-image {
+    position: relative;
+    width: 250px; /*will be changed to bootstraps card thing later*/
+    height: 150px;
+}

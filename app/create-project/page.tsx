@@ -8,11 +8,11 @@ export default async function CreateProject() {
   if (!session) {
     redirect('/login')
   }
-  console.log(session);
 
   return (
     <>
       <h1>Create a Project</h1>
+      
       <form>
         <div className="mb-3">
           <label htmlFor="project-title-input" className="form-label">
