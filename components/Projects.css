@@ -1,9 +1,37 @@
-.project-author {
-    font-weight: 600;
+.card {
+    flex: 1;
+    border: 0.2px solid var(--ctp-frappe-surface2);
+    width: 18rem;
+    overflow: hidden;
+    max-width: 300px;
+    border-radius: 10px;
+    margin-left: 25px;
+    transition: transform 0.3s ease-in-out;
 }
 
-.project-image {
-    position: relative;
-    width: 250px; /*will be changed to bootstraps card thing later*/
-    height: 150px;
+.card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
 }
+
+.card-text {
+    color: var(--ctp-frappe-subtext1);
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+/*
+.card-body {
+    padding: 20px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 8px 16px;
+    margin-top: 10px;
+    display: inline-block;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}*/

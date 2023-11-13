@@ -48,6 +48,7 @@ export default function Dashboard() {
     return (
         <>
             <CategoriesList />
+            <div className="card-container">
             {projectsData && projectsData.length > 0 ? (
                 projectsData.map((project) => <Projects key={project.id}
                                                         id={project.id}
@@ -58,12 +59,14 @@ export default function Dashboard() {
                                                         location={project.location}
                                                         category={project.category}
                                                         title={project.title}
+                                                        spots={project.spots}
                                                         description={project.description}
                                                         />)
             ) : (
                 <div>No Posts to display</div>
             )
             }
+            </div>
             <div>
                 <label>Title:</label>
                 <input type="text" name="title" value={opportunityData.title} onChange={handleInputChange} />

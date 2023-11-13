@@ -7,7 +7,8 @@ export const projectsData = [
         datepublished: "2023-11-17",
         category: "Public Cleanup",
         location: "Santa Cruz Beach, Santa Cruz, CA, USA",
-        image: "https://placehold.co/500x300",
+        spots: "30",
+        image: "https://placehold.co/50x50",
     },
     {
         id: "2",
@@ -16,6 +17,7 @@ export const projectsData = [
         author: "Keshav Varma",
         datepublished: "2023-11-15",
         category: "Awareness Campaign",
+        spots: "15",
         location: "Hacienda Drive, Dublin, CA, USA",
         //image: "https://placehold.co/500x300" this is to test the no image feature
     },
