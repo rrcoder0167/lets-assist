@@ -2,3 +2,16 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.projects-container {
+    margin-top: 2%;
+    margin-right: 2%;
+    margin-left: 2%;
+    position: relative;
+}
+  
+.createbtn {
+    position: absolute;
+    right: 0;
+    top: 0;
+}

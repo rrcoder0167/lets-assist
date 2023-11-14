@@ -8,7 +8,7 @@ export const projectsData = [
         category: "Public Cleanup",
         location: "Santa Cruz Beach, Santa Cruz, CA, USA",
         spots: "30",
-        image: "https://placehold.co/50x50",
+        image: "https://placehold.co/900x400",
     },
     {
         id: "2",
