@@ -2,6 +2,7 @@ import "./page.css";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { categoriesData } from "@/data";
 
 export default async function CreateProject() {
   const session = await getServerSession(authOptions);
@@ -54,9 +55,16 @@ export default async function CreateProject() {
             placeholder="name@example.com"
           />
         </div>
+        <select>
+          <option value="">Select a Category</option>
+          { 
+            categoriesData && categoriesData.map(category => <option key={category.id} value={category.name}>{category.name}</option>)
+          }
+        </select>
         <label htmlFor="customRange1" className="form-label">
           About how many people do you want?
         </label>
+        
         <input type="range" className="form-range" id="customRange1" />
         <button className="btn btn-primary">Create Project</button>
         <div className="error">Error Message</div>

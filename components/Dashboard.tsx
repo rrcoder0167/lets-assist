@@ -47,6 +47,12 @@ export default function Dashboard() {
 
     return (
         <>
+        <div className="projects-container">
+            <button className="btn btn-primary createbtn" onClick={handleCreateOpportunity}>
+                <i className="bi bi-plus-lg"></i>
+                Create a Volunteering Opportunity
+            </button>
+            </div>
             <CategoriesList />
             <div className="card-container">
             {projectsData && projectsData.length > 0 ? (
@@ -79,9 +85,6 @@ export default function Dashboard() {
                 <label>Location:</label>
                 <input type="text" name="location" value={opportunityData.location} onChange={handleInputChange} />
             </div>
-            <button className="btn btn-primary" onClick={handleCreateOpportunity}>
-                Create a Volunteering Opportunity
-            </button>
         </>
     );
 }
