@@ -6,16 +6,17 @@ import Image from "next/image";
 import { signIn } from 'next-auth/react';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth/next";
 
-export default async function LoginPage() {
-  
+//import { authOptions } from "../api/auth/[...nextauth]/route";
+//import { redirect } from "next/navigation";
+//import { getServerSession } from "next-auth/next";
+
+export default function LoginPage() {
+  /*
   const session = await getServerSession(authOptions);
   if (session) {
       redirect('/')
-  }
+  }*/
 
   const handleGoogleSignIn = () => {
     signIn("google");
