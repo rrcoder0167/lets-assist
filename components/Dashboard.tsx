@@ -11,7 +11,7 @@ export default function Dashboard() {
         location: '',
     });
 
-    const handleInputChange = (e:any) => {
+    const handleInputChange = (e: any) => {
         setOpportunityData({
             ...opportunityData,
             [e.target.name]: e.target.value,
@@ -47,38 +47,38 @@ export default function Dashboard() {
 
     return (
         <>
-        <div className="projects-container">
-            <button className="btn btn-primary createbtn" onClick={handleCreateOpportunity}>
-                <i className="bi bi-plus-lg"></i>
-                Create a Volunteering Opportunity
-            </button>
+            <div className="projects-container">
+                <button className="btn btn-primary createbtn" onClick={handleCreateOpportunity}>
+                    <i className="bi bi-plus-lg"></i>
+                    Create a Volunteering Opportunity
+                </button>
             </div>
             <CategoriesList />
             <div className="card-container">
-            {projectsData && projectsData.length > 0 ? (
-                projectsData.map((project) => <Projects key={project.id}
-                                                        id={project.id}
-                                                        author={project.author}
-                                                        authorEmail={'test@gmail.com'}
-                                                        date={project.datepublished}
-                                                        image={project.image}
-                                                        location={project.location}
-                                                        category={project.category}
-                                                        title={project.title}
-                                                        spots={project.spots}
-                                                        description={project.description}
-                                                        />)
-            ) : (
-                <div>No Posts to display</div>
-            )
-            }
+                {projectsData && projectsData.length > 0 ? (
+                    projectsData.map((project) => <Projects key={project.id}
+                        id={project.id}
+                        author={project.author}
+                        authorEmail={'test@gmail.com'}
+                        date={project.datepublished}
+                        image={project.image}
+                        location={project.location}
+                        category={project.category}
+                        title={project.title}
+                        spots={project.spots}
+                        description={project.description}
+                    />)
+                ) : (
+                    <div>No Posts to display</div>
+                )
+                }
             </div>
             <div>
                 <label>Title:</label>
                 <input type="text" name="title" value={opportunityData.title} onChange={handleInputChange} />
             </div>
             <div>
-                <label>Date Time:</label>
+                <label>Date 7 Time:</label>
                 <input type="datetime-local" name="dateTime" value={opportunityData.dateTime} onChange={handleInputChange} />
             </div>
             <div>
