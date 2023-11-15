@@ -42,7 +42,7 @@
     "app/api/auth/[...nextauth]/route.js",
     "app/signup/page.jsx",
     "components/Dashboard.tsx"
-  ],
+, "lib/prismadb.js"  ],
   "exclude": [
     "node_modules"
   ]

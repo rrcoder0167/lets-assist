@@ -63,7 +63,7 @@ export default function Dashboard() {
                         date={project.datepublished}
                         image={project.image}
                         location={project.location}
-                        category={project.category}
+                        category={project.catName}
                         title={project.title}
                         spots={project.spots}
                         description={project.description}

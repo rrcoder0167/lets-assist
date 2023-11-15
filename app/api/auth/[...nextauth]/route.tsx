@@ -1,36 +1,20 @@
+import { PrismaClient } from "@prisma/client";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
-import { connectMongoDB } from "@/lib/mongodb";
 import CredentialsProvider from "next-auth/providers/credentials";
-import User from "@/models/user"
 import bcrypt from "bcryptjs";
 import { AuthOptions } from "next-auth";
-/*
-const { PrismaClient } = require("@prisma/client");
+import { PrismaAdapter } from "@auth/prisma-adapter"
 
-const prisma = new PrismaClient();
 
-const { User } = prisma;
-
-async function getUsers() {
-    const users = await User.findMany();
-    return users;
-}
-
-async function createUser(_name: string, _email: string) {
-    const user = await User.create({
-        name: _name,
-        email: _email
-    })
-    return user;
-}
-*/
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const githubClientId = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 const credentialsSecret = process.env.NEXTAUTH_SECRET;
+
+const prisma = new PrismaClient();
 
 
 if (!googleClientId || !googleClientSecret || !githubClientId || !githubClientSecret || !credentialsSecret) {
@@ -38,6 +22,7 @@ if (!googleClientId || !googleClientSecret || !githubClientId || !githubClientSe
 }
 
 export const authOptions: AuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: googleClientId,
@@ -50,25 +35,24 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {},
-
+    
       async authorize(credentials: any) {
         const { email, password } = credentials
-
+    
         try {
-          await connectMongoDB();
-          const user = await User.findOne({ email });
-
+          const user = await prisma.user.findUnique({ where: { email } });
+    
           if (!user) {
             return null;
           }
-
+    
           const passwordsMatch = await bcrypt.compare(password, user.password);
-
+    
           if (!passwordsMatch) {
             return null;
           }
-
-          return user;
+    
+          return { email: user.email }; // return the email of the user
         } catch (error) {
           console.log("Error: ", error);
         }
@@ -87,31 +71,24 @@ export const authOptions: AuthOptions = {
       if (account.provider === "google" || account.provider === "github") {
         const { name, email } = user;
         try {
-          await connectMongoDB();
-          const userExists = await User.findOne({ email });
+          const userExists = await prisma.user.findUnique({ where: { email } });
           if (!userExists) {
-            const res = await fetch("http://localhost:3000/api/user", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
+            await prisma.user.create({
+              data: {
                 name,
                 email,
-              }),
+                // add other fields as necessary
+              },
             });
-
-            if (isNewUser) {
-              //const router = useRouter();
-              //router.push('/')
-              Promise.resolve('/dashboard');
-            }
+          }
+          if (isNewUser) {
+            return '/dashboard';
           }
         } catch (error) {
           console.log(error);
         }
       }
-      return Promise.resolve(true);
+      return true;
     },
   },
 };
