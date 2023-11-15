@@ -10,9 +10,9 @@ export default function CategoriesList() {
         <Link
             key={category.id}
             className="category"
-            href={`/categories/${category.name}`}
+            href={`/categories/${category.catName}`}
         >
-            {category.name}
+            {category.catName}
         </Link>
         ))}
     </div>
