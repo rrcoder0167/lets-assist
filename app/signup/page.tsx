@@ -6,16 +6,17 @@ import Image from "next/image";
 import { useState } from "react";
 import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
+/*
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth/next";
+import { getServerSession } from "next-auth/next";*/
 
-export default async function RegisterForm() {
-
+export default function RegisterForm() {
+  /*
   const session = await getServerSession(authOptions);
   if (session) {
       redirect('/')
-  }
+  }*/
 
   const [name, setUsername] = useState("");
   const [email, setEmail] = useState("");
