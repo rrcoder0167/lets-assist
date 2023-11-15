@@ -6,7 +6,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 interface PostProps {
     id: string,
     author: string,
-    date:string,
+    eventTime: string,
     spots: string,
     image?: string,
     authorEmail?: string, // ? means options
@@ -17,7 +17,7 @@ interface PostProps {
 }
 
 
-export default function Project({id, author, date, image, authorEmail, spots, title, description, location, category}: PostProps) {
+export default function Project({id, author, eventTime, image, authorEmail, spots, title, description, location, category}: PostProps) {
     const isEditable = true;
     return (
         <div className="card">
