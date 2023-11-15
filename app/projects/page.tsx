@@ -1,8 +1,17 @@
 import { projectsData } from "@/data";
+import { getServerSession } from "next-auth/next";
 import Project from "@/components/Projects";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-export default function Projects() {
-    return <div>
+export default async function Projects() {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        redirect('/login')
+    }
+
+    return (
+    <div>
         <h1>Projects</h1>
         <p>Projects will go here</p>
         {projectsData && projectsData.length > 0 ? (
@@ -22,5 +31,5 @@ export default function Projects() {
                 <div>No Posts created yet.</div>
             )
             }
-    </div>
+    </div>)
 }

@@ -10,6 +10,7 @@ export default async function CreateProject() {
     redirect('/login')
   }
 
+  
   return (
     <>
       <h1>Create a Project</h1>
@@ -66,7 +67,7 @@ export default async function CreateProject() {
         </label>
         
         <input type="range" className="form-range" id="customRange1" />
-        <button className="btn btn-primary">Create Project</button>
+        <button type="submit" className="btn btn-primary">Create Project</button>
         <div className="error">Error Message</div>
       </form>
     </>
