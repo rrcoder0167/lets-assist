@@ -5,8 +5,17 @@ import Image from "next/image";
 import { signIn } from 'next-auth/react';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth/next";
 
 export default function LoginPage() {
+  
+  const session = await getServerSession(authOptions);
+  if (!session) {
+      redirect('/login')
+  }
+
   const handleGoogleSignIn = () => {
     signIn("google");
   };

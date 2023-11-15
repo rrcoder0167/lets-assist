@@ -1,4 +1,4 @@
-import NextAuth from "next-auth/next";
+import NextAuth, { AuthOptions } from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import { connectMongoDB } from "@/lib/mongodb";
@@ -36,7 +36,7 @@ if (!googleClientId || !googleClientSecret || !githubClientId || !githubClientSe
   throw new Error("Google/Github client ID or client secret is not provided in the environment variables.");
 }
 
-export const authOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: googleClientId,
