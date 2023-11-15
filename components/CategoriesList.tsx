@@ -55,5 +55,4 @@ export default async function CategoriesList() {
         ))}
     </div>
     );
-}
-*
+}*/

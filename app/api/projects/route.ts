@@ -1,8 +1,18 @@
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(req: Request) {
-    const { title, description, selectedCategory, spots, image, location, publicId } = await req.json();
+    /*
+    const session = await getServerSession(authOptions);
+    
+    if (!session) {
+        return NextResponse.redirect(`/api/auth/signin`);
+    }*/
+
+
+    const { title, description, selectedCategory, spots, eventTime, image, location, publicId } = await req.json();
     const authorEmail="riddhiman.rana@gmail.com"
 
     if(!title || !description) {
@@ -20,6 +30,7 @@ export async function POST(req: Request) {
                 image,
                 spots,
                 location,
+                eventTime,
                 publicId,
                 catName: selectedCategory,
                 authorEmail,

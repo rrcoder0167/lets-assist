@@ -20,7 +20,7 @@ export async function PUT(
     req: Request,
     { params }: { params: { id: string } }   
 ) {
-    const { title, description, selectedCategory, spots, image, location, publicId } = await req.json();
+    const { title, description, selectedCategory, spots, image, eventTime, location, publicId } = await req.json();
     const id = params.id;
     try {
         const project = await prisma.project.update({
@@ -30,6 +30,7 @@ export async function PUT(
                 description,
                 catName:selectedCategory,
                 spots,
+                eventTime,
                 image,
                 location,
                 publicId

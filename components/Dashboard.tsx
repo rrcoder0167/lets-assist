@@ -60,7 +60,7 @@ export default function Dashboard() {
                         id={project.id}
                         author={project.author}
                         authorEmail={'test@gmail.com'}
-                        date={project.datepublished}
+                        eventTime={project.eventTime}
                         image={project.image}
                         location={project.location}
                         category={project.catName}

@@ -67,6 +67,7 @@ model Project {
   author User @relation(fields: [authorEmail], references: [email])
   authorEmail String
   location String
+  eventTime String
   spots String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
