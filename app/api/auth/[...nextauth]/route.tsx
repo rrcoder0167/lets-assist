@@ -1,10 +1,11 @@
-import NextAuth, { AuthOptions } from "next-auth/next";
+import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import { connectMongoDB } from "@/lib/mongodb";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/models/user"
 import bcrypt from "bcryptjs";
+import { AuthOptions } from "next-auth";
 /*
 const { PrismaClient } = require("@prisma/client");
 

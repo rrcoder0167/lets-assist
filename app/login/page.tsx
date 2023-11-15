@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-async-client-component */
 "use client";
 import './page.css';
 import React from 'react';
@@ -9,11 +10,11 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 
-export default function LoginPage() {
+export default async function LoginPage() {
   
   const session = await getServerSession(authOptions);
-  if (!session) {
-      redirect('/login')
+  if (session) {
+      redirect('/')
   }
 
   const handleGoogleSignIn = () => {
