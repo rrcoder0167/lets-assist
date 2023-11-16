@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import "./Projects.css"
 import Link from "next/link";

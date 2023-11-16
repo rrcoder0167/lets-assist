@@ -1,3 +1,4 @@
+
 import { TProject } from "@/app/types";
 import Projects from "@/components/Projects";
 
@@ -6,7 +7,7 @@ const getProjects = async (catName: string): Promise<TProject[] | null> => {
         const res = await fetch(`http://localhost:3000/api/categories/${catName}`, {cache: "no-store"});
         if (res.ok) {
             const categories = await res.json();
-            const projects = categories.projects();
+            const projects = categories.projects;
             return projects;
         }
     } catch(error) {
@@ -24,7 +25,7 @@ export default async function CategoryProjects({params}: {params: {catName: stri
         <>
         <h1>
             <span>Category: </span>{" "}{decodeURIComponent(category)}
-
+            </h1>
             {projects && projects.length > 0 ? (
           projects.map((project: TProject) => (
             <Projects key={project.id}
@@ -45,7 +46,6 @@ export default async function CategoryProjects({params}: {params: {catName: stri
         ) : (
           <div>No Posts to display</div>
         )}
-        </h1>
         </>
     )
 
