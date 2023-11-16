@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { FaMapMarkerAlt} from "react-icons/fa";
 import { useSession } from "next-auth/react";
+import DeleteButton from "./DeleteButton";
 
 
 interface PostProps {
@@ -37,7 +38,7 @@ export default function Project({id, author, eventTime, image, authorEmail, spot
             {isEditable && (
                     <div className="card-options">
                         <Link href={`/edit-post/${id}`}>Edit</Link>
-                        <Link href="#">Delete</Link>
+                        <DeleteButton id={id}/>
                     </div>
                 )
 }
