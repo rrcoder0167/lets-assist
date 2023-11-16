@@ -39,6 +39,7 @@ export default async function Projects() {
                                                     date={project.createdAt}
                                                     image={project.image}
                                                     location={project.location}
+                                                    participants={project.participants || []}
                                                     category={project.catName}
                                                     eventTime={project.eventTime}
                                                     title={project.title}

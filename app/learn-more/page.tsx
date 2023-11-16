@@ -16,12 +16,12 @@ export default function LearnMore() {
                         {project.description}
                         <br />
                         <small className="text-muted">
-                            Posted By <a>{project.author}</a> on {project.datepublished}
+                            Posted By <a>{project.author}</a> on {project.date}
                         </small>
                         <br />
                         Availible Spots: {project.spots}
                         <br />
-                        Category: {project.category}
+                        Category: {project.catName}
                         <br />
                     </p>
                 ))}
