@@ -67,3 +67,13 @@ export async function DELETE(
       return NextResponse.json({ message: "Could not update project." });
   }
 }
+
+export async function GET() {
+    try {
+        const participants = await prisma.project.findMany();
+        return res.json(participants);
+    } catch(error) {
+        console.log(error);
+        return NextResponse.json("Something went wrong")
+    }
+}

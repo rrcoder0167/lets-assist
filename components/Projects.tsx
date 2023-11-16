@@ -6,6 +6,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { FaMapMarkerAlt} from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import DeleteButton from "./DeleteButton";
+import React, { useEffect, useState } from 'react';
+import { TCategory } from '@/app/types';
 
 
 interface PostProps {
@@ -27,6 +29,25 @@ export default function Project({id, author, eventTime, image, authorEmail, spot
     const { data: session } = useSession();
     const isEditable = session && session?.user?.email === authorEmail;
 
+    const [project, setProject] = useState<TProject | null>(null);
+    const [isParticipant, setIsParticipant] = useState<boolean>(false);
+    
+    useEffect(() => {
+      const getProject = async () => {
+        try {
+          const res = await fetch(`http://localhost:3000/api/projects/${id}`);
+          if (res.ok) {
+            const project = await res.json();
+            setProject(project);
+            setIsParticipant(project.participants.includes(session?.user?.email));
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    
+      getProject();
+    }, [id, session]);
     const handleRegisterProject = async (e: React.FormEvent) =>  {
         e.preventDefault();
         try {
@@ -98,9 +119,12 @@ export default function Project({id, author, eventTime, image, authorEmail, spot
                 <p className="spots">{spots} spots left</p>
                 <p className="date">{formattedDate}</p>
                 <div className="button-container d-flex justify-content-between">
-                    <button onClick={handleRegisterProject} className="btn btn-primary">Sign Up</button>
-                    <a href="#" className="btn btn-success">Learn More</a>
-                </div>
+  {isParticipant
+    ? <button onClick={handleUnregisterProject} className="btn btn-danger">Unregister</button>
+    : <button onClick={handleRegisterProject} className="btn btn-primary">Sign Up</button>
+  }
+  <a href="#" className="btn btn-success">Learn More</a>
+</div>
             </div>
         </div>
     )

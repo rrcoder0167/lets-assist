@@ -1,37 +1,61 @@
-import { Request } from 'next/server';
-import prisma from '@/lib/prismadb';
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import prisma from "@/lib/prismadb";
 
-
-export async function DELETE(
+export async function GET(
     req: Request,
     { params }: { params: { id: string } }
-  ) {
-    const { participants } = await req.json();
-    const id = params.id;
-  
+) {
     try {
-        const project = await prisma.project.findUnique({
-            where: { id },
-        });
-  
-        if (!project) {
-            return NextResponse.json({ message: "Project not found." });
-        }
-  
-        const updatedParticipants = project.participants.filter((participant) => participant !== participants);
-  
-        const updatedProject = await prisma.project.update({
+        const id = params.id;
+        const project = await prisma.project.findUnique({ where: {id} });
+        return NextResponse.json(project)
+    } catch(error) {
+        console.log(error);
+        return NextResponse.json({ message: "Could not fetch project." }, {status: 500});
+    }
+
+}
+
+export async function PUT(
+    req: Request,
+    { params }: { params: { id: string } }   
+) {
+    const { title, description, selectedCategory, spots, image, eventTime, participants, location, publicId } = await req.json();
+    const id = params.id;
+    try {
+        const project = await prisma.project.update({
             where: {id},
             data: {
-                participants: updatedParticipants,
+                title,
+                description,
+                catName:selectedCategory,
+                spots,
+                eventTime,
+                image,
+                participants,
+                location,
+                publicId
             }
         });
-  
-        return NextResponse.json(updatedProject);
-  
+
+        return NextResponse.json(project);
+
     } catch(error) {
         console.log(error);
         return NextResponse.json({ message: "Could not update project." });
     }
-  }
+}
+
+export async function DELETE(
+    req: Request,
+    { params }: { params: { id: string } }
+) {
+    const id = params.id;
+    try {
+        const project = await prisma.project.delete({ where: { id } });
+        return NextResponse.json(project);
+    } catch(error) {
+        console.log(error);
+        return NextResponse.json({ message: "Could not delete project." });
+    }
+}
