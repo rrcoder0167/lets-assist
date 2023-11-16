@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { TCategory, TProject } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { set } from "mongoose";
+import "./EditProjectForm.css";
 
 export default function EditProjectForm({ project }: { project: TProject }) {
   const [title, setTitle] = useState("");
