@@ -60,7 +60,7 @@ model Project {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title String
   description String
-  image String
+  image String?//? is for now
   publicId String?
   catName String?
   category Category? @relation(fields: [catName], references: [catName])
@@ -68,7 +68,7 @@ model Project {
   authorEmail String
   location String
   eventTime String
-  spots String
+  spots String?//? is for now
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
