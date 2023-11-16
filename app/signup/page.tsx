@@ -23,10 +23,10 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignUp = () => {
     signIn("google");
   };
-  const handleGithubSignIn = () => {
+  const handleGithubSignUp = () => {
     signIn("github")
   }
 
@@ -55,7 +55,7 @@ export default function RegisterForm() {
         setError("User already exists.");
         return;
       }
-
+      
       const res = await fetch('api/register', {
         method: "POST",
         headers: {
@@ -86,12 +86,12 @@ export default function RegisterForm() {
         <h2>Don&apos;t have an account? No Problem!</h2>
         <div className="login-container">
           <div className="oauth-buttons">
-            <button onClick={handleGithubSignIn} className="oauth-button github">
-              Log in with GitHub
+            <button onClick={handleGithubSignUp} className="oauth-button github">
+              Signup with GitHub
               <Image src="/github-logo.png" className="github-icon" alt="GitHub sign-in" width={512} height={512} />
             </button>
-            <button onClick={handleGoogleSignIn} className="oauth-button google">
-              Log in with Google
+            <button onClick={handleGoogleSignUp} className="oauth-button google">
+              Signup with Google
               <Image src="/google-logo.png" className="google-icon" alt="Google sign-in" width={512} height={512} />
             </button>
             <button className="oauth-button apple">

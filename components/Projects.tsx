@@ -1,7 +1,10 @@
 import Image from "next/image";
 import "./Projects.css"
 import Link from "next/link";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { FaMapMarkerAlt } from "react-icons/fa";
+
 
 interface PostProps {
     id: string,
@@ -18,7 +21,9 @@ interface PostProps {
 
 
 export default function Project({id, author, eventTime, image, authorEmail, spots, title, description, location, category}: PostProps) {
+    //const session = await getServerSession(authOptions);
     const isEditable = true;
+    //const isEditable = session && session?.user?.email === authorEmail;
     return (
         <div className="card">
             {image ? (<Image src={image} alt={title} width={700} height={128} className="card-img-top"/>) : <Image src='/image-placeholder.png' alt={title} width={700} height={128} className="card-img-top"/>}
