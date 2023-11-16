@@ -11,6 +11,7 @@ export type TProject = {
   image?: string;
   publicId?: string;
   createdAt: string;
+  participants: null | string[];
   catName?: string;
   spots: string;
   location: string;

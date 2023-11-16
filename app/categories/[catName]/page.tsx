@@ -37,6 +37,7 @@ export default async function CategoryProjects({params}: {params: {catName: stri
               category={project.catName}
               title={project.title}
               date={project.createdAt}
+              participants={project.participants || []}
               spots={project.spots}
               description={project.description}
             />

@@ -16,6 +16,7 @@ interface PostProps {
     image?: string,
     authorEmail?: string, // ? means options
     title: string,
+    participants: string[],
     date: string,
     location: string,
     description: string,
@@ -49,9 +50,9 @@ export default function Project({id, author, eventTime, image, authorEmail, spot
                         
                         <p className="location-text">
                         <FaMapMarkerAlt className="location-icon" />    {location}</p>
-                        <p className="event-time">{eventTime}</p>
                     </a>
                 </div>
+                <p className="event-time">When: {eventTime}</p>
                 <p className="spots">{spots} spots left</p>
                 <p className="date">{formattedDate}</p>
                 <div className="button-container d-flex justify-content-between">

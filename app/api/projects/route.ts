@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     }
 
 
-    const { title, description, selectedCategory, spots, eventTime, image, location, publicId } = await req.json();
+    const { title, description, selectedCategory, spots, eventTime, image, location, participants, publicId } = await req.json();
     const authorEmail=session?.user?.email as string;
 
     if(!title || !description) {
@@ -31,6 +31,7 @@ export async function POST(req: Request) {
                 location,
                 eventTime,
                 publicId,
+                participants,
                 catName: selectedCategory,
                 authorEmail,
             }
