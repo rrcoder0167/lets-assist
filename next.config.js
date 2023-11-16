@@ -2,7 +2,7 @@
 const nextConfig = {
     images: {
         dangerouslyAllowSVG: true,
-        domains: ['lh3.googleusercontent.com', 'placehold.co', 'avatars.githubusercontent.com']
+        domains: ['lh3.googleusercontent.com', 'placehold.co', 'avatars.githubusercontent.com', 'res.cloudinary.com',]
     }
 }
 

@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { TCategory } from "@/app/types";
+import { CldUploadButton, CldUploadWidgetResults } from "next-cloudinary";
 import { useRouter } from "next/navigation";
+import { Image } from "next/image";
 import "./CreateProjectForm.css";
 
 export default function CreateProjectForm() {
@@ -66,6 +68,40 @@ export default function CreateProjectForm() {
 
   }
 
+  const handleImageUpload = (result: CldUploadWidgetResults) => {
+    console.log('result: ', result);
+    const info = result.info as object;
+
+    if ("secure_url" in info && "public_id" in info) {
+      const url = info.secure_url as string;
+      const public_id = info.public_id as string;
+      setImage(url);
+      setPublicId(public_id); 
+      console.log("url: ", url);
+      console.log("public_id: ", public_id);
+    }};
+
+    const removeImage = async (e: React.FormEvent) => {
+      e.preventDefault();
+
+      try {
+
+        const res = await fetch('/api/removeImage', {
+          method: "POST", 
+          headers: { "Content-Type": "application/json"},
+          body: JSON.stringify({publicId})
+        });
+  
+        if (res.ok) {
+          setImage("");
+          setPublicId("");
+        }
+
+      } catch(error) {
+        console.log(error);
+      }
+
+    };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -127,8 +163,14 @@ export default function CreateProjectForm() {
       <label htmlFor="customRange1" className="form-label">
         About how many people do you want?
       </label>
-
       <input type="range" className="form-range" id="customRange1" />
+      <CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}>
+            Upload Image
+        {image && (<Image src={image} alt={title}/>)} 
+      </CldUploadButton>
+      
+      {publicId && <button className="btn btn-danger" onClick={removeImage}>Remove Image</button>}
+
       <button type="submit" className="submitbtn">
         Create Project
       </button>
