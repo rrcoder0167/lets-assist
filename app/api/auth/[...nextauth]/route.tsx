@@ -27,6 +27,7 @@ export const authOptions: AuthOptions = {
       clientId: githubClientId as string,
       clientSecret: githubClientSecret as string,
     }),
+    /*
     CredentialsProvider({
       name: "credentials",
       credentials: {},
@@ -52,7 +53,7 @@ export const authOptions: AuthOptions = {
           console.log("Error: ", error);
         }
       },
-    }),
+    }),*/
   ],
   session: {
     maxAge: 30 * 24 * 60 * 60,
@@ -61,6 +62,7 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: "/",
   },
+  /*
   callbacks: {
     async signIn({ user, account, isNewUser }: any) {
       if (account.provider === "google" || account.provider === "github") {
@@ -85,7 +87,7 @@ export const authOptions: AuthOptions = {
       }
       return true;
     },
-  },
+  },*/
 };
 
 const handler = NextAuth(authOptions);
