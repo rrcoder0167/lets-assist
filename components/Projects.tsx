@@ -37,7 +37,7 @@ export default function Project({id, author, eventTime, image, authorEmail, spot
             <div className="card-body">
             {isEditable && (
                     <div className="card-options">
-                        <Link href={`/edit-post/${id}`}>Edit</Link>
+                        <Link href={`/edit-project/${id}`}>Edit</Link>
                         <DeleteButton id={id}/>
                     </div>
                 )

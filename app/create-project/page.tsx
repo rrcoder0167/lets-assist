@@ -11,7 +11,6 @@ export default async function CreateProject() {
 
   return (
     <>
-      <h1>Create a Project</h1>
       <CreateProjectForm />
     </>
   );

@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TCategory } from "@/app/types";
+import { TCategory, TProject } from "@/app/types";
 import { useRouter } from "next/navigation";
+import { set } from "mongoose";
 
-export default function CreateProjectForm() {
+export default function EditProjectForm({ project }: { project: TProject }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState<TCategory[]>([]);
@@ -24,7 +25,20 @@ export default function CreateProjectForm() {
     };
 
     fetchAllCategories();
-  }, []);
+
+    const initValues = () => {
+        setTitle(project.title);
+        setDescription(project.description);
+        setSelectedCategory(project.catName || '');
+        setImage(project.image || '');
+        setLocation(project.location);
+        setEventTime(project.eventTime);
+        setPublicId(project.publicId || '');
+        
+    }
+
+    initValues();
+  }, [project.title, project.description, project.catName, project.image, project.location, project.eventTime, project.publicId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,10 +49,10 @@ export default function CreateProjectForm() {
     }
     
     try {
-        const res = await fetch ('/api/projects/',
+        const res = await fetch (`/api/projects/${project.id}`,
         {
             
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
                 },
@@ -66,8 +80,8 @@ export default function CreateProjectForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Create Project</h2>
       <div className="mb-3">
+        <h2>Edit Project</h2>
         <label htmlFor="project-title-input" className="form-label">
           Project Title
         </label>
@@ -77,6 +91,7 @@ export default function CreateProjectForm() {
           className="form-control"
           id="project-title-input"
           placeholder="What do you want to name your project?"
+          value={title}
         />
 
         <label htmlFor="exampleFormControlTextarea1" className="form-label">
@@ -87,6 +102,7 @@ export default function CreateProjectForm() {
           className="form-control"
           id="exampleFormControlTextarea1"
           rows={3}
+          value={description}
         ></textarea>
 
         <label htmlFor="exampleFormControlInput1" className="form-label">
@@ -98,6 +114,7 @@ export default function CreateProjectForm() {
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="name@example.com"
+          value={eventTime}
         />
 
         <label htmlFor="exampleFormControlInput1" className="form-label">
@@ -109,10 +126,11 @@ export default function CreateProjectForm() {
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="name@example.com"
+          value={location}
         />
       </div>
       <select onChange={(e) => setSelectedCategory(e.target.value)}>
-        <option value="">Select a Category</option>
+        <option value={selectedCategory}>{selectedCategory} </option>
         {categories &&
           categories.map((category) => (
             <option key={category.id} value={category.catName}>
