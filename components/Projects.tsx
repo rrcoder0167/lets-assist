@@ -4,6 +4,8 @@ import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { useSession } from "next-auth/react";
+import { create } from "domain";
 
 
 interface PostProps {
@@ -20,22 +22,25 @@ interface PostProps {
 }
 
 
-export default function Project({id, author, eventTime, image, authorEmail, spots, title, description, location, category}: PostProps) {
-    //const session = await getServerSession(authOptions);
-    const isEditable = true;
-    //const isEditable = session && session?.user?.email === authorEmail;
+export default function Project({id, author, eventTime, image, authorEmail, spots, createdAt, title, description, location, category}: PostProps) {
+    const { data: session } = useSession();
+    const isEditable = session && session?.user?.email === authorEmail;
+
+    const dateObject = new Date(createdAt);
+    const options: Intl.DateTimeFormatOptions = { month: "short", day: "numeric", year: "numeric"};
+    const formattedDate = dateObject.toLocaleDateString("en-US", options);
+
     return (
         <div className="card">
             {image ? (<Image src={image} alt={title} width={700} height={128} className="card-img-top"/>) : <Image src='/image-placeholder.png' alt={title} width={700} height={128} className="card-img-top"/>}
             <div className="card-body">
-            {
-                    isEditable && (
-                        <div className="card-options">
-                            <Link href={`/edit-post/${id}`}>Edit</Link>
-                            <Link href="#">Delete</Link>
-                        </div>
-                    )
-                }
+            {isEditable && (
+                    <div className="card-options">
+                        <Link href={`/edit-post/${id}`}>Edit</Link>
+                        <Link href="#">Delete</Link>
+                    </div>
+                )
+}
                 <h5 className="card-title">{title}</h5>
                 <p className="card-text">{description}</p>
                 <div className="location-container d-flex align-items-center">
@@ -43,8 +48,11 @@ export default function Project({id, author, eventTime, image, authorEmail, spot
                         
                         <p className="location-text">
                         <FaMapMarkerAlt className="location-icon" />    {location}</p>
+                        <p className="event-time">{eventTime}</p>
                     </a>
                 </div>
+                <p className="spots">{spots} spots left</p>
+                <p className="date">{createdAt}</p>
                 <div className="button-container d-flex justify-content-between">
                     <a href="#" className="btn btn-primary">Sign Up</a>
                     <a href="#" className="btn btn-success">Learn More</a>
