@@ -5,7 +5,6 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { FaMapMarkerAlt} from "react-icons/fa";
 import { useSession } from "next-auth/react";
-import { create } from "domain";
 
 
 interface PostProps {
