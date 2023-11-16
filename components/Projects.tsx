@@ -3,7 +3,7 @@ import "./Projects.css"
 import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaMapMarkerAlt} from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { create } from "domain";
 
@@ -16,17 +16,18 @@ interface PostProps {
     image?: string,
     authorEmail?: string, // ? means options
     title: string,
+    date: string,
     location: string,
     description: string,
     category?: string;
 }
 
 
-export default function Project({id, author, eventTime, image, authorEmail, spots, createdAt, title, description, location, category}: PostProps) {
+export default function Project({id, author, eventTime, image, authorEmail, spots, date, title, description, location, category}: PostProps) {
     const { data: session } = useSession();
     const isEditable = session && session?.user?.email === authorEmail;
 
-    const dateObject = new Date(createdAt);
+    const dateObject = new Date(date);
     const options: Intl.DateTimeFormatOptions = { month: "short", day: "numeric", year: "numeric"};
     const formattedDate = dateObject.toLocaleDateString("en-US", options);
 
@@ -52,7 +53,7 @@ export default function Project({id, author, eventTime, image, authorEmail, spot
                     </a>
                 </div>
                 <p className="spots">{spots} spots left</p>
-                <p className="date">{createdAt}</p>
+                <p className="date">{formattedDate}</p>
                 <div className="button-container d-flex justify-content-between">
                     <a href="#" className="btn btn-primary">Sign Up</a>
                     <a href="#" className="btn btn-success">Learn More</a>
