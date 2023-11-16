@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { TCategory } from "@/app/types";
 import { useRouter } from "next/navigation";
+import "./CreateProjectForm.css";
 
 export default function CreateProjectForm() {
   const [title, setTitle] = useState("");
@@ -78,6 +79,7 @@ export default function CreateProjectForm() {
           id="project-title-input"
           placeholder="What do you want to name your project?"
         />
+        
 
         <label htmlFor="exampleFormControlTextarea1" className="form-label">
           Project Description
@@ -125,7 +127,7 @@ export default function CreateProjectForm() {
       </label>
 
       <input type="range" className="form-range" id="customRange1" />
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="submitbtn">
         Create Project
       </button>
       {error && <div className="error">{error}</div>}

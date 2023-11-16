@@ -16,21 +16,16 @@ const credentialsSecret = process.env.NEXTAUTH_SECRET;
 
 const prisma = new PrismaClient();
 
-
-if (!googleClientId || !googleClientSecret || !githubClientId || !githubClientSecret || !credentialsSecret) {
-  throw new Error("Google/Github client ID or client secret is not provided in the environment variables.");
-}
-
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
-      clientId: googleClientId,
-      clientSecret: googleClientSecret,
+      clientId: googleClientId as string,
+      clientSecret: googleClientSecret as string,
     }),
     GithubProvider({
-      clientId: githubClientId,
-      clientSecret: githubClientSecret,
+      clientId: githubClientId as string,
+      clientSecret: githubClientSecret as string,
     }),
     CredentialsProvider({
       name: "credentials",
