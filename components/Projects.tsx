@@ -23,10 +23,52 @@ interface PostProps {
     category?: string;
 }
 
-
 export default function Project({id, author, eventTime, image, authorEmail, spots, date, title, description, location, category}: PostProps) {
     const { data: session } = useSession();
     const isEditable = session && session?.user?.email === authorEmail;
+
+    const handleRegisterProject = async (e: React.FormEvent) =>  {
+        e.preventDefault();
+        try {
+          const res = await fetch(`/api/projects/${id}/register`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              participants: session?.user?.email
+            })
+          });
+      
+          if (res.ok) {
+            router.push('/') // redirect to home page
+          }
+        } catch(error) {
+          console.log(error);
+        }
+      }
+
+      const handleUnregisterProject = async (e: React.FormEvent) =>  {
+        e.preventDefault();
+        try {
+          const res = await fetch(`/api/projects/${id}/register`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              participant: session?.user?.email
+            })
+          });
+      
+          if (res.ok) {
+            router.push('/') // redirect to home page
+          }
+        } catch(error) {
+          console.log(error);
+        }
+      }
+
 
     const dateObject = new Date(date);
     const options: Intl.DateTimeFormatOptions = { month: "short", day: "numeric", year: "numeric"};
@@ -56,7 +98,7 @@ export default function Project({id, author, eventTime, image, authorEmail, spot
                 <p className="spots">{spots} spots left</p>
                 <p className="date">{formattedDate}</p>
                 <div className="button-container d-flex justify-content-between">
-                    <a href="#" className="btn btn-primary">Sign Up</a>
+                    <button onClick={handleRegisterProject} className="btn btn-primary">Sign Up</button>
                     <a href="#" className="btn btn-success">Learn More</a>
                 </div>
             </div>

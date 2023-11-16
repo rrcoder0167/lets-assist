@@ -15,6 +15,7 @@ export default function CreateProjectForm() {
   const [eventTime, setEventTime] = useState("");
   const [publicId, setPublicId] = useState("");
   const [error, setError] = useState("");
+  const [participants, setParticipants] = useState<string[]>([]); // [email, email, email
 
   const router = useRouter();
   useEffect(() => {
@@ -50,7 +51,8 @@ export default function CreateProjectForm() {
                     image,
                     location,
                     eventTime,
-                    publicId
+                    publicId,
+                    participants
                     })
         });
 
