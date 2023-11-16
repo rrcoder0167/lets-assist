@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { TCategory } from "@/app/types";
+import { useRouter } from "next/navigation";
 
 export default function CreateProjectForm() {
   const [title, setTitle] = useState("");
@@ -12,7 +13,9 @@ export default function CreateProjectForm() {
   const [location, setLocation] = useState("");
   const [eventTime, setEventTime] = useState("");
   const [publicId, setPublicId] = useState("");
+  const [error, setError] = useState("");
 
+  const router = useRouter();
   useEffect(() => {
     const fetchAllCategories = async () => {
       const res = await fetch("/api/categories");
@@ -23,11 +26,39 @@ export default function CreateProjectForm() {
     fetchAllCategories();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!title || !description) {
+        setError("Title and Content are required.");
+        return;
+    }
+    
+    try {
+        const res = await fetch ('/api/projects/',
+        {
+            
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title,
+                    description,
+                    selectedCategory,
+                    image,
+                    location,
+                    eventTime,
+                    publicId
+                    })
+        });
 
+        if (res.ok) {
+            router.push('/') // redirect to home page
+        }
+
+    } catch(error) {
+        console.log(error);
     }
 
   }
