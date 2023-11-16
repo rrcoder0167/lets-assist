@@ -10,6 +10,7 @@ export type TProject = {
   category: string;
   image?: string;
   publicId?: string;
+  createdAt: string;
   catName?: string;
   spots: string;
   location: string;
