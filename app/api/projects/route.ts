@@ -4,16 +4,15 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(req: Request) {
-    /*
     const session = await getServerSession(authOptions);
     
     if (!session) {
-        return NextResponse.redirect(`/api/auth/signin`);
-    }*/
+        return NextResponse.json({ error: "Not authorized" }, { status: 401 })
+    }
 
 
     const { title, description, selectedCategory, spots, eventTime, image, location, publicId } = await req.json();
-    const authorEmail="riddhiman.rana@gmail.com"
+    const authorEmail=session?.user?.email as string;
 
     if(!title || !description) {
         return NextResponse.json(
