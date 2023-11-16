@@ -10,7 +10,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch('http://localhost:3000/api/projects', {
+        const res = await fetch(`http://localhost:3000/api/projects`, {
           cache: 'no-store',
         });
 
