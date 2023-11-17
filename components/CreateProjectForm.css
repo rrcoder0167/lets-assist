@@ -66,3 +66,23 @@ form {
     color: red;
     margin-top: 10px;
   }
+
+  .uploadedImage {
+    height: 48px;
+    border: 2px dotted;
+    margin-top: 4px;
+    display: grid;
+    place-items: center;
+    background-color: #D1D5DB; /* equivalent to bg-slate-100 in Tailwind CSS */
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .image-cover {
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
