@@ -24,7 +24,8 @@ export default function CategoriesList() {
   }, []);
 
   return (
-    <div className="categories-section">
+    <div className="categories-section text-center">
+      <h4>Sort By</h4>
       {categories &&
         categories.map((category) => (
           <Link
