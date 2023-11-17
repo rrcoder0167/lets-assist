@@ -28,6 +28,12 @@ export default function Dashboard() {
 
   return (
     <>
+    <div className="projects-container">
+        <a href="/create-project" className="btn btn-success createbtn">
+          <i className="bi bi-plus-lg"></i>
+          Create a Volunteering Opportunity
+        </a>
+      </div>
       <CategoriesList />
       <div className="card-container">
         {projects && projects.length > 0 ? (
@@ -49,12 +55,6 @@ export default function Dashboard() {
         ) : (
           <div>No Posts to display</div>
         )}
-      </div>
-      <div className="projects-container">
-        <a href="/create-project" className="btn btn-success createbtn">
-          <i className="bi bi-plus-lg"></i>
-          Create a Volunteering Opportunity
-        </a>
       </div>
     </>
   );
