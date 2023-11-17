@@ -10,6 +10,6 @@ A personalized local volunteering portal where you give back to your community, 
 
 ## Tech Stack:
 ### Frontend: NextJS
-### Backend: 
+### Backend: Node.JS
 #### Deployed using Vercel
 

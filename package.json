@@ -19,7 +19,7 @@
     "express": "^4.18.2",
     "geist": "^1.0.0",
     "mongoose": "^8.0.0",
-    "next": "14.0.1",
+    "next": "^14.0.1",
     "next-auth": "^4.24.5",
     "next-cloudinary": "^5.7.0",
     "node-fetch": "^3.3.2",

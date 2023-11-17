@@ -122,9 +122,9 @@ export default function Project({id, author, eventTime, image, authorEmail, spot
                 <div className="button-container d-flex justify-content-between">
   {isParticipant
     ? <button onClick={handleUnregisterProject} className="btn btn-danger">Unregister</button>
-    : <button onClick={handleRegisterProject} className="btn btn-primary">Sign Up</button>
+    : <button onClick={handleRegisterProject} className="btn btn-success">Sign Up</button>
   }
-  <a href="#" className="btn btn-success">Learn More</a>
+  <a href="#" className="btn btn-primary">Learn More</a>
 </div>
             </div>
         </div>
