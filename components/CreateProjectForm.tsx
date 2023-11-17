@@ -164,13 +164,24 @@ export default function CreateProjectForm() {
         About how many people do you want?
       </label>
       <input type="range" className="form-range" id="customRange1" />
-      <CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}>
+      <CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+      onUpload={handleImageUpload}>
             Upload Image
-        {image && (<Image src={image} alt={title}/>)} 
+            {/*image && <Image src={image} alt={title} />*/}
       </CldUploadButton>
       
       {publicId && <button className="btn btn-danger" onClick={removeImage}>Remove Image</button>}
-
+            {/*
+      <CldUploadButton
+      uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+      onUpload={handleImageUpload}
+      className={`uploadedImage ${image && "pointer-events-none"}`}>
+            Upload Image
+        {image && (<Image src={image} className="image-cover" fill alt={title}/>)} 
+      </CldUploadButton>
+      
+      {publicId && <button className="btn btn-danger" onClick={removeImage}>Remove Image</button>}
+          */}
       <button type="submit" className="submitbtn">
         Create Project
       </button>
