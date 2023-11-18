@@ -1,13 +1,13 @@
 "use client";
 
-export default function DeleteButton({ id }: {id:string}) {
+export default function DeleteButton({ id }: { id: string }) {
     const handleDelete = async () => {
-        const confirmed = window.confirm (
+        const confirmed = window.confirm(
             "Are you sure you want to delete this project?"
         );
         if (confirmed) {
             try {
-                const res = await fetch(`/api/projects/${id}`, { 
+                const res = await fetch(`/api/projects/${id}`, {
                     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json"
@@ -18,15 +18,15 @@ export default function DeleteButton({ id }: {id:string}) {
                     console.log("Post deleted");
                 }
 
-            } catch(error) {
+            } catch (error) {
                 console.log(error);
             }
         }
     };
     return (
-        <button onClick={handleDelete}>
-          Delete
+        <button onClick={handleDelete} className="btn btn-danger">
+            Delete
         </button>
-      );
+    );
 
-    }
+}
