@@ -1,6 +1,8 @@
 
 import { TProject } from "@/app/types";
 import Projects from "@/components/Projects";
+import { FaRegSadTear } from 'react-icons/fa';
+import "./page.css"
 
 const getProjects = async (catName: string): Promise<TProject[] | null> => {
     try {
@@ -26,6 +28,8 @@ export default async function CategoryProjects({params}: {params: {catName: stri
         <h1>
             <span>Category: </span>{" "}{decodeURIComponent(category)}
             </h1>
+            <div className="projects-container">
+            <div className="card-container">
             {projects && projects.length > 0 ? (
           projects.map((project: TProject) => (
             <Projects key={project.id}
@@ -44,8 +48,13 @@ export default async function CategoryProjects({params}: {params: {catName: stri
             />
           ))
         ) : (
-          <div>No Posts to display</div>
+          <div className="no-posts">
+      <FaRegSadTear size={50} />
+      <p>No Posts to display</p>
+</div>
         )}
+        </div>
+        </div>
         </>
     )
 
