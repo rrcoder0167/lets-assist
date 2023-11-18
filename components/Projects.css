@@ -18,6 +18,10 @@
 
 .card-title {
     font-size: 1.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px; /* Adjust this value to control when the ellipsis appears */
     margin-bottom: 10px;
 }
 
@@ -51,9 +55,99 @@
     color: inherit; /* Use the same color as the text */
     text-decoration: none; /* Remove the underline */
   }
-  .location-text {
+  .info-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 250px; /* Adjust this value to control when the ellipsis appears */
+  }
+  
+  .card-options {
+    position: absolute;
+    top: 10px; /* Adjust the top position as needed */
+    right: 10px; /* Adjust the right position as needed */
+    display: flex;
+    flex-direction: column;
+  }
+  .card-category {
+    position: absolute;
+    display: flex;
+    bottom: 73%;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 0.8em;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .card-category:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+
+  
+  .menu-container {
+    position: relative;
+  }
+  
+  .menu-icon {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--ctp-frappe-text);
+    background-color: var(--ctp-frappe-surface0);
+    opacity: 0.5;
+    border: none;
+  }
+  
+  .menu-icon:hover {
+    opacity: 1;
+    
+  }
+  
+.menu {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 5px;
+    display: flex;
+    width: 150px;
+    flex-direction: column;
+    z-index: 9999; /* Set a higher value for z-index */
+}
+  
+  .menu button {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--ctp-frappe-blue);
+    color: #333;
+    width: 100%;
+  }
+
+  .menu button:hover {
+    background-color: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  
+  .menu button svg {
+    margin-right: 5px;
+  }
+  
+  .info-container {
+    flex-direction: column;
   }

@@ -1,5 +1,7 @@
 "use client";
 
+import { FaTrash } from 'react-icons/fa'; // Import the delete icon (assuming you have a delete icon in the library)
+
 export default function DeleteButton({ id }: { id: string }) {
     const handleDelete = async () => {
         const confirmed = window.confirm(
@@ -24,9 +26,12 @@ export default function DeleteButton({ id }: { id: string }) {
         }
     };
     return (
-        <button onClick={handleDelete} className="btn btn-danger">
+        <>
+        <button onClick={handleDelete}>
+        <FaTrash/>
             Delete
         </button>
+        </>
     );
 
 }
