@@ -117,7 +117,7 @@ export default function Project({ id, author, eventTime, image, authorEmail, spo
               <FaEllipsisV />
             </div>
             {isMenuOpen && (
-              <div className="menu">
+              <div className="info-menu">
                 <form action={`/edit-project/${id}`}>
                   <button className="edit-btn">
                     <FaEdit /> Edit
