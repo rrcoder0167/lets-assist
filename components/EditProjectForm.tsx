@@ -126,7 +126,7 @@ export default function EditProjectForm({ project }: { project: TProject }) {
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
-          placeholder="name@example.com"
+          placeholder="Example Street, Example City, EX"
           value={location}
         />
       </div>
@@ -145,7 +145,7 @@ export default function EditProjectForm({ project }: { project: TProject }) {
 
       <input type="range" className="form-range" id="customRange1" />
       <button type="submit" className="btn btn-primary">
-        Edit Project
+        Save Changes
       </button>
       {error && <div className="error">{error}</div>}
     </form>
