@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { TCategory } from "@/app/types";
 import { CldUploadButton, CldUploadWidgetResults } from "next-cloudinary";
 import { useRouter } from "next/navigation";
+import DateTimePicker from 'react-datetime-picker';
 import { Image } from "next/image";
+import { FaImage, FaTrash } from "react-icons/fa";
 import "./CreateProjectForm.css";
 
 export default function CreateProjectForm() {
@@ -14,7 +16,7 @@ export default function CreateProjectForm() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [image, setImage] = useState("");
   const [location, setLocation] = useState("");
-  const [eventTime, setEventTime] = useState("");
+  const [eventTime, setEventTime] = useState(new Date());
   const [publicId, setPublicId] = useState("");
   const [error, setError] = useState("");
   const [spots, setSpots] = useState(1);
@@ -107,6 +109,7 @@ export default function CreateProjectForm() {
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit}>
       <h2>Create Project</h2>
       <div className="mb-3">
@@ -132,16 +135,15 @@ export default function CreateProjectForm() {
           rows={3}
         ></textarea>
 
-        <label htmlFor="exampleFormControlInput1" className="form-label">
-          Date & Time
-        </label>
-        <input
-          onChange={e => setEventTime(e.target.value)}
-          type="text"
-          className="form-control"
-          id="exampleFormControlInput1"
-          placeholder="name@example.com"
-        />
+<label htmlFor="dateTimePicker" className="form-label">
+        Date & Time
+      </label>
+      <DateTimePicker
+        onChange={setEventTime}
+        value={eventTime}
+        className="form-control"
+        id="dateTimePicker"
+      />
 
         <label htmlFor="exampleFormControlInput1" className="form-label">
           Location
@@ -171,18 +173,19 @@ export default function CreateProjectForm() {
       min="1"
       max="100"
       value={spots}
-      className="form-range"
+      className="spots-range"
       id="customRange1"
       onInput={(e) => setSpots(e.target.value)}
-/>
-<div className="popover">{spots <= 100 ? spots : '100+'}</div>
+      />
+    <div className="popover">{spots <= 100 ? spots : '100+'}</div>
       <CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-        onUpload={handleImageUpload}>
+        onUpload={handleImageUpload} className={`image-upload ${image && "pointer-events-none"}`}>
+          <FaImage />
         Upload Image
-        {/*image && <Image src={image} alt={title} />*/}
+        {image && (<img src={image} className="uploaded-image" alt={title}/>)}
       </CldUploadButton>
 
-      {publicId && <button className="btn btn-danger" onClick={removeImage}>Remove Image</button>}
+      {publicId && <button className="image-remove" onClick={removeImage}> <FaTrash className="image-removeicon"/>Remove Image</button>}
       {/*
       <CldUploadButton
       uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
@@ -199,5 +202,6 @@ export default function CreateProjectForm() {
       </button>
       {error && <div className="error">{error}</div>}
     </form>
+    </>
   );
 }

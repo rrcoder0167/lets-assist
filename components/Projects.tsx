@@ -102,8 +102,14 @@ export default function Project({ id, author, eventTime, image, authorEmail, spo
   }
 
 
-  const dateObject = new Date(date);
-  const options: Intl.DateTimeFormatOptions = { month: "short", day: "numeric", year: "numeric" };
+  const dateObject = new Date(eventTime);
+  const options: Intl.DateTimeFormatOptions = { 
+    month: "short", 
+    day: "numeric", 
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric"
+  };
   const formattedDate = dateObject.toLocaleDateString("en-US", options);
 
   return (
@@ -138,7 +144,7 @@ export default function Project({ id, author, eventTime, image, authorEmail, spo
               <FaMapMarkerAlt className="location-icon" />    {location}</p>
           </a>
           <p className="info-text">
-            <FaClock className="clock-icon" /> {eventTime}
+            <FaClock className="clock-icon" /> {formattedDate}
           </p>
           <p className="info-text">
             <FaUsers className="users-icon" /> {spots} spots left
