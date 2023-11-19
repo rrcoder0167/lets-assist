@@ -168,7 +168,7 @@ export default function CreateProjectForm() {
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
-          placeholder="name@example.com"
+          placeholder="Example Street, Example City, EX"
         />
         {/*
         <GeoapifyContext apiKey="d3ea90d5656045209c5ac03c54841e3f">

@@ -103,9 +103,9 @@ export default function Project({ id, author, eventTime, image, authorEmail, spo
 
 
   const dateObject = new Date(eventTime);
-  const options: Intl.DateTimeFormatOptions = { 
-    month: "short", 
-    day: "numeric", 
+  const options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    day: "numeric",
     year: "numeric",
     hour: "numeric",
     minute: "numeric"
