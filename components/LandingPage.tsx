@@ -124,12 +124,6 @@ function Footer() {
           </a>
           <p>Keshav Verma</p>
         </div>
-        <div className="profile">
-          <a href="https://github.com/errorcodezero">
-            <Image src="https://avatars.githubusercontent.com/u/74121237?v=4" width={profilePictureSize} height={profilePictureSize} alt="Profile 3" />
-          </a>
-          <p>Abinav Venkit</p>
-        </div>
       </div>
       <div className="credits">
         <p>Copyright 2023, Powered by Vercel.</p>
