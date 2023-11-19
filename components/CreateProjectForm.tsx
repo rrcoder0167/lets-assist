@@ -17,6 +17,7 @@ export default function CreateProjectForm() {
   const [eventTime, setEventTime] = useState("");
   const [publicId, setPublicId] = useState("");
   const [error, setError] = useState("");
+  const [spots, setSpots] = useState(1);
   const [participants, setParticipants] = useState<string[]>([]); // [email, email, email
 
   const router = useRouter();
@@ -41,21 +42,22 @@ export default function CreateProjectForm() {
     try {
       const res = await fetch('/api/projects/',
         {
-
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            title,
-            description,
-            selectedCategory,
-            image,
-            location,
-            eventTime,
-            publicId,
-            participants
-          })
+            
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title,
+                    description,
+                    selectedCategory,
+                    image,
+                    location,
+                    eventTime,
+                    spots,
+                    publicId,
+                    participants
+                    })
         });
 
       if (res.ok) {
@@ -164,7 +166,16 @@ export default function CreateProjectForm() {
       <label htmlFor="customRange1" className="form-label">
         About how many people do you want?
       </label>
-      <input type="range" className="form-range" id="customRange1" />
+      <input
+      type="range"
+      min="1"
+      max="100"
+      value={spots}
+      className="form-range"
+      id="customRange1"
+      onInput={(e) => setSpots(e.target.value)}
+/>
+<div className="popover">{spots <= 100 ? spots : '100+'}</div>
       <CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
         onUpload={handleImageUpload}>
         Upload Image
