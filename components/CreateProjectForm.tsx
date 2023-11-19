@@ -6,10 +6,8 @@ import { CldUploadButton, CldUploadWidgetResults } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import DateTimePicker from 'react-datetime-picker';
 import '@geoapify/geocoder-autocomplete/styles/round-borders-dark.css';
-import {
-  GeoapifyGeocoderAutocomplete,
-  GeoapifyContext
-} from '@geoapify/react-geocoder-autocomplete';
+import { GeoapifyGeocoderAutocomplete, GeoapifyContext} from '@geoapify/react-geocoder-autocomplete';
+
 import { FaImage, FaTrash } from "react-icons/fa";
 import "./CreateProjectForm.css";
 
@@ -26,6 +24,8 @@ export default function CreateProjectForm() {
   const [spots, setSpots] = useState(1);
   const [participants, setParticipants] = useState<string[]>([]); // [email, email, email
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
   useEffect(() => {
     const fetchAllCategories = async () => {
@@ -37,7 +37,18 @@ export default function CreateProjectForm() {
     fetchAllCategories();
   }, []);
 
+  useEffect(() => {
+    if (error) {
+      setIsLoading(false);
+    }
+  }, [error]);
+  
+    const AddressInput = () => {
+      console.log("AddressInput component is being rendered");
+    };
+
   const handleSubmit = async (e: React.FormEvent) => {
+    setIsLoading(true);
     e.preventDefault();
 
     if (!title || !description) {
@@ -105,6 +116,7 @@ export default function CreateProjectForm() {
         setImage("");
         setPublicId("");
       }
+      
 
     } catch (error) {
       console.log(error);
@@ -151,12 +163,20 @@ export default function CreateProjectForm() {
         <label htmlFor="exampleFormControlInput1" className="form-label">
           Location
         </label>
+        <input
+          onChange={e => setLocation(e.target.value)}
+          type="text"
+          className="form-control"
+          id="exampleFormControlInput1"
+          placeholder="name@example.com"
+        />
+        {/*
         <GeoapifyContext apiKey="d3ea90d5656045209c5ac03c54841e3f">
-      <GeoapifyGeocoderAutocomplete
-        placeholder="Enter address here"
-        onSelect={console.log('onUserInput')}
-      />
-    </GeoapifyContext>
+        <GeoapifyGeocoderAutocomplete
+    placeholder="Enter address here"
+    onUserInput={(event: string) => setLocation(event)}
+  />
+  </GeoapifyContext>*/}
       </div>
       <select onChange={(e) => setSelectedCategory(e.target.value)}>
         <option value="">Select a Category</option>
@@ -184,10 +204,19 @@ export default function CreateProjectForm() {
         onUpload={handleImageUpload} className={`image-upload ${image && "pointer-events-none"}`}>
           <FaImage />
         Upload Image
-        {image && (<img src={image} className="uploaded-image" alt={title}/>)}
+        {image && (<>
+          <div className="alert alert-success alert-dismissible fade show top-alert" role="alert">
+  <strong>Success!</strong> You&apos;re image was successfully uploaded.
+  <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+          <img src={image} className="uploaded-image" alt={title} /></>
+        
+        )}
       </CldUploadButton>
 
-      {publicId && <button className="image-remove" onClick={removeImage}> <FaTrash className="image-removeicon"/>Remove Image</button>}
+      {publicId && 
+      <button className="image-remove" onClick={removeImage}> <FaTrash className="image-removeicon"/>Remove Image</button>
+      }
       {/*
       <CldUploadButton
       uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
@@ -199,10 +228,17 @@ export default function CreateProjectForm() {
       
       {publicId && <button className="btn btn-danger" onClick={removeImage}>Remove Image</button>}
           */}
-      <button type="submit" className="submitbtn">
-        Create Project
-      </button>
-      {error && <div className="error">{error}</div>}
+          {isLoading ? (
+            <button type="submit" className="submitbtn" disabled>
+              <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+              <span role="status">Loading...</span>
+            </button>
+          ) : (
+            <button type="submit" className="submitbtn">
+              Create Project
+            </button>
+          )}
+          {error && <div className="error">{error}</div>}
     </form>
     </>
   );

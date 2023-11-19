@@ -6,7 +6,7 @@ import { TProject } from "@/app/types";
 
 export default function Dashboard() {
   const [projects, setProjects] = useState<TProject[] | null>(null);
-
+  
   useEffect(() => {
     const fetchProjects = async () => {
       try {

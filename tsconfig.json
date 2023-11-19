@@ -44,7 +44,7 @@
     "components/Dashboard.tsx",
     "lib/prismadb.js",
     "app/api/geocode.js"
-  ],
+, "app/lol/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]
