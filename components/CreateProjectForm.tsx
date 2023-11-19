@@ -5,7 +5,11 @@ import { TCategory } from "@/app/types";
 import { CldUploadButton, CldUploadWidgetResults } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import DateTimePicker from 'react-datetime-picker';
-import { Image } from "next/image";
+import '@geoapify/geocoder-autocomplete/styles/round-borders-dark.css';
+import {
+  GeoapifyGeocoderAutocomplete,
+  GeoapifyContext
+} from '@geoapify/react-geocoder-autocomplete';
 import { FaImage, FaTrash } from "react-icons/fa";
 import "./CreateProjectForm.css";
 
@@ -144,17 +148,15 @@ export default function CreateProjectForm() {
         className="form-control"
         id="dateTimePicker"
       />
-
         <label htmlFor="exampleFormControlInput1" className="form-label">
           Location
         </label>
-        <input
-          onChange={e => setLocation(e.target.value)}
-          type="text"
-          className="form-control"
-          id="exampleFormControlInput1"
-          placeholder="name@example.com"
-        />
+        <GeoapifyContext apiKey="d3ea90d5656045209c5ac03c54841e3f">
+      <GeoapifyGeocoderAutocomplete
+        placeholder="Enter address here"
+        onSelect={console.log('onUserInput')}
+      />
+    </GeoapifyContext>
       </div>
       <select onChange={(e) => setSelectedCategory(e.target.value)}>
         <option value="">Select a Category</option>
