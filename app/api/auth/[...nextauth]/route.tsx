@@ -59,7 +59,7 @@ export const authOptions: AuthOptions = {
   },
   secret: credentialsSecret,
   pages: {
-    signIn: "/",
+    signIn: "/login",
   },
   /*
   callbacks: {

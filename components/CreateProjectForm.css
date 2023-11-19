@@ -546,3 +546,17 @@ select {
   padding: 25px;
   border: thin solid var(--ctp-frappe-text);
 }
+
+.autocomplete-container {
+  position: relative;
+}
+
+.top-alert {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  width: 500px;
+  margin: 0 auto;
+  z-index: 9999;
+}
