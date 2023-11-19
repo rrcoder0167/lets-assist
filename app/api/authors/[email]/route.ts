@@ -10,13 +10,12 @@ export async function GET(
         const projects = await prisma.user.findUnique({
             where: { email },
             include: {
-              projects: { orderBy: { createdAt: "desc" } },
+                projects: { orderBy: { createdAt: "desc" } },
             },
-          });
+        });
         return NextResponse.json(projects)
-    } catch(error) {
+    } catch (error) {
         console.log(error);
         return NextResponse.json({ message: "Could not fetch project." });
     }
-
 }

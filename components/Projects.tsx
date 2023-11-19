@@ -111,24 +111,24 @@ export default function Project({ id, author, eventTime, image, authorEmail, spo
       {image ? (<Image src={image} alt={title} width={700} height={128} className="card-img-top" />) : <Image src='/image-placeholder.png' alt={title} width={700} height={128} className="card-img-top" />}
       <Link href={`/categories/${category}`} className="card-category">{category}</Link>
       <div className="card-options">
-      {isEditable && (
-        <div className="menu-container">
-          <div className={`menu-icon ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
-            <FaEllipsisV />
-          </div>
-          {isMenuOpen && (
-            <div className="menu">
-              <form action={`/edit-project/${id}`}>
-                <button className="edit-btn">
-                  <FaEdit /> Edit
-                </button>
-              </form>
-              <DeleteButton id={id} />
+        {isEditable && (
+          <div className="menu-container">
+            <div className={`menu-icon ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
+              <FaEllipsisV />
             </div>
-          )}
-        </div>
-      )}
-    </div>
+            {isMenuOpen && (
+              <div className="menu">
+                <form action={`/edit-project/${id}`}>
+                  <button className="edit-btn">
+                    <FaEdit /> Edit
+                  </button>
+                </form>
+                <DeleteButton id={id} />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
       <div className="card-body">
         <h5 className="card-title">{title}</h5>
         <p className="card-text">{description}</p>

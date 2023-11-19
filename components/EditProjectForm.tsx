@@ -28,14 +28,14 @@ export default function EditProjectForm({ project }: { project: TProject }) {
     fetchAllCategories();
 
     const initValues = () => {
-        setTitle(project.title);
-        setDescription(project.description);
-        setSelectedCategory(project.catName || '');
-        setImage(project.image || '');
-        setLocation(project.location);
-        setEventTime(project.eventTime);
-        setPublicId(project.publicId || '');
-        
+      setTitle(project.title);
+      setDescription(project.description);
+      setSelectedCategory(project.catName || '');
+      setImage(project.image || '');
+      setLocation(project.location);
+      setEventTime(project.eventTime);
+      setPublicId(project.publicId || '');
+
     }
 
     initValues();
@@ -45,35 +45,35 @@ export default function EditProjectForm({ project }: { project: TProject }) {
     e.preventDefault();
 
     if (!title || !description) {
-        setError("Title and Content are required.");
-        return;
+      setError("Title and Content are required.");
+      return;
     }
-    
+
     try {
-        const res = await fetch (`/api/projects/${project.id}`,
+      const res = await fetch(`/api/projects/${project.id}`,
         {
-            
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    title,
-                    description,
-                    selectedCategory,
-                    image,
-                    location,
-                    eventTime,
-                    publicId
-                    })
+
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            title,
+            description,
+            selectedCategory,
+            image,
+            location,
+            eventTime,
+            publicId
+          })
         });
 
-        if (res.ok) {
-            router.push('/') // redirect to home page
-        }
+      if (res.ok) {
+        router.push('/') // redirect to home page
+      }
 
-    } catch(error) {
-        console.log(error);
+    } catch (error) {
+      console.log(error);
     }
 
   }
@@ -87,7 +87,7 @@ export default function EditProjectForm({ project }: { project: TProject }) {
           Project Title
         </label>
         <input
-        onChange={e => setTitle(e.target.value)}
+          onChange={e => setTitle(e.target.value)}
           type="text"
           className="form-control"
           id="project-title-input"
@@ -99,7 +99,7 @@ export default function EditProjectForm({ project }: { project: TProject }) {
           Project Description
         </label>
         <textarea
-        onChange={e => setDescription(e.target.value)}
+          onChange={e => setDescription(e.target.value)}
           className="form-control"
           id="exampleFormControlTextarea1"
           rows={3}
@@ -110,7 +110,7 @@ export default function EditProjectForm({ project }: { project: TProject }) {
           Date & Time
         </label>
         <input
-        onChange={e => setEventTime(e.target.value)}
+          onChange={e => setEventTime(e.target.value)}
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
@@ -122,7 +122,7 @@ export default function EditProjectForm({ project }: { project: TProject }) {
           Location
         </label>
         <input
-        onChange={e => setLocation(e.target.value)} 
+          onChange={e => setLocation(e.target.value)}
           type="text"
           className="form-control"
           id="exampleFormControlInput1"

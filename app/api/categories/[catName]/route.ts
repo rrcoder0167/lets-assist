@@ -7,11 +7,10 @@ export async function GET(
 ) {
     try {
         const catName = params.catName;
-        const projects = await prisma.category.findUnique({ where: {catName}, include: { projects: { include: {author: true}, orderBy: { createdAt: "desc" } } }, });
+        const projects = await prisma.category.findUnique({ where: { catName }, include: { projects: { include: { author: true }, orderBy: { createdAt: "desc" } } }, });
         return NextResponse.json(projects)
-    } catch(error) {
+    } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "Could not fetch project." }, {status: 500});
+        return NextResponse.json({ message: "Could not fetch project." }, { status: 500 });
     }
-
 }

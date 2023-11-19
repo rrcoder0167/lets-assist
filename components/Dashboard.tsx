@@ -28,7 +28,7 @@ export default function Dashboard() {
 
   return (
     <>
-    <div className="projects-container">
+      <div className="projects-container">
         <a href="/create-project" className="btn btn-success createbtn">
           <i className="bi bi-plus-lg"></i>
           Create a Volunteering Opportunity

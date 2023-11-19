@@ -55,7 +55,7 @@ export default function RegisterForm() {
         setError("User already exists.");
         return;
       }
-      
+
       const res = await fetch('api/register', {
         method: "POST",
         headers: {

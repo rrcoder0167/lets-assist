@@ -7,7 +7,6 @@ import bcrypt from "bcryptjs";
 import { AuthOptions } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
-
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const githubClientId = process.env.GITHUB_CLIENT_ID;
