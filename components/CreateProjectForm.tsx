@@ -34,36 +34,36 @@ export default function CreateProjectForm() {
     e.preventDefault();
 
     if (!title || !description) {
-        setError("Title and Content are required.");
-        return;
+      setError("Title and Content are required.");
+      return;
     }
-    
+
     try {
-        const res = await fetch ('/api/projects/',
+      const res = await fetch('/api/projects/',
         {
-            
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    title,
-                    description,
-                    selectedCategory,
-                    image,
-                    location,
-                    eventTime,
-                    publicId,
-                    participants
-                    })
+
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            title,
+            description,
+            selectedCategory,
+            image,
+            location,
+            eventTime,
+            publicId,
+            participants
+          })
         });
 
-        if (res.ok) {
-            router.push('/') // redirect to home page
-        }
+      if (res.ok) {
+        router.push('/') // redirect to home page
+      }
 
-    } catch(error) {
-        console.log(error);
+    } catch (error) {
+      console.log(error);
     }
 
   }
@@ -76,32 +76,33 @@ export default function CreateProjectForm() {
       const url = info.secure_url as string;
       const public_id = info.public_id as string;
       setImage(url);
-      setPublicId(public_id); 
+      setPublicId(public_id);
       console.log("url: ", url);
       console.log("public_id: ", public_id);
-    }};
+    }
+  };
 
-    const removeImage = async (e: React.FormEvent) => {
-      e.preventDefault();
+  const removeImage = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-      try {
+    try {
 
-        const res = await fetch('/api/removeImage', {
-          method: "POST", 
-          headers: { "Content-Type": "application/json"},
-          body: JSON.stringify({publicId})
-        });
-  
-        if (res.ok) {
-          setImage("");
-          setPublicId("");
-        }
+      const res = await fetch('/api/removeImage', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ publicId })
+      });
 
-      } catch(error) {
-        console.log(error);
+      if (res.ok) {
+        setImage("");
+        setPublicId("");
       }
 
-    };
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -111,19 +112,19 @@ export default function CreateProjectForm() {
           Project Title
         </label>
         <input
-        onChange={e => setTitle(e.target.value)}
+          onChange={e => setTitle(e.target.value)}
           type="text"
           className="form-control"
           id="project-title-input"
           placeholder="What do you want to name your project?"
         />
-        
+
 
         <label htmlFor="exampleFormControlTextarea1" className="form-label">
           Project Description
         </label>
         <textarea
-        onChange={e => setDescription(e.target.value)}
+          onChange={e => setDescription(e.target.value)}
           className="form-control"
           id="exampleFormControlTextarea1"
           rows={3}
@@ -133,7 +134,7 @@ export default function CreateProjectForm() {
           Date & Time
         </label>
         <input
-        onChange={e => setEventTime(e.target.value)}
+          onChange={e => setEventTime(e.target.value)}
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
@@ -144,7 +145,7 @@ export default function CreateProjectForm() {
           Location
         </label>
         <input
-        onChange={e => setLocation(e.target.value)} 
+          onChange={e => setLocation(e.target.value)}
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
@@ -165,13 +166,13 @@ export default function CreateProjectForm() {
       </label>
       <input type="range" className="form-range" id="customRange1" />
       <CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-      onUpload={handleImageUpload}>
-            Upload Image
-            {/*image && <Image src={image} alt={title} />*/}
+        onUpload={handleImageUpload}>
+        Upload Image
+        {/*image && <Image src={image} alt={title} />*/}
       </CldUploadButton>
-      
+
       {publicId && <button className="btn btn-danger" onClick={removeImage}>Remove Image</button>}
-            {/*
+      {/*
       <CldUploadButton
       uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
       onUpload={handleImageUpload}

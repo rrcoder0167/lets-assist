@@ -27,10 +27,10 @@ export default function DeleteButton({ id }: { id: string }) {
     };
     return (
         <>
-        <button onClick={handleDelete}>
-        <FaTrash/>
-            Delete
-        </button>
+            <button onClick={handleDelete}>
+                <FaTrash />
+                Delete
+            </button>
         </>
     );
 

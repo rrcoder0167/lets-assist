@@ -1,7 +1,7 @@
 export type TCategory = {
-    id: string;
-    catName: string;
-  };
+  id: string;
+  catName: string;
+};
 
 export type TProject = {
   id: string;

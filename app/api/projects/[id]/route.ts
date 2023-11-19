@@ -7,28 +7,28 @@ export async function GET(
 ) {
     try {
         const id = params.id;
-        const project = await prisma.project.findUnique({ where: {id} });
+        const project = await prisma.project.findUnique({ where: { id } });
         return NextResponse.json(project)
-    } catch(error) {
+    } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "Could not fetch project." }, {status: 500});
+        return NextResponse.json({ message: "Could not fetch project." }, { status: 500 });
     }
 
 }
 
 export async function PUT(
     req: Request,
-    { params }: { params: { id: string } }   
+    { params }: { params: { id: string } }
 ) {
     const { title, description, selectedCategory, spots, image, eventTime, participants, location, publicId } = await req.json();
     const id = params.id;
     try {
         const project = await prisma.project.update({
-            where: {id},
+            where: { id },
             data: {
                 title,
                 description,
-                catName:selectedCategory,
+                catName: selectedCategory,
                 spots,
                 eventTime,
                 image,
@@ -40,7 +40,7 @@ export async function PUT(
 
         return NextResponse.json(project);
 
-    } catch(error) {
+    } catch (error) {
         console.log(error);
         return NextResponse.json({ message: "Could not update project." });
     }
@@ -54,7 +54,7 @@ export async function DELETE(
     try {
         const project = await prisma.project.delete({ where: { id } });
         return NextResponse.json(project);
-    } catch(error) {
+    } catch (error) {
         console.log(error);
         return NextResponse.json({ message: "Could not delete project." });
     }

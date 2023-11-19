@@ -11,7 +11,8 @@ const getProjects = async (email: string) => {
         return projects;
     } catch (error) {
         return null;
-}};
+    }
+};
 
 export default async function Projects() {
     const session = await getServerSession(authOptions);
@@ -27,28 +28,28 @@ export default async function Projects() {
     }
 
     return (
-    <div>
-        <h1>Projects</h1>
-        <p>Projects will go here</p>
-        {projects && projects.length > 0 ? (
+        <div>
+            <h1>Projects</h1>
+            <p>Projects will go here</p>
+            {projects && projects.length > 0 ? (
                 projects.map((project: TProject) => <Project
-                                                    key={project.id}
-                                                    id={project.id}
-                                                    author={""}
-                                                    authorEmail={project.authorEmail}
-                                                    date={project.createdAt}
-                                                    image={project.image}
-                                                    location={project.location}
-                                                    participants={project.participants || []}
-                                                    category={project.catName}
-                                                    eventTime={project.eventTime}
-                                                    title={project.title}
-                                                    spots={project.spots}
-                                                    description={project.description}
-                                                        />)
+                    key={project.id}
+                    id={project.id}
+                    author={""}
+                    authorEmail={project.authorEmail}
+                    date={project.createdAt}
+                    image={project.image}
+                    location={project.location}
+                    participants={project.participants || []}
+                    category={project.catName}
+                    eventTime={project.eventTime}
+                    title={project.title}
+                    spots={project.spots}
+                    description={project.description}
+                />)
             ) : (
                 <div>No Posts created yet.</div>
             )
             }
-    </div>)
+        </div>)
 }
