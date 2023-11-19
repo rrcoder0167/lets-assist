@@ -4,6 +4,7 @@
   overflow: hidden;
   max-width: 300px;
   display: flex;
+  margin-top: 20px;
   flex-direction: column;
   border-radius: 10px;
   margin-left: 25px;
