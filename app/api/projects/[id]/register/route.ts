@@ -1,4 +1,3 @@
-import { Request } from 'next/server';
 import prisma from '@/lib/prismadb';
 import { NextResponse } from 'next/server';
 
@@ -19,11 +18,13 @@ export async function PUT(
         }
 
         const updatedParticipants = [...project.participants, participants];
-
+        const updatedSpots = (project.spots - 1).toString();//temp solution, will change spots to integer later
+        
         const updatedProject = await prisma.project.update({
             where: { id },
             data: {
                 participants: updatedParticipants,
+                spots: updatedSpots,
             }
         });
 
@@ -52,10 +53,11 @@ export async function DELETE(
         }
 
         const updatedParticipants = project.participants.filter(p => p !== participant);
-
+        const updatedSpots = (parseInt(project.spots) + 1).toString();//temp solution, will change spots to integer later
         const updatedProject = await prisma.project.update({
             where: { id },
             data: {
+                spots: updatedSpots,
                 participants: updatedParticipants,
             }
         });
