@@ -11,8 +11,7 @@ import { useSession } from "next-auth/react";
 import { FaClock, FaUsers } from 'react-icons/fa';
 import DeleteButton from "./DeleteButton";
 import React, { useEffect, useState } from 'react';
-import { TCategory } from '@/app/types';
-
+import { TCategory, TProject } from '@/app/types';
 
 interface PostProps {
   id: string,
@@ -155,7 +154,7 @@ export default function Project({ id, author, eventTime, image, authorEmail, spo
             ? <button onClick={handleUnregisterProject} className="btn btn-danger">Unregister</button>
             : <button onClick={handleRegisterProject} className="btn btn-success">Sign Up</button>
           }
-          <a href="#" className="btn btn-primary">Learn More</a>
+          <a href={"/learn-more/" + id} className="btn btn-primary">Learn More</a>
         </div>
       </div>
     </div>

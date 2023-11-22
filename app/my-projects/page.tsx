@@ -29,8 +29,8 @@ export default async function Projects() {
 
     return (
         <div>
-            <h1>Projects</h1>
-            <p>Projects will go here</p>
+            <title>My Projects</title>
+            <small className="text-muted">These are the projects you have created!</small>
             {projects && projects.length > 0 ? (
                 projects.map((project: TProject) => <Project
                     key={project.id}

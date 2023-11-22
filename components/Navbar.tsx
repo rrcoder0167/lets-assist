@@ -69,7 +69,7 @@ export default function Navbar() {
               <div className="user-name">{session?.user?.name}</div>
               <div className="user-email">{session?.user?.email}</div>
               <a href="#">Account Settings</a>
-              <a href="/projects">My Projects</a>
+              <a href="/my-projects">My Projects</a>
               <a href="#">Send Feedback</a>
               <a href="#">Report a Bug</a>
               <hr></hr>

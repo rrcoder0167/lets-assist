@@ -82,20 +82,21 @@ export default function RegisterForm() {
 
   return (
     <>
+      <title>Sign up for Let's Assist</title>
       <div className="container">
         <h2>Don&apos;t have an account? No Problem!</h2>
         <div className="login-container">
           <div className="oauth-buttons">
             <button onClick={handleGithubSignUp} className="oauth-button github">
-              Signup with GitHub
+              Sign up with GitHub
               <Image src="/github-logo.png" className="github-icon" alt="GitHub sign-in" width={512} height={512} />
             </button>
             <button onClick={handleGoogleSignUp} className="oauth-button google">
-              Signup with Google
+              Sign up with Google
               <Image src="/google-logo.png" className="google-icon" alt="Google sign-in" width={512} height={512} />
             </button>
             <button className="oauth-button apple">
-              Signup with Apple
+              Sign up with Apple
               <Image src="/apple-logo.png" className="apple-icon" alt="Apple sign-up" width={512} height={512}></Image>
             </button>
           </div>

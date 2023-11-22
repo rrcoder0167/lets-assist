@@ -1,7 +1,7 @@
 import { TProject } from "@/app/types";
 import Projects from "@/components/Projects";
 import { FaRegSadTear } from 'react-icons/fa';
-import "./page.css"
+import "./page.css";
 
 const getProjects = async (catName: string): Promise<TProject[] | null> => {
   try {
