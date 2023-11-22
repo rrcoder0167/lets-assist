@@ -3,23 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { TProject } from "@/app/types";
 import { redirect } from "next/navigation";
-
-const getProject = async (id: string): Promise<TProject | null> => {
-    try {
-        const res = await fetch(`http://localhost:3000/api/projects/${id}`, {
-            cache: "no-store",
-        });
-
-        if (res.ok) {
-            const post = await res.json();
-            return post;
-        }
-
-    } catch (error) {
-        console.log(error);
-    }
-    return null;
-};
+import { GetProject } from "@/components/GetProject";
 
 export default async function EditProject({ params }: { params: { id: string } }) {
 
@@ -31,10 +15,11 @@ export default async function EditProject({ params }: { params: { id: string } }
         redirect('/login')
     }
     const id = params.id;
-    const project = await getProject(id);
+    const project = await GetProject(id);
 
     return (
         <>
+        <title>{project?.title}</title>
             {project ? <EditProjectForm project={project} /> : <div>Project not found</div>}
         </>
     )

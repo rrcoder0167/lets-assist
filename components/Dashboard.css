@@ -8,10 +8,12 @@
     margin-right: 2%;
     margin-left: 2%;
     position: relative;
+    align-items: center;
 }
 
 .createbtn {
-    position: absolute;
+    position: relative;
+    align-items: center;
     right: 0;
     top: 0;
 }

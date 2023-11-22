@@ -54,8 +54,9 @@ export default function LoginPage() {
 
   return (
     <>
+      <title>Log in to Let's Assist</title>
       <div className="login-container">
-        <h2>Login to Let&apos;s Assist</h2>
+        <h2>Log in to Let&apos;s Assist</h2>
         <div className="oauth-buttons">
           <button onClick={handleGithubSignIn} className="oauth-button github">
             Log in with GitHub

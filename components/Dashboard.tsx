@@ -28,13 +28,13 @@ export default function Dashboard() {
 
   return (
     <>
+      <CategoriesList />
       <div className="projects-container">
         <a href="/create-project" className="btn btn-success createbtn">
           <i className="bi bi-plus-lg"></i>
           Create a Volunteering Opportunity
         </a>
       </div>
-      <CategoriesList />
       <div className="card-container">
         {projects && projects.length > 0 ? (
           projects.map((project) => (
