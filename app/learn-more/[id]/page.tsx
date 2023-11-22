@@ -5,6 +5,7 @@ import { TProject } from '@/app/types';
 import { GetProject } from "@/components/GetProject";
 import { FaReceipt, FaMapMarkerAlt, FaClock, FaList, FaUser } from 'react-icons/fa';
 import TimeInput from 'react-time-picker/dist/TimeInput';
+import { FormatDateTime } from '@/components/FormatDateTime';
 
 export default async function LearnMore({ params }: { params: { id: string } }) {
     const id = params.id;
@@ -20,7 +21,7 @@ export default async function LearnMore({ params }: { params: { id: string } }) 
                 <p className="text-muted d-inline">Location <FaMapMarkerAlt /></p>
                 <p>{project?.location}</p>
                 <p className="text-muted d-inline">Date & Time <FaClock /></p>
-                <p>{project?.eventTime}</p>
+                <p>{FormatDateTime(project?.eventTime)}</p>
                 <p className="text-muted d-inline">Category <FaList /></p>
                 <p>{project?.category}</p>
                 <p className="text-muted d-inline">Created By <FaUser /></p>

@@ -5,6 +5,7 @@ import { TCategory, TProject } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { set } from "mongoose";
 import "./EditProjectForm.css";
+import { FormatDateTime } from "./FormatDateTime";
 
 export default function EditProjectForm({ project }: { project: TProject }) {
   const [title, setTitle] = useState("");
@@ -115,7 +116,7 @@ export default function EditProjectForm({ project }: { project: TProject }) {
           className="form-control"
           id="exampleFormControlInput1"
           placeholder="name@example.com"
-          value={eventTime}
+          value={FormatDateTime(eventTime)}
         />
 
         <label htmlFor="exampleFormControlInput1" className="form-label">
