@@ -12,6 +12,7 @@ import { FaClock, FaUsers } from 'react-icons/fa';
 import DeleteButton from "./DeleteButton";
 import React, { useEffect, useState } from 'react';
 import { TCategory, TProject } from '@/app/types';
+import Refresh from "./Refresh";
 
 interface PostProps {
   id: string,
@@ -72,7 +73,7 @@ export default function Project({ id, author, eventTime, image, authorEmail, spo
       });
 
       if (res.ok) {
-        router.push('/') // redirect to home page
+        Refresh();
       }
     } catch (error) {
       console.log(error);
@@ -93,7 +94,7 @@ export default function Project({ id, author, eventTime, image, authorEmail, spo
       });
 
       if (res.ok) {
-        router.push('/') // redirect to home page
+        Refresh();
       }
     } catch (error) {
       console.log(error);

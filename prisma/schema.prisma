@@ -101,4 +101,5 @@ model ForumPost {
   authorEmail String
   replies     ForumReply[]
   replyIDs    String[]     @db.ObjectId
+  resolved    Boolean      @default(false)
 }

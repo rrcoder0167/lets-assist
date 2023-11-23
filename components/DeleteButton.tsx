@@ -1,4 +1,5 @@
 "use client";
+import Refresh from './Refresh';
 
 import { FaTrash } from 'react-icons/fa'; // Import the delete icon (assuming you have a delete icon in the library)
 
@@ -17,7 +18,7 @@ export default function DeleteButton({ id }: { id: string }) {
                 });
 
                 if (res.ok) {
-                    console.log("Post deleted");
+                    Refresh();
                 }
 
             } catch (error) {
