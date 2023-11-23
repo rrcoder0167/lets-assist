@@ -48,6 +48,7 @@ model User {
   projects      Project[]
   ForumPost     ForumPost[]
   ForumReply    ForumReply[]
+  Message       Message[]
 }
 
 model VerificationToken {
@@ -60,21 +61,23 @@ model VerificationToken {
 }
 
 model Project {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  title        String
-  description  String
-  image        String? //? is for now
-  publicId     String?
-  catName      String?
-  category     Category? @relation(fields: [catName], references: [catName])
-  author       User      @relation(fields: [authorEmail], references: [email])
-  authorEmail  String
-  location     String
-  eventTime    String
-  spots        String? //? is for now
-  participants String[]
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  image         String? //? is for now
+  publicId      String?
+  catName       String?
+  category      Category?   @relation(fields: [catName], references: [catName])
+  author        User        @relation(fields: [authorEmail], references: [email])
+  authorEmail   String
+  location      String
+  eventTime     String
+  spots         String? //? is for now
+  participants  String[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  projectChat   ProjectChat @relation(fields: [projectChatId], references: [id])
+  projectChatId String      @db.ObjectId
 }
 
 model Category {
@@ -102,4 +105,20 @@ model ForumPost {
   replies     ForumReply[]
   replyIDs    String[]     @db.ObjectId
   resolved    Boolean      @default(false)
+}
+
+model Message {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  contents      String
+  author        User         @relation(fields: [authorEmail], references: [email])
+  authorEmail   String
+  ProjectChat   ProjectChat? @relation(fields: [projectChatId], references: [id])
+  projectChatId String?      @db.ObjectId
+  isImportant   Boolean
+}
+
+model ProjectChat {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  messages Message[]
+  Project  Project[]
 }
