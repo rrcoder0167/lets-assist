@@ -12,22 +12,33 @@ make launch
 ```
 This is a better alternative to just running `npm run dev` as it will automatically handle other things needed before launching such as database changes.
 
+<style>
+    ul.a {
+        list-style-type: square;
+    }
+
+    ul.b {
+        list-style-type: circle;
+    }
+</style>
+
 <details>
 <summary>Features:</summary>
-- Sign up with GitHub/Google/Apple/Credentials.
-- Log in with GitHub/Google/Apple/Credentials.
-- Sign out.
-- Create / Edit / Delete opportunities.
-- Sign up for / Learn more about opportunities.
+<li>Sign up with GitHub/Google/Apple/Credentials</li>
+<li>Log in with GitHub/Google/Apple/Credentials</li>
+<li>Sign out</li>
+<li>Create / Edit / Delete opportunities</li>
+<li>Sign up for / Learn more about opportunities</li>
 </details>
 
 <details>
 <summary>Tech Stack:</summary>
-- Frontend: Next.js
-- Backend: Node.js
-- Database: MongoDB
-- Database ORM: Prisma
-- Styling: Bootstrap CSS
-- Authentication: Next-Auth
-- Deployed using Vercel
+<ul>
+<li>Frontend: Next.js</li>
+<li>Backend: Node.js</li>
+<li>Database: MongoDB</li>
+<li>Database ORM: Prisma</li>
+<li>Styling: Bootstrap CSS</li>
+<li>Authentication: Next-Auth</li>
+<li>Deployed using Vercel</li>
 </details>
