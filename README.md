@@ -12,16 +12,6 @@ make launch
 ```
 This is a better alternative to just running `npm run dev` as it will automatically handle other things needed before launching such as database changes.
 
-<style>
-    ul.a {
-        list-style-type: square;
-    }
-
-    ul.b {
-        list-style-type: circle;
-    }
-</style>
-
 <details>
 <summary>Features:</summary>
 <li>Sign up with GitHub/Google/Apple/Credentials</li>
