@@ -13,7 +13,7 @@ make launch
 This is a better alternative to just running `npm run dev` as it will automatically handle other things needed before launching such as database changes.
 
 <details>
-<summary>## Features:</summary>
+<summary>Features:</summary>
 - Sign up with GitHub/Google/Apple/Credentials.
 - Log in with GitHub/Google/Apple/Credentials.
 - Sign out.
@@ -21,8 +21,13 @@ This is a better alternative to just running `npm run dev` as it will automatica
 - Sign up for / Learn more about opportunities.
 </details>
 
-## Tech Stack:
-### Frontend: NextJS
-### Backend: Node.JS
-#### Deployed using Vercel
-
+<details>
+<summary>Tech Stack:</summary>
+- Frontend: Next.js
+- Backend: Node.js
+- Database: MongoDB
+- Database ORM: Prisma
+- Styling: Bootstrap CSS
+- Authentication: Next-Auth
+- Deployed using Vercel
+</details>
