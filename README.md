@@ -14,11 +14,13 @@ This is a better alternative to just running `npm run dev` as it will automatica
 
 <details>
 <summary>Features:</summary>
+<ul>
 <li>Sign up with GitHub/Google/Apple/Credentials</li>
 <li>Log in with GitHub/Google/Apple/Credentials</li>
 <li>Sign out</li>
 <li>Create / Edit / Delete opportunities</li>
 <li>Sign up for / Learn more about opportunities</li>
+</ul>
 </details>
 
 <details>
