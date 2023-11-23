@@ -6,10 +6,12 @@ import { GetProject } from "@/components/GetProject";
 import { FaReceipt, FaMapMarkerAlt, FaClock, FaList, FaUser } from 'react-icons/fa';
 import TimeInput from 'react-time-picker/dist/TimeInput';
 import { FormatDateTime } from '@/components/FormatDateTime';
+import { GetAuthor } from "@/components/GetAuthor";
 
 export default async function LearnMore({ params }: { params: { id: string } }) {
     const id = params.id;
     const project = await GetProject(id);
+    const pAuthor = await GetAuthor(project?.authorEmail);
 
     return (
         <>
@@ -23,9 +25,9 @@ export default async function LearnMore({ params }: { params: { id: string } }) 
                 <p className="text-muted d-inline">Date & Time <FaClock /></p>
                 <p>{FormatDateTime(project?.eventTime)}</p>
                 <p className="text-muted d-inline">Category <FaList /></p>
-                <p>{project?.category}</p>
+                <p>{project?.catName}</p>
                 <p className="text-muted d-inline">Created By <FaUser /></p>
-                <p>{project?.author?.name}</p>
+                <p>{pAuthor?.name}</p>
             </div>
         </>
     );
