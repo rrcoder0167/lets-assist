@@ -53,7 +53,7 @@ export default function Dashboard() {
             />
           ))
         ) : (
-          <div>No Posts to display</div>
+          <div>No projects to display</div>
         )}
       </div>
     </>
