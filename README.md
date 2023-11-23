@@ -32,5 +32,5 @@ This is a better alternative to just running `npm run dev` as it will automatica
 <li>Database ORM: Prisma</li>
 <li>Styling: Bootstrap CSS</li>
 <li>Authentication: Next-Auth</li>
-<li>Deployed using Vercel</li>
+<li>Deployment: Vercel</li>
 </details>
