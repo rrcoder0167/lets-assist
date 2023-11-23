@@ -33,4 +33,5 @@ This is a better alternative to just running `npm run dev` as it will automatica
 <li>Styling: Bootstrap CSS</li>
 <li>Authentication: Next-Auth</li>
 <li>Deployment: Vercel</li>
+</ul>
 </details>
