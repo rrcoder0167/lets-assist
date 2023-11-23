@@ -11,7 +11,7 @@ import { GetAuthor } from "@/components/GetAuthor";
 export default async function LearnMore({ params }: { params: { id: string } }) {
     const id = params.id;
     const project = await GetProject(id);
-    const pAuthor = await GetAuthor(project?.authorEmail);
+    const author = await GetAuthor(project?.authorEmail);
 
     return (
         <>
@@ -27,7 +27,7 @@ export default async function LearnMore({ params }: { params: { id: string } }) 
                 <p className="text-muted d-inline">Category <FaList /></p>
                 <p>{project?.catName}</p>
                 <p className="text-muted d-inline">Created By <FaUser /></p>
-                <p>{pAuthor?.name}</p>
+                <p>{author?.name}</p>
             </div>
         </>
     );

@@ -38,14 +38,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?   @unique
+  email         String?      @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   projects      Project[]
+  ForumPost     ForumPost[]
+  ForumReply    ForumReply[]
 }
 
 model VerificationToken {
@@ -80,4 +82,23 @@ model Category {
   catName    String    @unique
   projects   Project[]
   projectIDs String[]  @db.ObjectId
+}
+
+model ForumReply {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  contents    String
+  author      User       @relation(fields: [authorEmail], references: [email])
+  authorEmail String
+  ForumPost   ForumPost? @relation(fields: [forumPostId], references: [id])
+  forumPostId String?    @db.ObjectId
+}
+
+model ForumPost {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  contents    String
+  author      User         @relation(fields: [authorEmail], references: [email])
+  authorEmail String
+  replies     ForumReply[]
+  replyIDs    String[]     @db.ObjectId
 }

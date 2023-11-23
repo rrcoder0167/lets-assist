@@ -22,7 +22,7 @@ export default function LoginPage() {
     signIn("google");
   };
   const handleGithubSignIn = () => {
-    signIn("github")
+    signIn("github");
   }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
