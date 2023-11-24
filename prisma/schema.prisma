@@ -61,23 +61,23 @@ model VerificationToken {
 }
 
 model Project {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   description   String
   image         String? //? is for now
   publicId      String?
   catName       String?
-  category      Category?   @relation(fields: [catName], references: [catName])
-  author        User        @relation(fields: [authorEmail], references: [email])
+  category      Category?    @relation(fields: [catName], references: [catName])
+  author        User         @relation(fields: [authorEmail], references: [email])
   authorEmail   String
   location      String
   eventTime     String
   spots         String? //? is for now
   participants  String[]
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   projectChat   ProjectChat? @relation(fields: [projectChatId], references: [id]) // keshav until u fix this, i will use this
-  projectChatId String?      @db.ObjectId// keshav until u fix this, i will use this
+  projectChatId String?      @db.ObjectId // keshav until u fix this, i will use this
 }
 
 model Category {
