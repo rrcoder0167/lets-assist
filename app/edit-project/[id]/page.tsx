@@ -1,6 +1,6 @@
 import EditProjectForm from "@/components/EditProjectForm"
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 import { TProject } from "@/app/types";
 import { redirect } from "next/navigation";
 import { GetProject } from "@/components/GetProject";
