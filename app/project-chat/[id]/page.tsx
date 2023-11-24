@@ -15,31 +15,5 @@ const updateChat = async (cId: string) => {
 
 export default function ProjectChat({ params }: { params: { id: string } })
 {
-    const session = getServerSession(authOptions);
-
-    const chat = prisma.projectChat.findUnique({
-        where: {
-            id: params.id
-        }
-    });
-
-    if (!chat) {
-        throw error("Bald");
-    }
-
-    const chatProjectId = chat?.projectId;
-
-    if (!chatProjectId) {
-        throw error("Balder");
-    }
-
-    const chatOpportunity = prisma.project.findUnique({
-        where: {
-            id: projectChatId
-        }
-    });
-
-    if (!chatOpportunity) {
-        throw error("Bald-est");
-    }
+    
 }
