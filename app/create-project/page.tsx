@@ -1,4 +1,4 @@
-import { authOptions } from '../api/auth/[...nextauth]/route';
+import { authOptions } from "@/lib/authOptions";
 import CreateProjectForm from '@/components/CreateProjectForm';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';

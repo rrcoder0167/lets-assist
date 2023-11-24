@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth/next";
 import Project from "@/components/Projects";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 import { redirect } from "next/navigation";
 import { TProject } from "../types";
 

@@ -76,8 +76,8 @@ model Project {
   participants  String[]
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-  projectChat   ProjectChat @relation(fields: [projectChatId], references: [id])
-  projectChatId String      @db.ObjectId
+  projectChat   ProjectChat? @relation(fields: [projectChatId], references: [id]) // keshav until u fix this, i will use this
+  projectChatId String?      @db.ObjectId// keshav until u fix this, i will use this
 }
 
 model Category {

@@ -82,7 +82,7 @@ export default function RegisterForm() {
 
   return (
     <>
-      <title>Sign up for Let's Assist</title>
+      <title>Sign up for Let&apos;s Assist</title>
       <div className="container">
         <h2>Don&apos;t have an account? No Problem!</h2>
         <div className="login-container">

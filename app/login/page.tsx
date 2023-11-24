@@ -54,7 +54,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <title>Log in to Let's Assist</title>
+      <title>Log in to Let&apos;s Assist</title>
       <div className="login-container">
         <h2>Log in to Let&apos;s Assist</h2>
         <div className="oauth-buttons">
