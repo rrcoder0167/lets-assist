@@ -1,5 +1,6 @@
 import prisma from '@/lib/prismadb';
 import { NextResponse } from 'next/server';
+import { TProject } from "@/app/types";
 
 export async function PUT(
     req: Request,
@@ -18,7 +19,7 @@ export async function PUT(
         }
 
         const updatedParticipants = [...project.participants, participants];
-        const updatedSpots = (project.spots - 1).toString();//temp solution, will change spots to integer later
+        const updatedSpots = project.spots - 1;
         
         const updatedProject = await prisma.project.update({
             where: { id },
@@ -53,7 +54,7 @@ export async function DELETE(
         }
 
         const updatedParticipants = project.participants.filter(p => p !== participant);
-        const updatedSpots = (parseInt(project.spots) + 1).toString();//temp solution, will change spots to integer later
+        const updatedSpots = project.spots + 1
         const updatedProject = await prisma.project.update({
             where: { id },
             data: {
@@ -73,7 +74,7 @@ export async function DELETE(
 export async function GET() {
     try {
         const participants = await prisma.project.findMany();
-        return res.json(participants);
+        return NextResponse.json(participants);
     } catch (error) {
         console.log(error);
         return NextResponse.json("Something went wrong")

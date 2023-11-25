@@ -3,7 +3,6 @@ import Image from "next/image";
 import "./Projects.css"
 import Link from "next/link";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { FaEllipsisV } from 'react-icons/fa'; // Import the three-dot icon
 import { FaEdit } from 'react-icons/fa'; // Import the edit icon (assuming you have an edit icon in the library)
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -18,7 +17,7 @@ interface PostProps {
   id: string,
   author: string,
   eventTime: string,
-  spots: string,
+  spots: number,
   image?: string,
   authorEmail?: string, // ? means options
   title: string,

@@ -155,7 +155,7 @@ export default function CreateProjectForm() {
         Date & Time
       </label>
       <DateTimePicker
-        onChange={setEventTime}
+        onChange={e => setEventTime/*potentiallbroken*/}
         value={eventTime}
         className="form-control"
         id="dateTimePicker"
@@ -197,7 +197,7 @@ export default function CreateProjectForm() {
       value={spots}
       className="spots-range"
       id="customRange1"
-      onInput={(e) => setSpots(e.target.value)}
+      onInput={(e) => setSpots(spots)/*potentiallbroken*/}
       />
     <div className="popover">{spots <= 100 ? spots : '100+'}</div>
       <CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
