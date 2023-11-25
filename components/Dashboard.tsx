@@ -47,6 +47,7 @@ export default function Dashboard() {
               location={project.location}
               category={project.catName}
               title={project.title}
+              participants={project.participants}
               date={project.createdAt}
               spots={project.spots}
               description={project.description}

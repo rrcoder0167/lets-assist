@@ -11,13 +11,13 @@ export type TProject = {
   image?: string;
   publicId?: string;
   createdAt: string;
-  participants: null | string[];
+  participants: string[];
   catName?: string;
-  spots: string;
+  spots: number;
   location: string;
   eventTime: string;
   authorEmail: string;
   author: {
     name: string;
   };
-}
+} 

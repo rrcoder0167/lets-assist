@@ -12,7 +12,7 @@ export default function Home() {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-  let timeoutId;
+  let timeoutId:any; //change this any to something else, not important right now
   if (status === "loading") {
     timeoutId = setTimeout(() => {
       setIsLoading(false);

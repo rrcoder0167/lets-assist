@@ -72,7 +72,7 @@ model Project {
   authorEmail   String
   location      String
   eventTime     String
-  spots         String? //? is for now
+  spots         Int
   participants  String[]
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
