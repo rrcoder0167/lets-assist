@@ -155,7 +155,7 @@ export default function CreateProjectForm() {
         Date & Time
       </label>
       <DateTimePicker
-        onChange={e => setEventTime/*potentiallbroken*/}
+        onChange={(newDate) => newDate && setEventTime(newDate)}
         value={eventTime}
         className="form-control"
         id="dateTimePicker"
@@ -164,12 +164,12 @@ export default function CreateProjectForm() {
           Location
         </label>
         <input
-          onChange={e => setLocation(e.target.value)}
-          type="text"
-          className="form-control"
-          id="exampleFormControlInput1"
-          placeholder="Example Street, Example City, EX"
-        />
+  onChange={(e) => setLocation(e.target.value)}
+  type="text"
+  className="form-control"
+  id="exampleFormControlInput1"
+  placeholder="Example Street, Example City, EX"
+/>
         {/*
         <GeoapifyContext apiKey="d3ea90d5656045209c5ac03c54841e3f">
         <GeoapifyGeocoderAutocomplete
@@ -197,7 +197,7 @@ export default function CreateProjectForm() {
       value={spots}
       className="spots-range"
       id="customRange1"
-      onInput={(e) => setSpots(spots)/*potentiallbroken*/}
+      onChange={(event) => setSpots(Number(event.target.value))}
       />
     <div className="popover">{spots <= 100 ? spots : '100+'}</div>
       <CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}

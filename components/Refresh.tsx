@@ -1,9 +1,7 @@
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+
 const Refresh = () => {
   const router = useRouter();
-  const handleRefresh = () => {
-    router.reload();
-  };
-  return null;
+    router.refresh();
 };
 export default Refresh;
