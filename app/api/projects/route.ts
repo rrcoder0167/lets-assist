@@ -37,7 +37,7 @@ export async function POST(req: Request) {
             }
         });
 
-        console.log("Post Created");
+        console.log("Project Created");
         return NextResponse.json(newProject);
 
     } catch (error) {

@@ -16,10 +16,13 @@ export default function DeleteButton({ id }: { id: string }) {
                         "Content-Type": "application/json"
                     },
                 });
+                const data = await res.json(); // Parse the response body
+
+                console.log(`Response status: ${res.status}`, data); // Log the response status and body
 
                 if (res.ok) {
                     console.log("Project deleted");
-                    Refresh();
+                    location.reload(); // Use location.reload() to refresh the page
                 }
 
             } catch (error) {
