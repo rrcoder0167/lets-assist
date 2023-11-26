@@ -9,7 +9,7 @@ export async function GET(
     try {
         const projectChat = await prisma.projectChat.findUnique({
             where: {
-                id: cId
+                id: params.cId
             }
         });
         return NextResponse.json(projectChat);
