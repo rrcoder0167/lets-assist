@@ -5,6 +5,7 @@ import { TCategory, TProject } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { set } from "mongoose";
 import "./EditProjectForm.css";
+import DateTimePicker from 'react-datetime-picker';
 import { FormatDateTime } from "./FormatDateTime";
 
 export default function EditProjectForm({ project }: { project: TProject }) {
@@ -14,9 +15,10 @@ export default function EditProjectForm({ project }: { project: TProject }) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [image, setImage] = useState("");
   const [location, setLocation] = useState("");
-  const [eventTime, setEventTime] = useState("");
+  const [eventTime, setEventTime] = useState(new Date());
   const [publicId, setPublicId] = useState("");
   const [error, setError] = useState("");
+  const [spots, setSpots] = useState(1);
 
   const router = useRouter();
   useEffect(() => {
@@ -34,13 +36,14 @@ export default function EditProjectForm({ project }: { project: TProject }) {
       setSelectedCategory(project.catName || '');
       setImage(project.image || '');
       setLocation(project.location);
-      setEventTime(project.eventTime);
+      setSpots(project.spots || 1);
       setPublicId(project.publicId || '');
+      setEventTime(new Date());
 
     }
 
     initValues();
-  }, [project.title, project.description, project.catName, project.image, project.location, project.eventTime, project.publicId]);
+  }, [project.title, project.description, project.catName, project.image, project.location, project.eventTime, project.spots, project.publicId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,16 +110,14 @@ export default function EditProjectForm({ project }: { project: TProject }) {
           value={description}
         ></textarea>
 
-        <label htmlFor="exampleFormControlInput1" className="form-label">
+        <label htmlFor="dateTimePicker" className="form-label">
           Date & Time
         </label>
-        <input
-          onChange={e => setEventTime(e.target.value)}
-          type="text"
+        <DateTimePicker
+          onChange={(newDate) => newDate && setEventTime(newDate)}
+          value={eventTime}
           className="form-control"
-          id="exampleFormControlInput1"
-          placeholder="name@example.com"
-          value={FormatDateTime(eventTime)}
+          id="dateTimePicker"
         />
 
         <label htmlFor="exampleFormControlInput1" className="form-label">
@@ -144,7 +145,16 @@ export default function EditProjectForm({ project }: { project: TProject }) {
         About how many people do you want?
       </label>
 
-      <input type="range" className="form-range" id="customRange1" />
+      <input
+      type="range"
+      min="1"
+      max="100"
+      value={spots}
+      className="spots-range"
+      id="customRange1"
+      onChange={(event) => setSpots(Number(event.target.value))}
+      />
+    <div className="popover">{spots <= 100 ? spots : '100+'}</div>
       <button type="submit" className="btn btn-primary">
         Save Changes
       </button>
