@@ -5,7 +5,7 @@ import "./page.css";
 
 const getProjects = async (catName: string): Promise<TProject[] | null> => {
   try {
-    const res = await fetch(`/api/categories/${catName}`, { cache: "no-store" });
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories/${catName}`, { cache: "no-store" });
     if (res.ok) {
       const categories = await res.json();
       const projects = categories.projects;

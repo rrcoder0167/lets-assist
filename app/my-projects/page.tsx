@@ -8,7 +8,7 @@ import prisma from "@/lib/prismadb";
 
 const getCreatedProjects = async (email: string) => {
     try {
-        const res = await fetch(`/api/authors/${email}`);
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/authors/${email}`);
         const { projects } = await res.json();
         return projects;
     } catch (error) {
@@ -25,7 +25,7 @@ const getSignedUpProjects = async (uEmail: string) => {
         })
         const userId = (await user).id
         const userEmail = (await user).email
-        const res = await fetch(`https://letsassist.vercel.app/api/projects/${userId}/register`);
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/projects/${userId}/register`);
         const data = await res.json();
         const projectsUserIsPartOf = [];
 
