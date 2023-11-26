@@ -19,13 +19,18 @@ export async function PUT(
         }
 
         const updatedParticipants = [...project.participants, participants];
-        const updatedSpots = project.spots - 1;
+
+        if (project.spots == null) {
+            return NextResponse.json({ message: "Project spots is null." });
+        }
+
+        const updatedSpots = +project.spots - 1;
         
         const updatedProject = await prisma.project.update({
             where: { id },
             data: {
                 participants: updatedParticipants,
-                spots: updatedSpots,
+                spots: updatedSpots.toString(),
             }
         });
 
@@ -54,11 +59,16 @@ export async function DELETE(
         }
 
         const updatedParticipants = project.participants.filter(p => p !== participant);
-        const updatedSpots = project.spots + 1
+
+        if (project.spots == null) {
+            return NextResponse.json({ message: "Project spots is null." });
+        }
+
+        const updatedSpots = +project.spots + 1
         const updatedProject = await prisma.project.update({
             where: { id },
             data: {
-                spots: updatedSpots,
+                spots: updatedSpots.toString(),
                 participants: updatedParticipants,
             }
         });
@@ -77,6 +87,6 @@ export async function GET() {
         return NextResponse.json(participants);
     } catch (error) {
         console.log(error);
-        return NextResponse.json("Something went wrong")
+        return NextResponse.json("Something went wrong");
     }
 }
