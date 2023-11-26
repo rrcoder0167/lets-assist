@@ -3,7 +3,7 @@ import Project from "@/components/Projects";
 import { authOptions } from "@/lib/authOptions";
 import { redirect } from "next/navigation";
 import { TProject } from "../types";
-import { GetUserFromEmail } from "@/components/GetUser";
+import { GetUserFromEmail, GetUserFromId } from "@/components/GetUser";
 import prisma from "@/lib/prismadb";
 
 const getCreatedProjects = async (email: string) => {
@@ -16,27 +16,39 @@ const getCreatedProjects = async (email: string) => {
     }
 };
 
-const getSignedUpProjects = async (uEmail: string) => {
-    try {
-        const user = prisma.user.findUniqueOrThrow({
-            where: {
-                email: uEmail
-            }
-        })
-        const userId = (await user).id
-        const res = await fetch(`http://localhost:3000/api/projects/${userId}/register`);
-        const data = await res.json();
-        return data;
-    } catch (error) {
-        return null;
-    }
-}
+/*  DONT TOUCH, I WILL FIX TMR */
+// const getSignedUpProjects = async (uEmail: string) => {
+//     try {
+//         const user = prisma.user.findUniqueOrThrow({
+//             where: {
+//                 email: uEmail
+//             }
+//         })
+//         const userId = (await user).id
+//         const userEmail = (await user).email
+//         const res = await fetch(`http://localhost:3000/api/projects/${userId}/register`);
+//         const data = await res.json();
+//         const projectsUserIsPartOf = [];
+
+//         for (let i = 0; i < data.length(); i++) {
+//             if (data[i].participants.includes(userEmail, 0)) {
+//                 projectsUserIsPartOf.push(data[i]);
+//             }
+//         }
+
+//         console.log(JSON.stringify(data));
+
+//         return projectsUserIsPartOf;
+//     } catch (error) {
+//         return null;
+//     }
+// }
 
 export default async function Projects() {
     const session = await getServerSession(authOptions);
     const email = session?.user?.email;
     let createdProjects = [];
-    let signedUpProjects = [];
+    // let signedUpProjects = [];
 
     if (!session) {
         redirect('/login')
@@ -44,7 +56,7 @@ export default async function Projects() {
 
     if (email) {
         createdProjects = await getCreatedProjects(email);
-        signedUpProjects = await getSignedUpProjects(email);
+        // signedUpProjects = await getSignedUpProjects(email);
     }
 
     return (
@@ -73,7 +85,7 @@ export default async function Projects() {
                 )
                 }
             </div>
-            <small className="text-muted">These are the projects you have signed up for!</small>
+            {/* <small className="text-muted">These are the projects you have signed up for!</small>
             <div className="d-flex flex-wrap">
                 {signedUpProjects && signedUpProjects.length > 0 ? (
                     signedUpProjects.map((project: TProject) => <Project
@@ -95,6 +107,6 @@ export default async function Projects() {
                     <div>No projects signed up for yet.</div>
                 )
                 }
-            </div>
+            </div> */}
         </div>)
 }
