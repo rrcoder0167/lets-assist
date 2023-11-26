@@ -45,7 +45,7 @@ export default function Project({ id, author, eventTime, image, authorEmail, spo
   useEffect(() => {
     const getProject = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/projects/${id}`);
+        const res = await fetch(`/api/projects/${id}`);
         if (res.ok) {
           const project = await res.json();
           setProject(project);

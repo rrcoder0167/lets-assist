@@ -10,7 +10,7 @@ export default function CategoriesList() {
     const getCategories = async () => {
       try {
         // should be like this not working: const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`);
-        const res = await fetch('http://localhost:3000/api/categories');
+        const res = await fetch(`/api/categories`);
         if (res.ok) {
           const categories = await res.json();
           setCategories(categories);
