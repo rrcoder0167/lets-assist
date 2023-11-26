@@ -12,7 +12,7 @@ export async function GET(
                 id: cId
             }
         });
-        return NextResponse.json(projectChat)
+        return NextResponse.json(projectChat);
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: "Could not fetch project." }, { status: 500 });
