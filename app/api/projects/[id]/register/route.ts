@@ -30,7 +30,7 @@ export async function PUT(
             where: { id },
             data: {
                 participants: updatedParticipants,
-                spots: updatedSpots.toString(),
+                spots: updatedSpots,
             }
         });
 
@@ -68,7 +68,7 @@ export async function DELETE(
         const updatedProject = await prisma.project.update({
             where: { id },
             data: {
-                spots: updatedSpots.toString(),
+                spots: updatedSpots,
                 participants: updatedParticipants,
             }
         });
