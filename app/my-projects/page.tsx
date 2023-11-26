@@ -50,7 +50,7 @@ export default async function Projects() {
     let signedUpProjects: TProject[] | null = null;
 
     if (!session) {
-        redirect('/login')
+        redirect('/login');
     }
 
     if (email) {
@@ -62,7 +62,7 @@ export default async function Projects() {
         <div>
             <title>My Projects</title>
             <small className="text-muted">These are the projects you have created!</small>
-            <div className="d-flex flex-wrap">
+            <div className="d-flex flex-wrap mb-3">
                 {createdProjects && createdProjects.length > 0 ? (
                     createdProjects.map((project: TProject) => <Project
                         key={project.id}
@@ -84,8 +84,8 @@ export default async function Projects() {
                 )
                 }
             </div>
-            {/* <small className="text-muted">These are the projects you have signed up for!</small>
-            <div className="d-flex flex-wrap">
+            <small className="text-muted">These are the projects you have signed up for!</small>
+            <div className="d-flex flex-wrap mt-3">
                 {signedUpProjects && signedUpProjects.length > 0 ? (
                     signedUpProjects.map((project: TProject) => <Project
                         key={project.id}
@@ -103,9 +103,9 @@ export default async function Projects() {
                         description={project.description}
                     />)
                 ) : (
-                    <div>No projects signed up for yet.</div>
+                    <div>No projects signed up for yet. Try checking your <a href={process.env.NEXTAUTH_URL}>dashboard</a> for more opportunities.</div>
                 )
                 }
-            </div> */}
+            </div>
         </div>)
 }
