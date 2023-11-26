@@ -72,12 +72,13 @@ model Project {
   authorEmail  String
   location     String
   eventTime    String
-  spots         Int
+  spots        Int
   participants String[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   ProjectChat  ProjectChat[]
 }
+
 model Category {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   catName    String    @unique
