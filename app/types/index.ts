@@ -20,4 +20,5 @@ export type TProject = {
   author: {
     name: string;
   };
+  name: string;
 } 
