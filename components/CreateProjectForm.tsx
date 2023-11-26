@@ -6,7 +6,8 @@ import { CldUploadButton, CldUploadWidgetResults } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import DateTimePicker from 'react-datetime-picker';
 import '@geoapify/geocoder-autocomplete/styles/round-borders-dark.css';
-import { GeoapifyGeocoderAutocomplete, GeoapifyContext} from '@geoapify/react-geocoder-autocomplete';
+import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete';
+import Image from "next/image";
 
 import { FaImage, FaTrash } from "react-icons/fa";
 import "./CreateProjectForm.css";
@@ -42,10 +43,10 @@ export default function CreateProjectForm() {
       setIsLoading(false);
     }
   }, [error]);
-  
-    const AddressInput = () => {
-      console.log("AddressInput component is being rendered");
-    };
+
+  const AddressInput = () => {
+    console.log("AddressInput component is being rendered");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     setIsLoading(true);
@@ -59,22 +60,22 @@ export default function CreateProjectForm() {
     try {
       const res = await fetch('/api/projects/',
         {
-            
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    title,
-                    description,
-                    selectedCategory,
-                    image,
-                    location,
-                    eventTime,
-                    spots,
-                    publicId,
-                    participants
-                    })
+
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            title,
+            description,
+            selectedCategory,
+            image,
+            location,
+            eventTime,
+            spots,
+            publicId,
+            participants
+          })
         });
 
       if (res.ok) {
@@ -116,7 +117,7 @@ export default function CreateProjectForm() {
         setImage("");
         setPublicId("");
       }
-      
+
 
     } catch (error) {
       console.log(error);
@@ -126,30 +127,30 @@ export default function CreateProjectForm() {
 
   return (
     <>
-    <form onSubmit={handleSubmit}>
-      <h2>Create Project</h2>
-      <div className="mb-3">
-        <label htmlFor="project-title-input" className="form-label">
-          Project Title
-        </label>
-        <input
-          onChange={e => setTitle(e.target.value)}
-          type="text"
-          className="form-control"
-          id="project-title-input"
-          placeholder="What do you want to name your project?"
-        />
+      <form onSubmit={handleSubmit}>
+        <h2>Create Project</h2>
+        <div className="mb-3">
+          <label htmlFor="project-title-input" className="form-label">
+            Project Title
+          </label>
+          <input
+            onChange={e => setTitle(e.target.value)}
+            type="text"
+            className="form-control"
+            id="project-title-input"
+            placeholder="What do you want to name your project?"
+          />
 
 
-        <label htmlFor="exampleFormControlTextarea1" className="form-label">
-          Project Description
-        </label>
-        <textarea
-          onChange={e => setDescription(e.target.value)}
-          className="form-control"
-          id="exampleFormControlTextarea1"
-          rows={3}
-        ></textarea>
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">
+            Project Description
+          </label>
+          <textarea
+            onChange={e => setDescription(e.target.value)}
+            className="form-control"
+            id="exampleFormControlTextarea1"
+            rows={3}
+          ></textarea>
 
 <label htmlFor="dateTimePicker" className="form-label">
         Date & Time
@@ -203,21 +204,22 @@ export default function CreateProjectForm() {
       <CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
         onUpload={handleImageUpload} className={`image-upload ${image && "pointer-events-none"}`}>
           <FaImage />
-        Upload Image
-        {image && (<>
-          <div className="alert alert-success alert-dismissible fade show top-alert" role="alert">
-  <strong>Success!</strong> You&apos;re image was successfully uploaded.
-  <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-          <img src={image} className="uploaded-image" alt={title} /></>
-        
-        )}
-      </CldUploadButton>
+          Upload Image
+          {image && (<>
+            <div className="alert alert-success alert-dismissible fade show top-alert" role="alert">
+              <strong>Success!</strong> You&apos;re image was successfully uploaded.
+              <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <Image src={image} className="uploaded-image" alt={title} width={1280} height={720}/>
+          </>
 
-      {publicId && 
-      <button className="image-remove" onClick={removeImage}> <FaTrash className="image-removeicon"/>Remove Image</button>
-      }
-      {/*
+          )}
+        </CldUploadButton>
+
+        {publicId &&
+          <button className="image-remove" onClick={removeImage}> <FaTrash className="image-removeicon" />Remove Image</button>
+        }
+        {/*
       <CldUploadButton
       uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
       onUpload={handleImageUpload}
@@ -228,18 +230,18 @@ export default function CreateProjectForm() {
       
       {publicId && <button className="btn btn-danger" onClick={removeImage}>Remove Image</button>}
           */}
-          {isLoading ? (
-            <button type="submit" className="submitbtn" disabled>
-              <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
-              <span role="status">Loading...</span>
-            </button>
-          ) : (
-            <button type="submit" className="submitbtn">
-              Create Project
-            </button>
-          )}
-          {error && <div className="error">{error}</div>}
-    </form>
+        {isLoading ? (
+          <button type="submit" className="submitbtn" disabled>
+            <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status">Loading...</span>
+          </button>
+        ) : (
+          <button type="submit" className="submitbtn">
+            Create Project
+          </button>
+        )}
+        {error && <div className="error">{error}</div>}
+      </form>
     </>
   );
 }
