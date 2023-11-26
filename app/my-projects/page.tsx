@@ -8,7 +8,7 @@ import prisma from "@/lib/prismadb";
 
 const getCreatedProjects = async (email: string) => {
     try {
-        const res = await fetch(`http://localhost:3000/api/authors/${email}`);
+        const res = await fetch(`/api/authors/${email}`);
         const { projects } = await res.json();
         return projects;
     } catch (error) {
@@ -16,39 +16,38 @@ const getCreatedProjects = async (email: string) => {
     }
 };
 
-/*  DONT TOUCH, I WILL FIX TMR */
-// const getSignedUpProjects = async (uEmail: string) => {
-//     try {
-//         const user = prisma.user.findUniqueOrThrow({
-//             where: {
-//                 email: uEmail
-//             }
-//         })
-//         const userId = (await user).id
-//         const userEmail = (await user).email
-//         const res = await fetch(`http://localhost:3000/api/projects/${userId}/register`);
-//         const data = await res.json();
-//         const projectsUserIsPartOf = [];
+const getSignedUpProjects = async (uEmail: string) => {
+    try {
+        const user = prisma.user.findUniqueOrThrow({
+            where: {
+                email: uEmail
+            }
+        })
+        const userId = (await user).id
+        const userEmail = (await user).email
+        const res = await fetch(`https://letsassist.vercel.app/api/projects/${userId}/register`);
+        const data = await res.json();
+        const projectsUserIsPartOf = [];
 
-//         for (let i = 0; i < data.length(); i++) {
-//             if (data[i].participants.includes(userEmail, 0)) {
-//                 projectsUserIsPartOf.push(data[i]);
-//             }
-//         }
+        for (let i = 0; i < data.length(); i++) {
+            if (data[i].participants.includes(userEmail, 0)) {
+                projectsUserIsPartOf.push(data[i]);
+            }
+        }
 
-//         console.log(JSON.stringify(data));
+        console.log(JSON.stringify(data));
 
-//         return projectsUserIsPartOf;
-//     } catch (error) {
-//         return null;
-//     }
-// }
+        return projectsUserIsPartOf;
+    } catch (error) {
+        return null;
+    }
+}
 
 export default async function Projects() {
     const session = await getServerSession(authOptions);
     const email = session?.user?.email;
     let createdProjects = [];
-    // let signedUpProjects = [];
+    let signedUpProjects: TProject[] | null = null;
 
     if (!session) {
         redirect('/login')
@@ -56,7 +55,7 @@ export default async function Projects() {
 
     if (email) {
         createdProjects = await getCreatedProjects(email);
-        // signedUpProjects = await getSignedUpProjects(email);
+        signedUpProjects = await getSignedUpProjects(email);
     }
 
     return (
