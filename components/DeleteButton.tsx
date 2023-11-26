@@ -18,6 +18,7 @@ export default function DeleteButton({ id }: { id: string }) {
                 });
 
                 if (res.ok) {
+                    console.log("Project deleted");
                     Refresh();
                 }
 

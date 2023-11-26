@@ -152,57 +152,57 @@ export default function CreateProjectForm() {
             rows={3}
           ></textarea>
 
-          <label htmlFor="dateTimePicker" className="form-label">
-            Date & Time
-          </label>
-          <DateTimePicker
-            onChange={e => setEventTime/*potentiallbroken*/}
-            value={eventTime}
-            className="form-control"
-            id="dateTimePicker"
-          />
-          <label htmlFor="exampleFormControlInput1" className="form-label">
-            Location
-          </label>
-          <input
-            onChange={e => setLocation(e.target.value)}
-            type="text"
-            className="form-control"
-            id="exampleFormControlInput1"
-            placeholder="Example Street, Example City, EX"
-          />
-          {/*
+<label htmlFor="dateTimePicker" className="form-label">
+        Date & Time
+      </label>
+      <DateTimePicker
+        onChange={(newDate) => newDate && setEventTime(newDate)}
+        value={eventTime}
+        className="form-control"
+        id="dateTimePicker"
+      />
+        <label htmlFor="exampleFormControlInput1" className="form-label">
+          Location
+        </label>
+        <input
+  onChange={(e) => setLocation(e.target.value)}
+  type="text"
+  className="form-control"
+  id="exampleFormControlInput1"
+  placeholder="Example Street, Example City, EX"
+/>
+        {/*
         <GeoapifyContext apiKey="d3ea90d5656045209c5ac03c54841e3f">
         <GeoapifyGeocoderAutocomplete
     placeholder="Enter address here"
     onUserInput={(event: string) => setLocation(event)}
   />
   </GeoapifyContext>*/}
-        </div>
-        <select onChange={(e) => setSelectedCategory(e.target.value)}>
-          <option value="">Select a Category</option>
-          {categories &&
-            categories.map((category) => (
-              <option key={category.id} value={category.catName}>
-                {category.catName}
-              </option>
-            ))}
-        </select>
-        <label htmlFor="customRange1" className="form-label">
-          About how many people do you want?
-        </label>
-        <input
-          type="range"
-          min="1"
-          max="100"
-          value={spots}
-          className="spots-range"
-          id="customRange1"
-          onInput={(e) => setSpots(spots)/*potentiallbroken*/}
-        />
-        <div className="popover">{spots <= 100 ? spots : '100+'}</div>
-        <CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-          onUpload={handleImageUpload} className={`image-upload ${image && "pointer-events-none"}`}>
+      </div>
+      <select onChange={(e) => setSelectedCategory(e.target.value)}>
+        <option value="">Select a Category</option>
+        {categories &&
+          categories.map((category) => (
+            <option key={category.id} value={category.catName}>
+              {category.catName}
+            </option>
+          ))}
+      </select>
+      <label htmlFor="customRange1" className="form-label">
+        About how many people do you want?
+      </label>
+      <input
+      type="range"
+      min="1"
+      max="100"
+      value={spots}
+      className="spots-range"
+      id="customRange1"
+      onChange={(event) => setSpots(Number(event.target.value))}
+      />
+    <div className="popover">{spots <= 100 ? spots : '100+'}</div>
+      <CldUploadButton uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+        onUpload={handleImageUpload} className={`image-upload ${image && "pointer-events-none"}`}>
           <FaImage />
           Upload Image
           {image && (<>
