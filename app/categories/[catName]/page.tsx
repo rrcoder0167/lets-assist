@@ -5,7 +5,7 @@ import "./page.css";
 
 const getProjects = async (catName: string): Promise<TProject[] | null> => {
   try {
-    const res = await fetch(`http://localhost:3000/api/categories/${catName}`, { cache: "no-store" });
+    const res = await fetch(`/api/categories/${catName}`, { cache: "no-store" });
     if (res.ok) {
       const categories = await res.json();
       const projects = categories.projects;
