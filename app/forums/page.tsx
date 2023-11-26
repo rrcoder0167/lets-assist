@@ -1,3 +1,5 @@
+"use client";
+
 import "./page.css";
 import { useRouter } from "next/navigation";
 
