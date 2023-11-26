@@ -2,7 +2,7 @@ import { TProject } from "@/app/types";
 
 export const GetAuthor = async (email: string): Promise<TProject | null> => {
     try {
-        const res = await fetch(`/api/authors/${email}`, {
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/authors/${email}`, {
             cache: "no-store",
         });
 

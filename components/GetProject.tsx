@@ -2,7 +2,7 @@ import { TProject } from "@/app/types";
 
 export const GetProject = async (id: string): Promise<TProject | null> => {
     try {
-        const res = await fetch(`/api/projects/${id}`, {
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/projects/${id}`, {
             cache: "no-store",
         });
 
