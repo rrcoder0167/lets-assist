@@ -61,25 +61,23 @@ model VerificationToken {
 }
 
 model Project {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
-  title         String
-  description   String
-  image         String? //? is for now
-  publicId      String?
-  catName       String?
-  category      Category?   @relation(fields: [catName], references: [catName])
-  author        User        @relation(fields: [authorEmail], references: [email])
-  authorEmail   String
-  location      String
-  eventTime     String
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String
+  image        String? //? is for now
+  publicId     String?
+  catName      String?
+  category     Category?     @relation(fields: [catName], references: [catName])
+  author       User          @relation(fields: [authorEmail], references: [email])
+  authorEmail  String
+  location     String
+  eventTime    String
   spots         Int
-  participants  String[]
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  projectChat   ProjectChat? @relation(fields: [projectChatId], references: [id]) // keshav until u fix this, i will use this
-  projectChatId String?      @db.ObjectId// keshav until u fix this, i will use this
+  participants String[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  ProjectChat  ProjectChat[]
 }
-
 model Category {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   catName    String    @unique
@@ -115,10 +113,12 @@ model Message {
   ProjectChat   ProjectChat? @relation(fields: [projectChatId], references: [id])
   projectChatId String?      @db.ObjectId
   isImportant   Boolean
+  dateCreated   DateTime     @default(now())
 }
 
 model ProjectChat {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  messages Message[]
-  Project  Project[]
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  messages  Message[]
+  Project   Project   @relation(fields: [projectId], references: [id])
+  projectId String    @db.ObjectId
 }
