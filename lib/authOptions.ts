@@ -24,62 +24,59 @@ export const authOptions: AuthOptions = {
       clientId: githubClientId as string,
       clientSecret: githubClientSecret as string,
     }),
-    /*
-    CredentialsProvider({
-      name: "credentials",
-      credentials: {},
+    // CredentialsProvider({
+    //   name: "credentials",
+    //   credentials: {},
     
-      async authorize(credentials: any) {
-        const { email, password } = credentials
+    //   async authorize(credentials: any) {
+    //     const { email, password } = credentials
     
-        try {
-          const user = await prisma.user.findUnique({ where: { email } });
+    //     try {
+    //       const user = await prisma.user.findUnique({ where: { email } });
     
-          if (!user) {
-            return null;
-          }
+    //       if (!user) {
+    //         return null;
+    //       }
     
-          const passwordsMatch = await bcrypt.compare(password, user.password);
+    //       const passwordsMatch = await bcrypt.compare(password, user.password);
     
-          if (!passwordsMatch) {
-            return null;
-          }
+    //       if (!passwordsMatch) {
+    //         return null;
+    //       }
     
-          return { email: user.email }; // return the email of the user
-        } catch (error) {
-          console.log("Error: ", error);
-        }
-      },
-    }),*/
+    //       return { email: user.email };
+    //     } catch (error) {
+    //       console.log("Error: ", error);
+    //     }
+    //   },
+    // }),
   ],
   secret: credentialsSecret,
   pages: {
     signIn: "/login",
   },
-  /*
-  callbacks: {
-    async signIn({ user, account, isNewUser }: any) {
-      if (account.provider === "google" || account.provider === "github") {
-        const { name, email } = user;
-        try {
-          const userExists = await prisma.user.findUnique({ where: { email } });
-          if (!userExists) {
-            await prisma.user.create({
-              data: {
-                name,
-                email,
-                // add other fields as necessary
-              },
-            });
-          }
-          if (isNewUser) {
-            return '/dashboard';
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-      return true;
-    },
-  },*/
+  // callbacks: {
+  //   async signIn({ user, account, isNewUser }: any) {
+  //     if (account.provider === "google" || account.provider === "github") {
+  //       const { name, email } = user;
+  //       try {
+  //         const userExists = await prisma.user.findUnique({ where: { email } });
+  //         if (!userExists) {
+  //           await prisma.user.create({
+  //             data: {
+  //               name,
+  //               email
+  //             },
+  //           });
+  //         }
+  //         if (isNewUser) {
+  //           return '/dashboard';
+  //         }
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     }
+  //     return true;
+  //   },
+  // },
 };
