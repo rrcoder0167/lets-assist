@@ -1,4 +1,4 @@
-.text-response {
-    background-color: var(--ctp-frappe-teal);
+.text-cst-response {
+    background-color: var(--ctp-frappe-crust);
     align-items: center;
 }
