@@ -2,12 +2,13 @@ import * as React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NextUIProvider } from "@nextui-org/react";
+import { Link, Navbar, NavbarBrand, NavbarContent, NavbarItem, NextUIProvider } from "@nextui-org/react";
 import { Button as ButtonSCN, buttonVariants } from "@/components/ui/button";
 import LetsAssistLogo from "@/components/logos/letsAssist";
 import "./globals.css";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { Contact, Proportions, SquareUser, Telescope, UserCog } from "lucide-react";
+import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,8 +29,12 @@ export default function RootLayout({
           {/* Navbar */}
           <Navbar shouldHideOnScroll className="bg-primary">
             <NavbarBrand>
-              <div className="w-7"><LetsAssistLogo /></div>
-              <ButtonSCN>Let&apos;s Assist</ButtonSCN>
+              <ButtonSCN asChild>
+                <Link href="/home">
+                  <span className="w-7"><LetsAssistLogo /></span>
+                  <span className="pl-3">Let&apos;s Assist</span>
+                </Link>
+              </ButtonSCN>
             </NavbarBrand>
             <NavbarContent justify="center">
               <NavbarItem>
