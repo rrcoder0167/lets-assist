@@ -68,7 +68,9 @@ export default function RootLayout({
               </NavbarItem>
             </NavbarContent>
           </Navbar>
-          {children}
+          <div className="bg-secondary">
+            {children}
+          </div>
         </NextUIProvider>
         <SpeedInsights />
       </body>
