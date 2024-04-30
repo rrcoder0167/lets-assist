@@ -26,7 +26,7 @@ export default function Navbar() {
       />
       <NavbarBrand>
         {/* <LetsAssistLogo /> */}
-        <p className="font-bold text-inherit">ACME</p>
+        <p className="font-bold text-inherit">Let&apos;s Assist</p>
       </NavbarBrand>
     </NavbarContent>
 
