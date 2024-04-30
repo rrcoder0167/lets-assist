@@ -9,7 +9,7 @@ export default function Navbar() {
         <NextNavbar shouldHideOnScroll className="bg-primary">
             <NavbarBrand>
               <ButtonSCN asChild>
-                <Link href="/home">
+                <Link href="/">
                   <span className="w-7"><LetsAssistLogo /></span>
                   <span className="pl-3">Let&apos;s Assist</span>
                 </Link>
