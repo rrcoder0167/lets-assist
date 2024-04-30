@@ -79,7 +79,10 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"),
-    nextui(),
+    nextui({
+      
+    }
+    ),
   ],
 } satisfies Config
 

@@ -1,11 +1,6 @@
 import { Button as ButtonSCN } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
 
-/*
-* Basic IDEA:
-* If the user is not signed in, the user will be redirected to the url with the /home extention.
-* If the user is signed in, the dashboard will be displayed.
-*/
 
 export default function Home() {
   return (
