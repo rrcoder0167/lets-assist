@@ -1,6 +1,5 @@
-import { Button } from "@nextui-org/react";
 import { Button as ButtonSCN } from "@/components/ui/button";
-import { redirect } from "next/navigation";
+import { UserPlus } from "lucide-react";
 
 /*
 * Basic IDEA:
