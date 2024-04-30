@@ -1,51 +1,78 @@
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
-import { Contact, Proportions, SquareUser, Telescope, UserCog } from "lucide-react";
-import { Button as ButtonSCN, buttonVariants } from "@/components/ui/button";
+"use client";
+import React from "react";
 import LetsAssistLogo from "@/components/logos/letsAssist";
-import { Link, Navbar as NextNavbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/react";
+import {Navbar as NextNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button} from "@nextui-org/react";
 
 export default function Navbar() {
-    return (
-        <NextNavbar shouldHideOnScroll className="bg-primary">
-            <NavbarBrand>
-              <ButtonSCN asChild>
-                <Link href="/home">
-                  <span className="w-7"><LetsAssistLogo /></span>
-                  <span className="pl-3">Let&apos;s Assist</span>
-                </Link>
-              </ButtonSCN>
-            </NavbarBrand>
-            <NavbarContent justify="center">
-              <NavbarItem>
-                <ButtonSCN variant="default"><Proportions className="w-5 pr-1" /> Dashboard</ButtonSCN>
-              </NavbarItem>
-              <NavbarItem>
-                <ButtonSCN><Telescope className="w-5 pr-1" />Discover</ButtonSCN>
-              </NavbarItem>
-            </NavbarContent>
-            <NavbarContent justify="end">
-              <NavbarItem>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <ButtonSCN><SquareUser className="w-5" /></ButtonSCN>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-25">
-                    <DropdownMenuLabel>My Stuff</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem>
-                        <UserCog className="w-5 pr-1" />
-                        <span>Account</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Contact className="w-5 pr-1" />
-                        <span>Profile</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </NavbarItem>
-            </NavbarContent>
-          </NextNavbar>
-    )
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const menuItems = [
+    "Profile",
+    "Dashboard",
+    "Activity",
+    "Analytics",
+    "System",
+    "Deployments",
+    "My Settings",
+    "Team Settings",
+    "Help & Feedback",
+    "Log Out",
+  ];
+  return (
+    <NextNavbar onMenuOpenChange={setIsMenuOpen}>
+    <NavbarContent>
+      <NavbarMenuToggle
+        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        className="sm:hidden"
+      />
+      <NavbarBrand>
+        {/* <LetsAssistLogo /> */}
+        <p className="font-bold text-inherit">ACME</p>
+      </NavbarBrand>
+    </NavbarContent>
+
+    <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarItem>
+        <Link color="foreground" href="#">
+          Features
+        </Link>
+      </NavbarItem>
+      <NavbarItem isActive>
+        <Link href="#" aria-current="page">
+          Customers
+        </Link>
+      </NavbarItem>
+      <NavbarItem>
+        <Link color="foreground" href="#">
+          Integrations
+        </Link>
+      </NavbarItem>
+    </NavbarContent>
+    <NavbarContent justify="end">
+      <NavbarItem className="hidden lg:flex">
+        <Link href="#">Login</Link>
+      </NavbarItem>
+      <NavbarItem>
+        <Button as={Link} color="primary" href="#" variant="flat">
+          Sign Up
+        </Button>
+      </NavbarItem>
+    </NavbarContent>
+    <NavbarMenu>
+      {menuItems.map((item, index) => (
+        <NavbarMenuItem key={`${item}-${index}`}>
+          <Link
+            color={
+              index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
+            }
+            className="w-full"
+            href="#"
+            size="lg"
+          >
+            {item}
+          </Link>
+        </NavbarMenuItem>
+      ))}
+    </NavbarMenu>
+  </NextNavbar>
+  );
 }
