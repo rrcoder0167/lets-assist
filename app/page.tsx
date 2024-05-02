@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { MailPlus, OctagonAlert, UserPlus } from "lucide-react";
 import Image from "next/image";
 import PlaceholderImage from "@/public/placeholder-500-300.svg";
+import PrototypeDashboard from "@/public/prototype-dashboard.png";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
@@ -47,18 +48,26 @@ export default function Home() {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <Input type="email" placeholder="Enter Your Email Here" />
-              <AlertDialogCancel>Nevermind</AlertDialogCancel>
               <AlertDialogAction className="bg-success-500 hover:bg-success-700">Sign Me Up!</AlertDialogAction>
+              <AlertDialogCancel>Nevermind</AlertDialogCancel>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
       </div>
       <Separator />
-      <div className="grid grid-cols-2 justify-center m-5 p-1">
-        <Image src={PlaceholderImage} alt="Placeholder" width={500} height={300} className="rounded-md" />
-        <div>
-          <h1 className="text-xl">Find & Manage Volunteering Opportunities With Ease.</h1>
-          <p className="text-sm">Finding and managing volunteering opportunities has never been easier than using Let&apos;s Assist&apos;s easy-to-use dashboard!</p>
+      <div>
+        <h1 className="text-3xl flex justify-center m-5 font-bold" id="features">Features</h1>
+        <div className="grid grid-cols-2 justify-center m-5 p-1 space-y-10">
+          <Image src={PrototypeDashboard} alt="A demo user-interface for the Let&apos;s Assist dashboard page" width={500} height={300} className="rounded-md" />
+          <div>
+            <h1 className="text-xl font-bold">Find Volunteering Opportunities</h1>
+            <p className="text-sm">Finding volunteering opportunities has never been easier than using Let&apos;s Assist&apos;s easy-to-use dashboard! Use tags and location matching to sort through opportunities and retrieve the ones that fit you.</p>
+          </div>
+          <div>
+            <h1 className="text-xl font-bold">Manage Volunteering Opportunities</h1>
+            <p className="text-sm">The event manager page allows you update your event information and post updates about these events.</p>
+          </div>
+          <Image src={PlaceholderImage} alt="Placeholder" width={500} height={300} className="rounded-md" />
         </div>
       </div>
     </>
