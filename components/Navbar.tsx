@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
-import LetsAssistLogo from "@/components/letsAssistLogo";
+import LetsAssistLogo from "@/components/LetsAssistLogo";
 import { Navbar as NextNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button } from "@nextui-org/react";
 import { Separator } from "@/components/ui/separator";
-import { LayoutDashboard } from "lucide-react";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
