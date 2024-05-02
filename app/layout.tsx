@@ -19,13 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={inter.className}>
         <NextUIProvider>
-          <Navbar />
-          <div className="bg-secondary">
+            <Navbar />
             {children}
-          </div>
         </NextUIProvider>
       </body>
     </html>
