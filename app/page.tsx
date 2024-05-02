@@ -46,7 +46,7 @@ export default function Home() {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Nevermind</AlertDialogCancel>
-              <AlertDialogAction className="bg-lime-500 hover:bg-lime-700">Sign Me Up!</AlertDialogAction>
+              <AlertDialogAction className="bg-success-500 hover:bg-success-700">Sign Me Up!</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
