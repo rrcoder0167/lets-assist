@@ -5,6 +5,7 @@ import Image from "next/image";
 import PlaceholderImage from "@/public/placeholder-500-300.svg";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
 
 
 export default function Home() {
@@ -45,6 +46,7 @@ export default function Home() {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
+              <Input type="email" placeholder="Enter Your Email Here" />
               <AlertDialogCancel>Nevermind</AlertDialogCancel>
               <AlertDialogAction className="bg-success-500 hover:bg-success-700">Sign Me Up!</AlertDialogAction>
             </AlertDialogFooter>
