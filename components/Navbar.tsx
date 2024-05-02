@@ -18,7 +18,7 @@ export default function Navbar() {
     "Log Out",
   ];
   return (
-    <NextNavbar onMenuOpenChange={setIsMenuOpen}>
+    <NextNavbar onMenuOpenChange={setIsMenuOpen} shouldHideOnScroll>
     <NavbarContent>
       <NavbarMenuToggle
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
