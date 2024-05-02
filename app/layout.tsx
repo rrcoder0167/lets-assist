@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { NextUIProvider } from "@nextui-org/react";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { Separator } from "@/components/ui/separator";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextUIProvider>
           <Navbar />
+          <Separator />
           <div className="bg-secondary">
             {children}
           </div>
