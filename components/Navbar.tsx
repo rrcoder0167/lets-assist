@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import LetsAssistLogo from "@/components/letsAssistLogo";
-import {Navbar as NextNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button} from "@nextui-org/react";
+import { Navbar as NextNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button } from "@nextui-org/react";
+import { Separator } from "@/components/ui/separator";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -18,6 +19,7 @@ export default function Navbar() {
     "Log Out",
   ];
   return (
+    <>
     <NextNavbar onMenuOpenChange={setIsMenuOpen} shouldHideOnScroll>
     <NavbarContent>
       <NavbarMenuToggle
@@ -74,5 +76,7 @@ export default function Navbar() {
       ))}
     </NavbarMenu>
   </NextNavbar>
+  <Separator />
+  </>
   );
 }
