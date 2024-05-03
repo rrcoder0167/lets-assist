@@ -1,6 +1,6 @@
 import { Button as ButtonSCN } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { MailPlus, OctagonAlert, UserPlus } from "lucide-react";
+import { MailPlus, MailQuestion } from "lucide-react";
 import Image from "next/image";
 import PlaceholderImage from "@/public/placeholder-500-300.svg";
 import PrototypeDashboard from "@/public/prototype-dashboard.png";
@@ -8,7 +8,6 @@ import PrototypeManageProject from "@/public/prototype-manage-project.png";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
-
 
 export default function Home() {
   return (
@@ -70,6 +69,15 @@ export default function Home() {
           </div>
           <Image src={PrototypeManageProject} alt="A demo user-interface for the manage project page" width={500} height={300} className="rounded-md" />
         </div>
+      </div>
+      <Separator />
+      <div className="text-center">
+        <h1 className="text-3xl m-5 font-bold" id="contact-us">Contact Us</h1>
+        <p>We know you may have questions we did not answer with this page, so feel free to <span className="font-semibold">reach us at</span></p>
+        <ButtonSCN variant="ghost" className="m-7">
+          <MailQuestion className="mr-1" />
+          riddhiman.please.put@email.here
+        </ButtonSCN>
       </div>
     </>
   );
