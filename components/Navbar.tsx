@@ -18,7 +18,6 @@ export default function Navbar() {
         <p className="font-bold text-inherit">Let&apos;s Assist</p>
       </NavbarBrand>
     </NavbarContent>
-
     <NavbarContent className="hidden sm:flex gap-4" justify="center">
       <NavbarItem isActive>
         <Link color="primary" href="/">
@@ -26,12 +25,12 @@ export default function Navbar() {
         </Link>
       </NavbarItem>
       <NavbarItem>
-        <Link color="foreground" href="#features">
+        <Link color="foreground" href="/#features">
           Features
         </Link>
       </NavbarItem>
       <NavbarItem>
-        <Link color="foreground" href="#pricing">
+        <Link color="foreground" href="/#contact-us">
           Contact Us
         </Link>
       </NavbarItem>
