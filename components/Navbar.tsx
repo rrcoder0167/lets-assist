@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import LetsAssistLogo from "@/components/LetsAssistLogo";
+import LetsAssistLogo from "@/components/letsAssistLogo";
 import { Navbar as NextNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button } from "@nextui-org/react";
 
 export default function Navbar() {
