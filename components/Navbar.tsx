@@ -2,12 +2,13 @@
 import React from "react";
 import LetsAssistLogo from "@/components/letsAssistLogo";
 import { Navbar as NextNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button } from "@nextui-org/react";
+import { ModeToggle } from "@/components/themeToggle";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   return (
     <>
-    <NextNavbar onMenuOpenChange={setIsMenuOpen} shouldHideOnScroll>
+    <NextNavbar onMenuOpenChange={setIsMenuOpen} shouldHideOnScroll isBlurred={false}>
     <NavbarContent>
       <NavbarMenuToggle
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -57,10 +58,11 @@ export default function Navbar() {
       </NavbarMenuItem>
       <NavbarMenuItem>
         <Link color="primary" className="w-full" href="#" size="lg">
-          Pricing
+          Contact Us
         </Link>
       </NavbarMenuItem>
     </NavbarMenu>
+    <ModeToggle />
   </NextNavbar>
   </>
   );
