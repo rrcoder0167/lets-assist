@@ -84,7 +84,7 @@ const config = {
         dark: {
           colors: {
             background: {
-              DEFAULT: "#24273B",
+              DEFAULT: "#24273a",
               foreground: "#181c35"
             },
             content1: "#e3e5f2",

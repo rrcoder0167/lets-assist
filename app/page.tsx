@@ -7,31 +7,20 @@ import PrototypeDashboard from "@/public/prototype-dashboard.png";
 import PrototypeManageProject from "@/public/prototype-manage-project.png";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Input } from "@/components/ui/input";
+import { Input as InputSCN} from "@/components/ui/input";
+import { Input } from "@nextui-org/react";
 
 export default function Home() {
   return (
     <>
-      {/* If the user IS signed in */}
-      {/* <div className="flex justify-center items-center h-screen">
-        <div className="">
-          <Button className="m-2" color="primary">NextUI Sign Up Button</Button>
-          <ButtonSCN className="m-2 rounded-xl">ShadCN Button</ButtonSCN>
-        </div>
-      </div> */}
-
-      {/* If the user is NOT signed in */}
-      <div className="text-center align-middle p-10">
-        <h1 className="text-7xl font-bold pb-5">Give back to your<br />community, your way</h1>
+      <div className="xl:p-10 md:p-10 sm:p-7 p-5">
+        <h1 className="xl:text-8xl md:text-7xl sm:text-6xl text-5xl font-black pb-5">Give back to <span className="text-success">your<br />community, your way</span></h1>
         <p className="text-lg pb-5">Find local volunteering opportunities today with Let&apos;s Assist, and give back to your community.</p>
         <Alert variant="default" className="my-10">
           <AlertTitle>Note From Developers</AlertTitle>
           <AlertDescription>Let&apos;s Assist is still in development! Everything you see is a work in progress, is not final, and may not even function! If you want to receive updates on development, join the waitlist by clicking the button below. This also lets us know how many people are intrested in this software.</AlertDescription>
         </Alert>
-        {/* <ButtonSCN variant="default">
-          <UserPlus className="pr-1" />
-          Get Started
-        </ButtonSCN> */}
+        <InputSCN className="md-2" />
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <ButtonSCN>
