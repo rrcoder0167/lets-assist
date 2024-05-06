@@ -7,8 +7,7 @@ import PrototypeDashboard from "@/public/prototype-dashboard.png";
 import PrototypeManageProject from "@/public/prototype-manage-project.png";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Input as InputSCN} from "@/components/ui/input";
-import { Input } from "@nextui-org/react";
+import { Input } from "@/components/ui/input";
 
 export default function Home() {
   return (
@@ -16,32 +15,13 @@ export default function Home() {
       <div className="xl:p-10 md:p-10 sm:p-7 p-5">
         <h1 className="xl:text-8xl md:text-7xl sm:text-6xl text-5xl font-black pb-5">Give back to <span className="text-success">your<br />community, your way</span></h1>
         <p className="text-lg pb-5">Find local volunteering opportunities today with Let&apos;s Assist, and give back to your community.</p>
-        <Alert variant="default" className="my-10">
-          <AlertTitle>Note From Developers</AlertTitle>
-          <AlertDescription>Let&apos;s Assist is still in development! Everything you see is a work in progress, is not final, and may not even function! If you want to receive updates on development, join the waitlist by clicking the button below. This also lets us know how many people are intrested in this software.</AlertDescription>
-        </Alert>
-        <InputSCN className="md-2" />
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <ButtonSCN>
-              <MailPlus className="pr-1" />
-              Join The Waitlist
-            </ButtonSCN>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Join Our Waitlist!</AlertDialogTitle>
-              <AlertDialogDescription>
-                Joining our waitlist means you know our progress with developing this software. It also lets us know how many people are interested in this handy-dandy piece of software. You can unsubscribe from this anytime.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <Input type="email" placeholder="enter@email.here" />
-              <AlertDialogAction className="bg-success-500 hover:bg-success-700">Sign Me Up!</AlertDialogAction>
-              <AlertDialogCancel>Nevermind</AlertDialogCancel>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <div className="flex">
+        <Input className="mb-2 w-1/4 mr-5" type="email" placeholder="enter@email.here"/>
+        <ButtonSCN>
+          <MailPlus className="pr-1" />
+          Join The Waitlist
+        </ButtonSCN>
+        </div>
       </div>
       <Separator />
       <div>
