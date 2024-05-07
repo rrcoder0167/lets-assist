@@ -51,7 +51,7 @@ export default function Home() {
         </ButtonSCN>
       </div>
       <div>
-        <BackgroundBeams />
+        {/* <BackgroundBeams /> */}
       </div>
     </>
   );
