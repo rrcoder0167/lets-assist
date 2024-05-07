@@ -6,7 +6,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ThemeProvider } from "@/components/theme-provider"
-
+import { TracingBeam } from "@/components/ui/tracing-beam";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,20 +24,18 @@ export default function RootLayout({
     <html lang="en">
       <SpeedInsights />
       <body className={`${inter.className} bg-background transition-colors duration-1000`}>
+
         <NextUIProvider>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-          <Navbar />
-          {children}
-        </ThemeProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            <Navbar />
+            <TracingBeam className="">
+              {children}
+            </TracingBeam>
+          </ThemeProvider>
         </NextUIProvider>
-        
+
       </body>
-      
+
     </html>
   );
 }
