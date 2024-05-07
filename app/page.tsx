@@ -18,7 +18,14 @@ export default function Home() {
       <div className="xl:p-10 md:p-10 sm:p-7 p-5">
         <h1 className="xl:text-8xl md:text-7xl sm:text-6xl text-5xl font-black pb-5">Give back to <span className="text-success">your<br />community, your way</span></h1>
         <p className="text-lg pb-5">Find local volunteering opportunities today with Let&apos;s Assist, and give back to your community.</p>
-      </div>
+        <div className="flex">
+        <Input className="mb-2 w-1/4 mr-5" type="email" placeholder="enter@email.here" />
+        <ButtonSCN>
+          <MailPlus className="pr-1" />
+          Join The Waitlist
+        </ButtonSCN>
+        </div>
+        </div>
       <Separator />
       <div className="text-center">
         <h1 className="text-3xl m-5 font-bold" id="features">Features</h1>
@@ -34,14 +41,6 @@ export default function Home() {
           </div>
           <Image src={PrototypeManageProject} alt="A demo user-interface for the manage project page" width={500} height={300} className="rounded-md" />
         </div>
-      </div>
-      <Separator />
-      <div className="flex">
-        <Input className="mb-2 w-1/4 mr-5" type="email" placeholder="enter@email.here" />
-        <ButtonSCN>
-          <MailPlus className="pr-1" />
-          Join The Waitlist
-        </ButtonSCN>
       </div>
       <Separator />
       <div className="text-center">
