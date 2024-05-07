@@ -28,7 +28,7 @@ export default function RootLayout({
         <NextUIProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <Navbar />
-            <TracingBeam className="">
+            <TracingBeam>
               {children}
             </TracingBeam>
           </ThemeProvider>
