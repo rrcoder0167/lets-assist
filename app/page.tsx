@@ -16,23 +16,23 @@ export default function Home() {
         <h1 className="xl:text-8xl md:text-7xl sm:text-6xl text-5xl font-black pb-5">Give back to <span className="text-success">your<br />community, your way</span></h1>
         <p className="text-lg pb-5">Find local volunteering opportunities today with Let&apos;s Assist, and give back to your community.</p>
         <div className="flex">
-        <Input className="mb-2 w-1/4 mr-5" type="email" placeholder="enter@email.here"/>
-        <ButtonSCN>
-          <MailPlus className="pr-1" />
-          Join The Waitlist
-        </ButtonSCN>
+          <Input className="mb-2 w-1/4 mr-5" type="email" placeholder="enter@email.here" />
+          <ButtonSCN>
+            <MailPlus className="pr-1" />
+            Join The Waitlist
+          </ButtonSCN>
         </div>
       </div>
       <Separator />
-      <div>
-        <h1 className="text-3xl flex justify-center m-5 font-bold" id="features">Features</h1>
-        <div className="grid grid-cols-2 justify-center m-5 p-1 space-y-10">
+      <div className="text-center">
+        <h1 className="text-3xl m-5 font-bold" id="features">Features</h1>
+        <div className="grid grid-cols-2 m-5 justify-items-center space-y-5">
           <Image src={PrototypeDashboard} alt="A demo user-interface for the dashboard page" width={500} height={300} className="rounded-md" />
           <div>
             <h1 className="text-xl font-bold">Find Volunteering Opportunities</h1>
             <p className="text-sm">Finding volunteering opportunities has never been easier than using Let&apos;s Assist&apos;s easy-to-use dashboard! Use tags and location matching to sort through opportunities and retrieve the ones that fit you.</p>
           </div>
-          <div className="mr-5">
+          <div>
             <h1 className="text-xl font-bold">Manage Volunteering Opportunities</h1>
             <p className="text-sm">The event manager page allows you update your event information and post updates about these events. You can update project information, download participant sheets, and post updates for participants to see.</p>
           </div>
