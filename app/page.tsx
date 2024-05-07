@@ -8,10 +8,12 @@ import PrototypeManageProject from "@/public/prototype-manage-project.png";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
+import { TracingBeam } from "@/components/ui/tracing-beam";
 
 export default function Home() {
   return (
     <>
+    <TracingBeam className="xl:ml-20 xl:mr-40 md:ml-0 sm:ml-0">
       <div className="xl:p-10 md:p-10 sm:p-7 p-5">
         <h1 className="xl:text-8xl md:text-7xl sm:text-6xl text-5xl font-black pb-5">Give back to <span className="text-success">your<br />community, your way</span></h1>
         <p className="text-lg pb-5">Find local volunteering opportunities today with Let&apos;s Assist, and give back to your community.</p>
@@ -48,6 +50,7 @@ export default function Home() {
           riddhiman.please.put@email.here
         </ButtonSCN>
       </div>
+      </TracingBeam>
     </>
   );
 }
