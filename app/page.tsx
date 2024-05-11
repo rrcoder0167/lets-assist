@@ -14,7 +14,7 @@ import { BackgroundBeams } from "@/components/ui/background-beams";
 export default function Home() {
   return (
     <>
-    <TracingBeam className="xl:ml-20 md:ml-20 sm:ml-0">
+    <TracingBeam className="xl:ml-20 md:ml-20">
       <div className="xl:p-10 md:p-10 sm:p-7 p-5">
         <h1 className="xl:text-8xl md:text-7xl sm:text-6xl text-5xl font-black pb-5">Give back to <span className="text-success">your<br />community, your way</span></h1>
         <p className="text-lg pb-5">Find local volunteering opportunities today with Let&apos;s Assist, and give back to your community.</p>
