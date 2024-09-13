@@ -18,7 +18,14 @@ const formSchema = z.object({
   }).trim(),
   email: z.string().email({
     message: "Invalid email"
-  }).trim()
+  }).trim(),
+  password: z.string().min(6, {
+    message: "Password must be at least 6 characters long"
+  }).regex(/^(?=.*[0-9])(?=.*[!@#$%^&*~`_=+;:-])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*~`_=+;:-]/, {
+    message: "Password must contain: at least 1 lower case letter, at least 1 upper case letter, at least 1 number, and at least 1 of the following symbols: ! @ # $ % ^ & * ~ ` _ - = + ; :"
+  }),
+  password2: z.string(),
+  uid: z.string().uuid()
 }).required()
 
 export default function Register() {
@@ -93,6 +100,32 @@ export default function Register() {
                 <FormLabel><b>Email</b></FormLabel>
                 <FormControl>
                   <Input placeholder="bob@example.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel><b>Password</b></FormLabel>
+                <FormControl>
+                  <Input placeholder="****-****-****-****" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password2"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel><b>Confirm Password</b></FormLabel>
+                <FormControl>
+                  <Input placeholder="****-****-****-****" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
