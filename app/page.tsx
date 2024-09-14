@@ -24,7 +24,7 @@ export default function Home() {
           description="Make group-based volunteering events restricted to those within the group."
           src="https://placehold.co/500x300"
           alt="Placeholder"
-          className="left-col"
+          className="center-col"
         />
       </div>
     </>
