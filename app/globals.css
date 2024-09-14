@@ -94,8 +94,8 @@ body {
 .keyword {
   background: -webkit-linear-gradient(#00ff44, #007820);
   font-weight: 700;
-  margin-left: 0.125rem;
-  margin-right: 0.125rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
