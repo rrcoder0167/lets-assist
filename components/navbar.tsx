@@ -50,7 +50,7 @@ export default function Navbar() {
     </Link>
       
       {/* Desktop Navigation */}
-      <div className="hidden md:flex items-center space-x-4">
+      <div className="hidden md:flex items-center space-x-4 ml-auto">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -89,8 +89,8 @@ export default function Navbar() {
         </NavigationMenu>
         <Button variant="ghost">Volunteering Near Me</Button>
         </div>
-        <div className="flex items-center space-x-4">
-        <Link href="/login">
+        <div className="hidden sm:flex items-center space-x-4 ml-auto">
+          <Link href="/login">
             <Button variant="ghost">Login</Button>
           </Link>
           <Button>Sign Up</Button>
@@ -107,7 +107,7 @@ export default function Navbar() {
         </SheetTrigger>
         <SheetContent side="right">
           <nav className="flex flex-col space-y-4">
-            <Link href="/features" className="text-lg font-medium">
+            <Link href="/features" className="text-lg text-white font-medium">
               Features
             </Link>
             {features.map((feature) => (
