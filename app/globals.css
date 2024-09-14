@@ -90,3 +90,51 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.keyword {
+  background: -webkit-linear-gradient(#00ff44, #007820);
+  font-weight: 700;
+  margin-left: 0.125rem;
+  margin-right: 0.125rem;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-header {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+.left {
+  display: flex;
+  justify-content: start;
+}
+
+.left-col {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: start;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.center-col {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.right {
+  display: flex;
+  justify-content: end;
+}
+
+.right-col {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: end;
+}
