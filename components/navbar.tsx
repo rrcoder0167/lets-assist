@@ -19,6 +19,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { ModeToggle } from "@/components/themeToggle"
 
 const features = [
   {
@@ -86,12 +87,14 @@ export default function Navbar() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
+        <Button variant="ghost">Volunteering Near Me</Button>
         </div>
         <div className="flex items-center space-x-4">
         <Link href="/login">
             <Button variant="ghost">Login</Button>
           </Link>
           <Button>Sign Up</Button>
+          <ModeToggle />
         </div>
 
       {/* Mobile Navigation */}
