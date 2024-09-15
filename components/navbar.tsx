@@ -20,6 +20,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { ModeToggle } from "@/components/themeToggle"
+import { Separator } from "@/components/ui/separator"
 
 const features = [
   {
@@ -41,7 +42,10 @@ const features = [
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between p-4 bg-background">
+    <>
+    <div>
+    <nav className="flex items-center justify-between p-3 bg-background">
+ 
     <Link href="/">
       <div className="flex items-center space-x-2">
         <Rocket className="h-6 w-6" />
@@ -93,12 +97,19 @@ export default function Navbar() {
           <Link href="/login">
             <Button variant="ghost">Login</Button>
           </Link>
+          <Link href="/signup">
           <Button>Sign Up</Button>
-          <ModeToggle />
+          </Link>
+        </div>
+        <div className="hidden sm:flex items-center space-x-4 ml-4 mr-4">
+        <ModeToggle/>
         </div>
 
       {/* Mobile Navigation */}
       <Sheet>
+      <div className="sm:hidden flex ml-auto mr-4">
+            <ModeToggle />
+        </div>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon" className="md:hidden">
             <Menu className="h-6 w-6" />
@@ -120,12 +131,20 @@ export default function Navbar() {
               </Link>
             ))}
             <hr className="my-4" />
+            <Link href="/login">
             <Button variant="ghost" className="justify-start">Login</Button>
+            </Link>
+            
+            <Link href="/signup">
             <Button className="justify-start">Sign Up</Button>
+            </Link>
           </nav>
         </SheetContent>
       </Sheet>
     </nav>
+    </div>
+    <Separator />
+    </>
   )
 }
 
