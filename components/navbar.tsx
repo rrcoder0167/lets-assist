@@ -19,7 +19,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { ModeToggle } from "@/components/themeToggle"
+import { ModeToggle } from "@/components/theme-toggle"
 import { Separator } from "@/components/ui/separator"
 
 const features = [
