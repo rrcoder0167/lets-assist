@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label"
 export default function LoginForm() {
     return (
         <div className="flex items-center justify-center min-h-screen">
-            <Card className="mx-auto max-w-sm">
+            <Card className="mx-auto max-w-sm mb-12">
                 <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
                     <CardDescription>
@@ -53,7 +53,7 @@ export default function LoginForm() {
                     </div>
                     <div className="mt-4 text-center text-sm">
                         Don&apos;t have an account?{" "}
-                        <Link href="#" className="underline">
+                        <Link href="/signup" className="underline">
                             Sign up
                         </Link>
                     </div>
