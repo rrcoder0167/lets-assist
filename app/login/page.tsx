@@ -11,6 +11,14 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Login - Lets Assist",
+  description:
+    "Login to the Lets Assist Dashboard",
+};
+
 export default function LoginForm() {
     return (
         <div className="flex items-center justify-center min-h-screen">
