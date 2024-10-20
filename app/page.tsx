@@ -1,4 +1,11 @@
 import { HeroSection } from "@/components/Hero";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Lets Assist: The Ultimate Volunteering Platform",
+  description:
+    "The ultimate volunteering platform to help you find volunteering opportunities. Give back to your community, your way.",
+};
 
 export default function Home() {
   return (
