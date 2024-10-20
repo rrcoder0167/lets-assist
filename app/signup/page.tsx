@@ -10,7 +10,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-import { Mail } from "lucide-react"
 
 export default function LoginForm() {
     return (
@@ -48,7 +47,7 @@ export default function LoginForm() {
                         <Input id="password" type="password" />
                     </div>
                     <Button className="w-full">
-                        <Mail className="mr-2 h-4 w-4" /> Create Account
+                        Create Account
                     </Button>
                     <div className="mt-4 text-center text-sm">
                     Already have an account?{" "}
