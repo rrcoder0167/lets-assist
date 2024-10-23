@@ -19,7 +19,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.441.0",
-    "next": "^14.2.15",
+    "next": "^15.0.1",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
@@ -37,6 +37,7 @@
     "eslint-config-next": "14.2.11"
   },
   "trustedDependencies": [
-    "@vercel/speed-insights"
+    "@vercel/speed-insights",
+    "sharp"
   ]
 }
