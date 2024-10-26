@@ -4,8 +4,20 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import Navbar from "@/components/Navbar"
+import localFont from "next/font/local";
 
-const inter = Inter({ subsets: ["latin"] });
+
+const overusedgrotesk = localFont({
+  src: '../public/fonts/OverusedGrotesk-VF.woff2',
+  display: 'swap',
+  variable: '--font-overusedgrotesk',
+})
+
+const inter = Inter(
+  { subsets: ["latin"],
+    display: "swap",
+    variable: "--font-inter" }
+);
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-background text-foreground`}>
+      <body className={`${inter.className} ${overusedgrotesk.variable} bg-background text-foreground`}>
         <ThemeProvider
             attribute="class"
             defaultTheme="dark"
