@@ -24,19 +24,19 @@ import { Separator } from "@/components/ui/separator"
 
 const features = [
   {
-    title: "Feature 1",
+    title: "Personalized Project Matching",
     href: "/features/feature-1",
-    description: "Description of Feature 1",
+    description: "Smart project recommendations",
   },
   {
-    title: "Feature 2",
+    title: "Stay Updated, Stay Involved",
     href: "/features/feature-2",
-    description: "Description of Feature 2",
+    description: "Real-time updates on projects",
   },
   {
-    title: "Feature 3",
+    title: "Celebrate Your Contributions",
     href: "/features/feature-3",
-    description: "Description of Feature 3",
+    description: "Certificates, Badges, and more",
   },
 ]
 
@@ -72,7 +72,7 @@ export default function Navbar() {
                           letsassist
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
-                          Empowering your business with intelligent assistance.
+                          Helping communities and volunteers connect
                         </p>
                       </a>
                     </NavigationMenuLink>
@@ -92,6 +92,7 @@ export default function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
         <Button variant="ghost">Volunteering Near Me</Button>
+        <Button variant="ghost">Connected Organizations</Button>
         </div>
         <div className="hidden sm:flex items-center space-x-4 ml-auto">
           <Link href="/login">
@@ -118,18 +119,8 @@ export default function Navbar() {
         </SheetTrigger>
         <SheetContent side="right">
           <nav className="flex flex-col space-y-4">
-            <Link href="/features" className="text-lg text-white font-medium">
-              Features
-            </Link>
-            {features.map((feature) => (
-              <Link
-                key={feature.title}
-                href={feature.href}
-                className="text-sm text-muted-foreground"
-              >
-                {feature.title}
-              </Link>
-            ))}
+            <Button variant="ghost" className="justify-start">Volunteering Near Me</Button>
+            <Button variant="ghost" className="justify-start">Connected Organizations</Button>
             <hr className="my-4" />
             <Link href="/login">
             <Button variant="ghost" className="justify-start">Login</Button>
