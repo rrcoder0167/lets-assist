@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 
+
 export const HeroSection = () => {
   const { theme } = useTheme();
   return (
@@ -19,38 +20,26 @@ export const HeroSection = () => {
             <span> v1.0 released 🎉</span>
           </Badge>
 
-          <div className="max-w-screen-md mx-auto text-center text-6xl md:text-6xl font-extrabold">
+            <div className="max-w-screen-md mx-auto text-center text-6xl md:text-6xl font-extrabold font-sans">
             <h1>
               Give back to your community,
               <span className="text-transparent px-2 bg-gradient-to-r from-[#4ed247] to-primary bg-clip-text">
-                your way
+              your way
               </span>
             </h1>
-          </div>
+            </div>
 
           <p className="max-w-screen-sm mx-auto text-xl text-muted-foreground">
-            {`We're more than just a tool, we're a community of passionate
-            creators. Get access to exclusive resources, tutorials, and support.`}
+            {`Find local volunteering opportunities today with Let's Assist, and give back to your community`}
           </p>
 
           <div className="space-y-4 md:space-y-0 md:space-x-4">
-            <Button className="w-5/6 md:w-1/4 font-bold group/arrow">
+          <Link href="/signup">
+            <Button className="w-5/6 md:w-1/4 font-inter font-semibold group/arrow text-sm transform transition-transform duration-200 hover:scale-105">
               Get Started
-              <ArrowRight className="size-5 ml-2 group-hover/arrow:translate-x-1 transition-transform" />
+              <ArrowRight className="size-5 ml-2 group-hover/arrow:translate-x-1 transition-transform duration-500" />
             </Button>
-
-            <Button
-              asChild
-              variant="secondary"
-              className="w-5/6 md:w-1/4 font-bold"
-            >
-              <Link
-                href="https://github.com/rrcoder0167/lets-assist"
-                target="_blank"
-              >
-                Github respository
-              </Link>
-            </Button>
+            </Link>
           </div>
         </div>
 
