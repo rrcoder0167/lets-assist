@@ -39,7 +39,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
           <Navbar />
-        {children}
+        <main className="p-4">
+          {children}
+        </main>
         <SpeedInsights />
         </ThemeProvider>
       </body>

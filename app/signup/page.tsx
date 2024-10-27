@@ -17,10 +17,9 @@ export const metadata: Metadata = {
     "Create an account to the Lets Assist Dashboard",
 };
 
-
 export default function LoginForm() {
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex items-center justify-center min-h-screen p-4">
             <Card className="w-full max-w-sm mx-auto mb-12">
                 <CardHeader className="space-y-1">
                     <CardTitle className="text-2xl text-left">Create an account</CardTitle>
