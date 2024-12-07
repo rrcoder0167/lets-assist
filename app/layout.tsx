@@ -6,18 +6,17 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import Navbar from "@/components/Navbar"
 import localFont from "next/font/local";
 
-
 const overusedgrotesk = localFont({
   src: '../public/fonts/OverusedGrotesk-VF.woff2',
   display: 'swap',
   variable: '--font-overusedgrotesk',
 })
 
-const inter = Inter(
-  { subsets: ["latin"],
-    display: "swap",
-    variable: "--font-inter" }
-);
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter"
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -30,19 +29,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} ${overusedgrotesk.variable} bg-background text-foreground`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} ${overusedgrotesk.variable}`}>
         <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-          <Navbar />
-        <main className="p-4">
-          {children}
-        </main>
-        <SpeedInsights />
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="bg-background text-foreground">
+            <Navbar />
+            <main className="p-4">
+              {children}
+            </main>
+            <SpeedInsights />
+          </div>
         </ThemeProvider>
       </body>
     </html>
