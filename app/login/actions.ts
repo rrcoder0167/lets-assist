@@ -1,26 +1,30 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
-
+import { z } from 'zod'
 import { createClient } from '@/utils/supabase/server'
 
+const loginSchema = z.object({
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(1, 'Password is required'),
+})
+
 export async function login(formData: FormData) {
-  const supabase = await createClient()
+    const supabase = await createClient()
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  }
+    const validatedFields = loginSchema.safeParse({
+        email: formData.get('email'),
+        password: formData.get('password'),
+    })
 
-  const { error } = await supabase.auth.signInWithPassword(data)
+    if (!validatedFields.success) {
+        return { error: validatedFields.error.flatten().fieldErrors }
+    }
 
-  if (error) {
-    redirect('/error')
-  }
+    const { error } = await supabase.auth.signInWithPassword(validatedFields.data)
 
-  revalidatePath('/', 'layout')
-  redirect('/dashboard')
+    if (error) {
+        return { error: { server: [error.message] } }
+    }
+
+    return { success: true }
 }
