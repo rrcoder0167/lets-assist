@@ -1,5 +1,5 @@
 import Link from "next/link"
-
+import { login } from './actions'
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -21,7 +21,8 @@ export const metadata: Metadata = {
 
 export default function LoginForm() {
     return (
-        <div className="flex items-center justify-center min-h-screen">
+        <form action={login}>
+            <div className="flex items-center justify-center min-h-screen">
             <Card className="mx-auto max-w-sm mb-12">
                 <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
@@ -44,6 +45,7 @@ export default function LoginForm() {
                             <Input
                                 id="email"
                                 type="email"
+                                name="email"
                                 placeholder="m@example.com"
                                 required
                             />
@@ -55,7 +57,7 @@ export default function LoginForm() {
                                     Forgot your password?
                                 </Link>
                             </div>
-                            <Input id="password" type="password" required />
+                            <Input id="password" name="password" type="password" required />
                         </div>
                         <Button type="submit" className="w-full">
                             Login
@@ -71,5 +73,6 @@ export default function LoginForm() {
                 </CardContent>
             </Card>
         </div>
+        </form>
     )
 }

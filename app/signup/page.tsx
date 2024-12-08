@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Metadata } from 'next';
-
+import { signup } from './actions';
 export const metadata: Metadata = {
   title: "Signup - Lets Assist",
   description:
@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 
 export default function LoginForm() {
     return (
+        <form action={signup}>
         <div className="flex items-center justify-center min-h-screen p-4">
             <Card className="w-full max-w-sm mx-auto mb-12">
                 <CardHeader className="space-y-1">
@@ -46,13 +47,13 @@ export default function LoginForm() {
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="email">Email</Label>
-                        <Input id="email" type="email" placeholder="m@example.com" />
+                        <Input id="email" name="email" type="email" placeholder="m@example.com" required/>
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="password">Password</Label>
-                        <Input id="password" type="password" />
+                        <Input id="password" name="password" type="password" required/>
                     </div>
-                    <Button className="w-full">
+                    <Button type="submit" className="w-full">
                         Create Account
                     </Button>
                     <div className="mt-4 text-center text-sm">
@@ -64,5 +65,6 @@ export default function LoginForm() {
                 </CardContent>
             </Card>
         </div>
+        </form>
     )
 }
