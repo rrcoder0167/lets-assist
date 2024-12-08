@@ -18,7 +18,7 @@ export default async function Dashboard(){
                 <div className="flex justify-between items-center mb-4">
                     <h1 className="text-3xl font-bold">Hello, {data.user.email}</h1>
                     <form>
-                    <Button variant="outline" className="bg-red-500 hover:bg-red-600 text-white" formAction={logout}>
+                    <Button type="submit" variant="outline" className="bg-red-500 hover:bg-red-600 text-white" formAction={logout}>
                         Logout
                     </Button>
                     </form>
