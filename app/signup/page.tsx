@@ -42,6 +42,7 @@ export default function SignupForm() {
 
         const result = await signup(formData)
 
+        
         if (result.error) {
             const errors = result.error
             Object.keys(errors).forEach((key) => {
@@ -130,7 +131,7 @@ export default function SignupForm() {
                     </Form>
                 </CardContent>
             </Card>
-            <Toaster position="bottom-center" theme="dark" richColors />
+            <Toaster position="bottom-right" theme="dark" richColors />
         </div>
     )
 }

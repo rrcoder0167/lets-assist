@@ -18,11 +18,12 @@ export async function GET(request: NextRequest) {
       token_hash,
     })
     if (!error) {
-      // redirect user to specified redirect URL or root of app
-      redirect(next)
+      // Redirect user to specified redirect URL or root of app with ?confirmed=true
+      redirect(`${next}?confirmed=true`)
+      return
     }
   }
 
-  // redirect the user to an error page with some instructions
+  // Redirect the user to an error page with some instructions
   redirect('/error')
 }
