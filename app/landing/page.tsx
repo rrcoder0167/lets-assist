@@ -12,6 +12,7 @@ import { Toaster, toast } from 'sonner'
 import { completeOnboarding } from './actions'
 import type { OnboardingValues } from './actions'
 import { z } from 'zod'
+import ImageCropper from '@/components/ImageCropper'
 
 const onboardingSchema = z.object({
     firstName: z.string().min(2, 'First name must be at least 2 characters'),
@@ -19,6 +20,7 @@ const onboardingSchema = z.object({
     username: z.string().min(3, 'Username must be at least 3 characters'),
     avatarUrl: z.string().optional(),
 })
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 
 interface AvatarProps {
     url: string
@@ -26,56 +28,65 @@ interface AvatarProps {
 }
 
 function Avatar({ url, onUpload }: AvatarProps) {
-    const [uploading, setUploading] = useState(false)
+    const [tempImageUrl, setTempImageUrl] = useState<string>('')
+    const [showCropper, setShowCropper] = useState(false)
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (!file) return
 
-        setUploading(true)
-        
-        // Here you would typically upload the file to your storage service
-        // For this example, we'll just use a local URL
         const fileUrl = URL.createObjectURL(file)
-        
-        // Simulate an upload delay
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        
-        onUpload(fileUrl)
-        setUploading(false)
+        setTempImageUrl(fileUrl)
+        setShowCropper(true)
+    }
+
+    const handleCropComplete = (croppedImage: string) => {
+        onUpload(croppedImage)
+        setShowCropper(false)
+        setTempImageUrl('')
+    }
+
+    const handleCropCancel = () => {
+        setShowCropper(false)
+        setTempImageUrl('')
     }
 
     return (
-        <div className="flex items-center space-x-4">
-            <AvatarUI className="w-20 h-20">
-                <AvatarImage src={url} alt="Profile picture" />
-                <AvatarFallback>
-                    {url ? 'PIC' : 'ADD'}
-                </AvatarFallback>
-            </AvatarUI>
-            <div>
-                <Button variant="outline" className="relative" disabled={uploading}>
-                    {uploading ? (
-                        <>
-                            <Upload className="w-5 h-5 mr-2 animate-pulse" />
-                            Uploading...
-                        </>
-                    ) : (
-                        <>
-                            <Upload className="w-5 h-5 mr-2" />
-                            Upload Picture
-                        </>
-                    )}
-                    <input
-                        type="file"
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                        onChange={handleUpload}
-                        accept="image/*"
-                        disabled={uploading}
-                    />
-                </Button>
+        <>
+            <div className="flex items-center space-x-4">
+                <AvatarUI className="w-20 h-20">
+                    <AvatarImage src={url} alt="Profile picture" />
+                    <AvatarFallback>
+                        {url ? 'PIC' : 'ADD'}
+                    </AvatarFallback>
+                </AvatarUI>
+                <div>
+                    <Button variant="outline" className="relative">
+                        <Upload className="w-5 h-5 mr-2" />
+                        Upload Picture
+                        <input
+                            type="file"
+                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                            onChange={handleUpload}
+                            accept="image/*"
+                        />
+                    </Button>
+                </div>
             </div>
-        </div>
+
+            <Dialog open={showCropper} onOpenChange={setShowCropper}>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogTitle className="sr-only">Image Cropper</DialogTitle>
+                    {showCropper && (
+                        <ImageCropper
+                            imageSrc={tempImageUrl}
+                            onCropComplete={handleCropComplete}
+                            onCancel={handleCropCancel}
+                        />
+                    )}
+                </DialogContent>
+            </Dialog>
+        </>
     )
 }
 
