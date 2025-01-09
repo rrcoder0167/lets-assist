@@ -13,6 +13,11 @@ const onboardingSchema = z.object({
 export type OnboardingValues = z.infer<typeof onboardingSchema>
 
 export async function completeOnboarding(formData: FormData) {
+    const avatarFile = formData.get('avatarUrl') as File;
+    if (avatarFile && avatarFile.size > 5 * 1024 * 1024) { // 5MB limit
+        return { error: { avatarUrl: ['Avatar file size must be less than 5MB'] } }
+    }
+
     const validatedFields = onboardingSchema.safeParse({
         firstName: formData.get('firstName'),
         lastName: formData.get('lastName'),
