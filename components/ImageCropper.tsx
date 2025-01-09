@@ -103,9 +103,9 @@ const getCroppedImg = async (imageSrc: string, pixelCrop: { x: number; y: number
         return null
     }
 
-    // Set canvas size to 1:1 square
-    canvas.width = 250
-    canvas.height = 250
+    // Set canvas size to 96x96
+    canvas.width = 96
+    canvas.height = 96
 
     // Draw cropped image
     ctx.drawImage(

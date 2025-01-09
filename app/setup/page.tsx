@@ -35,6 +35,11 @@ function Avatar({ url, onUpload }: AvatarProps) {
         const file = e.target.files?.[0]
         if (!file) return
 
+        if (file.size > 5 * 1024 * 1024) { // 5 MB limit
+            toast.error('File size exceeds 5 MB. Please upload a smaller file.')
+            return
+        }
+
         const fileUrl = URL.createObjectURL(file)
         setTempImageUrl(fileUrl)
         setShowCropper(true)
