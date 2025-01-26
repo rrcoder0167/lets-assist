@@ -1,3 +1,4 @@
+// components/Navbar.tsx
 "use client"
 
 import * as React from "react"
@@ -50,26 +51,31 @@ const features = [
   },
 ]
 
-export default function Navbar() {
-  const [user, setUser] = React.useState<SupabaseUser | null>(null)
+interface NavbarProps {
+  initialUser: SupabaseUser | null;
+}
+
+export default function Navbar({ initialUser }: NavbarProps) {
+  const [user, setUser] = React.useState<SupabaseUser | null>(initialUser);
 
   React.useEffect(() => {
     async function getUser() {
-      const supabase = createClient()
-      const { data, error } = await supabase.auth.getUser()
+      const supabase = createClient();
+      const { data, error } = await supabase.auth.getUser();
       if (!error && data?.user) {
-        setUser(data.user)
+        setUser(data.user);
+      } else {
+        setUser(null);
       }
     }
-    getUser()
-  }, [])
+    getUser();
+  }, []);
 
   const handleSignOut = async () => {
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    setUser(null)
-  }
-
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setUser(null);
+  };
   return (
     <>
     <div>
