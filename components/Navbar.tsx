@@ -2,7 +2,9 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Rocket, Menu } from "lucide-react"
+import { Rocket, Menu, User, Settings, LogOut, LayoutDashboard, UserCog } from "lucide-react"
+import { createClient } from "@/utils/supabase/client"
+import { User as SupabaseUser } from '@supabase/supabase-js'
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -21,6 +23,14 @@ import {
 } from "@/components/ui/sheet"
 import { ModeToggle } from "@/components/theme-toggle"
 import { Separator } from "@/components/ui/separator"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const features = [
   {
@@ -41,6 +51,25 @@ const features = [
 ]
 
 export default function Navbar() {
+  const [user, setUser] = React.useState<SupabaseUser | null>(null)
+
+  React.useEffect(() => {
+    async function getUser() {
+      const supabase = createClient()
+      const { data, error } = await supabase.auth.getUser()
+      if (!error && data?.user) {
+        setUser(data.user)
+      }
+    }
+    getUser()
+  }, [])
+
+  const handleSignOut = async () => {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    setUser(null)
+  }
+
   return (
     <>
     <div>
@@ -54,7 +83,7 @@ export default function Navbar() {
     </Link>
       
       {/* Desktop Navigation */}
-      <div className="hidden md:flex items-center space-x-4 ml-auto">
+      <div className="hidden md:flex items-center space-x-6 ml-auto">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -94,16 +123,61 @@ export default function Navbar() {
         <Button variant="ghost">Volunteering Near Me</Button>
         <Button variant="ghost">Connected Organizations</Button>
         </div>
-        <div className="hidden sm:flex items-center space-x-4 ml-auto">
-          <Link href="/login">
-            <Button variant="ghost">Login</Button>
-          </Link>
-          <Link href="/signup">
-          <Button>Sign Up</Button>
-          </Link>
-        </div>
-        <div className="hidden sm:flex items-center space-x-4 ml-4 mr-4">
-        <ModeToggle/>
+        <div className="hidden sm:flex items-center space-x-6 ml-auto">
+          {user ? (
+            <div className="flex items-center space-x-6">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center">
+                      <User className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-base font-medium leading-none">Account</p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {user.email}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <UserCog className="mr-2 h-4 w-4" />
+                    <span>Account settings</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Preferences</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem 
+                    className="text-red-600 font-bold focus:text-red-600" 
+                    onClick={handleSignOut}
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Sign out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button variant="ghost">Login</Button>
+              </Link>
+              <Link href="/signup">
+                <Button>Sign Up</Button>
+              </Link>
+            </>
+          )}
+          <div className="ml-4">
+            <ModeToggle/>
+          </div>
         </div>
 
       {/* Mobile Navigation */}
@@ -118,17 +192,55 @@ export default function Navbar() {
           </Button>
         </SheetTrigger>
         <SheetContent side="right">
-          <nav className="flex flex-col space-y-4">
+          <nav className="flex flex-col space-y-6">
             <Button variant="ghost" className="justify-start">Volunteering Near Me</Button>
             <Button variant="ghost" className="justify-start">Connected Organizations</Button>
             <hr className="my-4" />
-            <Link href="/login">
-            <Button variant="ghost" className="justify-start">Login</Button>
-            </Link>
-            
-            <Link href="/signup">
-            <Button className="justify-start">Sign Up</Button>
-            </Link>
+            {user ? (
+                <>
+                <div className="flex items-center space-x-4 px-4 py-2">
+                <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                  <User className="h-5 w-5" />
+                </div>
+                <span className="text-sm">{user.email}</span>
+                </div>
+                <Link href="/dashboard"></Link>
+                <Button variant="ghost" className="justify-start space-x-2 w-full">
+                  <LayoutDashboard className="mr-4 h-5 w-5" />
+                  Dashboard
+                </Button>
+                <Link href="/account-settings">
+                <Button variant="ghost" className="justify-start space-x-2 w-full">
+                  <UserCog className="mr-4 h-5 w-5" />
+                  Account settings
+                </Button>
+                </Link>
+                <Link href="/preferences">
+                <Button variant="ghost" className="justify-start space-x-2 w-full">
+                  <Settings className="mr-4 h-5 w-5" />
+                  Preferences
+                </Button>
+                </Link>
+                <Separator />
+                <Button 
+                variant="ghost" 
+                className="justify-start text-red-600 font-bold space-x-2 mt-4 w-full" 
+                onClick={handleSignOut}
+                >
+                <LogOut className="mr-4 h-5 w-5" />
+                Sign out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button variant="ghost" className="justify-start">Login</Button>
+                </Link>
+                <Link href="/signup">
+                  <Button className="justify-start">Sign Up</Button>
+                </Link>
+              </>
+            )}
           </nav>
         </SheetContent>
       </Sheet>
