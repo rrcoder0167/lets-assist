@@ -133,42 +133,42 @@ export default function Navbar({ initialUser }: NavbarProps) {
           {user ? (
             <div className="flex items-center space-x-6">
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center">
-                      <User className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-base font-medium leading-none">Account</p>
-                      <p className="text-xs leading-none text-muted-foreground">
-                        {user.email}
-                      </p>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <LayoutDashboard className="mr-2 h-4 w-4" />
-                    <span>Dashboard</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <UserCog className="mr-2 h-4 w-4" />
-                    <span>Account settings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Preferences</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem 
-                    className="text-red-600 font-bold focus:text-red-600" 
-                    onClick={handleSignOut}
-                  >
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Sign out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
+              <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="w-10 h-10 px-4 rounded-full bg-secondary flex items-center justify-center cursor-pointer">
+              <User className="h-4 w-4" />
+              </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 py-2" align="end" forceMount>
+              <DropdownMenuLabel className="font-normal py-2">
+              <div className="flex flex-col space-y-2">
+              <p className="text-lg font-semibold leading-none">Account</p>
+              <p className="text-xs leading-none text-muted-foreground">
+              {user.email}
+              </p>
+              </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator className="my-2" />
+              <DropdownMenuItem className="py-2 cursor-pointer">
+              <LayoutDashboard className="mr-2 h-4 w-4" />
+              <span>Dashboard</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="py-2 cursor-pointer">
+              <UserCog className="mr-2 h-4 w-4" />
+              <span>Account settings</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="py-2 cursor-pointer">
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Preferences</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="my-2" />
+              <DropdownMenuItem 
+              className="text-destructive focus:text-destructive font-bold py-2 cursor-pointer" 
+              onClick={handleSignOut}
+              >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Sign out</span>
+              </DropdownMenuItem>
+              </DropdownMenuContent>
               </DropdownMenu>
             </div>
           ) : (
