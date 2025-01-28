@@ -131,46 +131,50 @@ export default function Navbar({ initialUser }: NavbarProps) {
         </div>
         <div className="hidden sm:flex items-center space-x-6 ml-auto">
           {user ? (
-            <div className="flex items-center space-x-6">
-              <DropdownMenu>
+            <div className="flex items-center space-x-8">
+            <DropdownMenu>
               <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="w-10 h-10 px-4 rounded-full bg-secondary flex items-center justify-center cursor-pointer">
-              <User className="h-4 w-4" />
-              </Button>
+                <Button
+                  variant="ghost"
+                  className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center"
+                >
+                  <User className="h-5 w-5" />
+                </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 py-2" align="end" forceMount>
-              <DropdownMenuLabel className="font-normal py-2">
-              <div className="flex flex-col space-y-2">
-              <p className="text-lg font-semibold leading-none">Account</p>
-              <p className="text-xs leading-none text-muted-foreground">
-              {user.email}
-              </p>
-              </div>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator className="my-2" />
-              <DropdownMenuItem className="py-2 cursor-pointer">
-              <LayoutDashboard className="mr-2 h-4 w-4" />
-              <span>Dashboard</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="py-2 cursor-pointer">
-              <UserCog className="mr-2 h-4 w-4" />
-              <span>Account settings</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="py-2 cursor-pointer">
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Preferences</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator className="my-2" />
-              <DropdownMenuItem 
-              className="text-destructive focus:text-destructive font-bold py-2 cursor-pointer" 
-              onClick={handleSignOut}
-              >
-              <LogOut className="mr-2 h-4 w-4" />
-              <span>Sign out</span>
-              </DropdownMenuItem>
-              </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+                  <DropdownMenuContent className="w-64 pt-3 px-2 pb-2" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal mb-2">
+                    <div className="flex flex-col space-y-2">
+                    <p className="text-sm font-medium leading-tight">Account</p>
+                    <p className="text-sm leading-none text-muted-foreground">
+                      {user.email}
+                    </p>
+                    </div>
+                  </DropdownMenuLabel>
+
+                  <DropdownMenuItem className="py-2.5 text-muted-foreground cursor-pointer">
+                    <span>Dashboard</span>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem className="py-2.5 text-muted-foreground cursor-pointer">
+                    <span>Account Settings</span>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem className="py-2.5 text-muted-foreground cursor-pointer">
+                    <span>Preferences</span>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator className="my-2" />
+
+                    <DropdownMenuItem
+                    className="text-destructive focus:text-destructive py-2.5 cursor-pointer flex justify-between"
+                    onClick={handleSignOut}
+                    >
+                    <span>Log Out</span>
+                    <LogOut className="h-4 w-4" />
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+            </DropdownMenu>
+          </div>          
           ) : (
             <>
               <Link href="/login">
