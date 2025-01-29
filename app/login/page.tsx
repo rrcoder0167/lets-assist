@@ -18,7 +18,6 @@ import { Input } from "@/components/ui/input"
 // import { Label } from "@/components/ui/label"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
 import { Toaster, toast } from 'sonner'
-import { useRouter } from 'next/navigation'
 // import { Metadata } from 'next'
 
 // export const metadata: Metadata = {
@@ -35,7 +34,6 @@ const loginSchema = z.object({
 type LoginValues = z.infer<typeof loginSchema>
 
 export default function LoginForm() {
-    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false)
     const form = useForm<LoginValues>({
         resolver: zodResolver(loginSchema),
@@ -65,7 +63,7 @@ export default function LoginForm() {
             toast.error('Incorrect email or password.')
         } else if (result.success) {
             // form.reset()
-            router.push('/dashboard')
+            window.location.href = '/home'
             
         }
 
