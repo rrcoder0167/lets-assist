@@ -9,7 +9,7 @@ export default function ErrorPage() {
     const router = useRouter();
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="min-h-screen flex items-center justify-center">
             <Card className="w-[380px] shadow-lg">
                 <CardHeader className="text-center">
                     <CardTitle className="flex items-center justify-center gap-2 text-destructive">

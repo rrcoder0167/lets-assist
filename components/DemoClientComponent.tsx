@@ -20,7 +20,6 @@ export default function DemoClientComponent() {
     }
     getUser()
   }, [])
-  console.log({user})
   return (
     <div>
       <h1>Supabase Client</h1>

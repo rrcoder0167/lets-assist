@@ -6,7 +6,7 @@ import Link from "next/link"
 import { Rocket, Menu, User, Settings, LogOut, LayoutDashboard, UserCog } from "lucide-react"
 import { createClient } from "@/utils/supabase/client"
 import { User as SupabaseUser } from '@supabase/supabase-js'
-
+import { logout } from '@/app/logout/actions'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -51,6 +51,7 @@ const features = [
   },
 ]
 
+
 interface NavbarProps {
   initialUser: SupabaseUser | null;
 }
@@ -70,12 +71,6 @@ export default function Navbar({ initialUser }: NavbarProps) {
     }
     getUser();
   }, []);
-
-  const handleSignOut = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    setUser(null);
-  };
   return (
     <>
     <div>
@@ -164,10 +159,9 @@ export default function Navbar({ initialUser }: NavbarProps) {
                   </DropdownMenuItem>
 
                   <DropdownMenuSeparator className="my-2" />
-
                     <DropdownMenuItem
                     className="text-destructive focus:text-destructive py-2.5 cursor-pointer flex justify-between"
-                    onClick={handleSignOut}
+                    onClick={async () => { setUser(null); await logout();}}
                     >
                     <span>Log Out</span>
                     <LogOut className="h-4 w-4" />
@@ -235,10 +229,10 @@ export default function Navbar({ initialUser }: NavbarProps) {
                 <Button 
                 variant="ghost" 
                 className="justify-start text-red-600 font-bold space-x-2 mt-4 w-full" 
-                onClick={handleSignOut}
+                onClick={async () => { setUser(null); await logout();}}
                 >
                 <LogOut className="mr-4 h-5 w-5" />
-                Sign out
+                Log Out
                 </Button>
               </>
             ) : (
