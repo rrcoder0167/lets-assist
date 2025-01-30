@@ -1,22 +1,18 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { logout } from '../logout/actions'
 import DemoClientComponent from "@/components/DemoClientComponent";
 
 export default async function Home(){
     const supabase = await createClient()
-    const { data, error } = await supabase.auth.getUser()
-    if (error || !data?.user) {
-        redirect('/login')
-    }
+    const { data } = await supabase.auth.getUser()
     return (
         <div>
             <main className="p-8">
                 <div className="flex justify-between items-center mb-4">
-                    <h1 className="text-3xl font-bold">Hello, {data.user.email}</h1>
+                    <h1 className="text-3xl font-bold">Hello, {data?.user?.email ?? 'Guest'}</h1>
                     <form>
                     <Button type="submit" variant="outline" className="bg-red-500 hover:bg-red-600 text-white" formAction={logout}>
                         Logout
