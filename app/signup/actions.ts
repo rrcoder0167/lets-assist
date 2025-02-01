@@ -20,6 +20,7 @@ export async function signup(formData: FormData) {
 
   const supabase = await createClient()
 
+
   try {
       // 1. Create auth user
       const { data: { user }, error: authError } = await supabase.auth.signUp({
@@ -31,16 +32,16 @@ export async function signup(formData: FormData) {
                 }
             }
         })
-      
+      // check if user already exists
+      if (!user || !user.identities || user.identities.length === 0) {
+        return { error: { server: ['ACCEXISTS0'] } }
+      }
 
       if (authError || !user) {
-        console.log(authError)
         throw authError
       }
-      console.log('here')
       // 2. Generate temporary username from user ID
       const tempUsername = `user_${user.id.slice(0, 8)}`
-      console.log(tempUsername)
 
       // 3. Create matching profile with temporary username
       const { error: profileError } = await supabase
@@ -53,7 +54,6 @@ export async function signup(formData: FormData) {
           })
 
       if (profileError) {
-        console.log(profileError)
         throw profileError
       }
 

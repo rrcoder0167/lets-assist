@@ -44,7 +44,7 @@ export default function SignupForm() {
 
         
         if (result.error) {
-            const errors = result.error
+            const errors: { email?: string[]; password?: string[]; server?: string[] } = result.error
             Object.keys(errors).forEach((key) => {
                 if (key in errors && key in signupSchema.shape) {
                     form.setError(key as keyof SignupValues, {
@@ -53,7 +53,14 @@ export default function SignupForm() {
                     })
                 }
             })
-            toast.error('Sorry, there was an error creating your account. Please try again.')
+            if (errors.server && errors.server[0] === "ACCEXISTS0") {
+                toast.error("Account already exists. Login to continue.")
+            } else if (errors.server && errors.server[0] === "NOCNFRM0") {
+                toast.warning("Email confirmation is required. Please check your inbox.")
+            }
+            else {
+                toast.error('Sorry, there was an error creating your account. Please try again.')
+            }
         } else if (result.success) {
             form.reset()
             toast.success('Please check your email for a confirmation link.', {
