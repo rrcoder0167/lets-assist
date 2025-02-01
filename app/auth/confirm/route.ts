@@ -29,5 +29,5 @@ export async function GET(request: NextRequest) {
     redirect('/error?message=' + encodeURIComponent(error.message))
   }
 
-  redirect(`${next}?confirmed=true`)
+  redirect(`${next}/home?confirmed=true`)
 }
