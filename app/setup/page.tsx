@@ -13,13 +13,13 @@ import { completeOnboarding } from './actions'
 import type { OnboardingValues } from './actions'
 import { z } from 'zod'
 import ImageCropper from '@/components/ImageCropper'
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 
 const onboardingSchema = z.object({
     fullName: z.string().min(3, 'Full name must be at least 3 characters'),
     username: z.string().min(3, 'Username must be at least 3 characters'),
     avatarUrl: z.string().optional(),
 })
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 
 interface AvatarProps {
     url: string
@@ -96,6 +96,8 @@ function Avatar({ url, onUpload }: AvatarProps) {
 
 export default function NewUserOnboarding() {
     const [isLoading, setIsLoading] = useState(false)
+    const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null)
+    const [checkingUsername, setCheckingUsername] = useState(false)
     const form = useForm<OnboardingValues>({
         resolver: zodResolver(onboardingSchema),
         defaultValues: {
@@ -104,6 +106,20 @@ export default function NewUserOnboarding() {
             avatarUrl: '',
         },
     })
+
+    // New handler to check username uniqueness
+    async function handleUsernameBlur(e: React.FocusEvent<HTMLInputElement>) {
+        const username = e.target.value.trim()
+        if (username.length < 3) {
+            setUsernameAvailable(null)
+            return
+        }
+        setCheckingUsername(true)
+        const res = await fetch(`/api/check-username?username=${encodeURIComponent(username)}`)
+        const data = await res.json()
+        setUsernameAvailable(data.available)
+        setCheckingUsername(false)
+    }
 
     async function onSubmit(data: OnboardingValues) {
         setIsLoading(true)
@@ -162,9 +178,28 @@ export default function NewUserOnboarding() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Username</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="johndoe123" {...field} />
-                                        </FormControl>
+                                        <div className="relative">
+                                            <FormControl>
+                                                <Input 
+                                                    placeholder="johndoe123" 
+                                                    {...field} 
+                                                    onBlur={(e) => {
+                                                        field.onBlur()
+                                                        handleUsernameBlur(e)
+                                                    }}
+                                                />
+                                            </FormControl>
+                                            {checkingUsername && (
+                                                <span className="absolute right-2 top-2 text-sm text-muted-foreground">
+                                                    Checking...
+                                                </span>
+                                            )}
+                                            {usernameAvailable !== null && !checkingUsername && (
+                                                <span className={`absolute right-2 top-2 text-sm ${usernameAvailable ? 'text-green-600' : 'text-red-600'}`}>
+                                                    {usernameAvailable ? '✓' : '✕'}
+                                                </span>
+                                            )}
+                                        </div>
                                         <FormMessage />
                                     </FormItem>
                                 )}
