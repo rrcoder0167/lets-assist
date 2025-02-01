@@ -3,10 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function ErrorPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const message = searchParams.get("message") || "There was a problem signing you in.";
 
     return (
         <div className="min-h-screen flex items-center justify-center">
@@ -18,7 +20,7 @@ export default function ErrorPage() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="text-center text-muted-foreground">
-                    <p>There was a problem signing you in.</p>
+                    <p className="text-sm font-mono text-destructive mb-2">{message}</p>
                     <p>Please try again or contact support if the issue persists.</p>
                 </CardContent>
                 <CardFooter className="flex justify-center gap-2">
