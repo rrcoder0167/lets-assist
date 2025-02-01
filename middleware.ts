@@ -1,7 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/utils/supabase/middleware';
 
-const PUBLIC_PATHS = ['/login', '/', '/signup']; // public paths that don't require authentication
+const PUBLIC_PATHS = ['/login', '/', '/signup', '/error', '/auth/confirm']; // public paths that don't require authentication
+const RESTRICTED_PATHS_FOR_LOGGED_IN_USERS = ['/', '/login', '/signup'];
 
 export async function middleware(request: NextRequest) {
     const { supabase, response } = createClient(request);
@@ -15,7 +16,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/login', request.url));
     }
 
-    if (user && PUBLIC_PATHS.includes(currentPath)) { // redirect to home if user is already logged in, you can't access those pages
+    if (user && RESTRICTED_PATHS_FOR_LOGGED_IN_USERS.includes(currentPath)) { // redirect to home if user is already logged in, you can't access those pages
         return NextResponse.redirect(new URL('/home', request.url));
     }
 

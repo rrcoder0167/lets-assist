@@ -29,11 +29,24 @@ export async function completeOnboarding(formData: FormData) {
 
     const supabase = await createClient()
     
-    // Here you would update the user's profile in your database
-    // This is just a placeholder for the actual implementation
+    // New: Check if username is unique
+    const { data: existingUser, error: selectError } = await supabase
+        .from('users')
+        .select('username')
+        .eq('username', validatedFields.data.username)
+        .maybeSingle()
+        
+    if (selectError) {
+        return { error: { server: ['Failed to check username uniqueness'] } }
+    }
+    
+    if (existingUser) {
+        return { error: { username: ['Username is already taken'] } }
+    }
+
     try {
         const { error } = await supabase
-            .from('profiles')
+            .from('users')
             .upsert({
                 full_name: validatedFields.data.fullName,
                 username: validatedFields.data.username,
@@ -47,4 +60,17 @@ export async function completeOnboarding(formData: FormData) {
     } catch (error) {
         return { error: { server: ['Failed to update profile'] } }
     }
+}
+
+export async function checkUsernameUnique(username: string) {
+    const supabase = await createClient()
+    const { data: existingUser, error } = await supabase
+        .from('profiles')
+        .select('username')
+        .eq('username', username)
+        .maybeSingle()
+    if (error) {
+        return { available: false, error: error.message }
+    }
+    return { available: !existingUser }
 }
