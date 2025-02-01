@@ -15,8 +15,7 @@ import { z } from 'zod'
 import ImageCropper from '@/components/ImageCropper'
 
 const onboardingSchema = z.object({
-    firstName: z.string().min(2, 'First name must be at least 2 characters'),
-    lastName: z.string().min(2, 'Last name must be at least 2 characters'),
+    fullName: z.string().min(3, 'Full name must be at least 3 characters'),
     username: z.string().min(3, 'Username must be at least 3 characters'),
     avatarUrl: z.string().optional(),
 })
@@ -100,8 +99,7 @@ export default function NewUserOnboarding() {
     const form = useForm<OnboardingValues>({
         resolver: zodResolver(onboardingSchema),
         defaultValues: {
-            firstName: '',
-            lastName: '',
+            fullName: '',
             username: '',
             avatarUrl: '',
         },
@@ -147,25 +145,12 @@ export default function NewUserOnboarding() {
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                             <FormField
                                 control={form.control}
-                                name="firstName"
+                                name="fullName"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>First Name</FormLabel>
+                                        <FormLabel>Full Name</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="John" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="lastName"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Last Name</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Doe" {...field} />
+                                            <Input placeholder="John Doe" {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
