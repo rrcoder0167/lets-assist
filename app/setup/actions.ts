@@ -4,8 +4,7 @@ import { z } from 'zod'
 import { createClient } from '@/utils/supabase/server'
 
 const onboardingSchema = z.object({
-    firstName: z.string().min(1, 'First name must be at least 1 character'),
-    lastName: z.string().min(1, 'Last name must be at least 1 character'),
+    fullName: z.string().min(3, 'Full name must be at least 3 characters'),
     username: z.string().min(3, 'Username must be at least 3 characters'),
     avatarUrl: z.string().optional(),
 })
@@ -19,8 +18,7 @@ export async function completeOnboarding(formData: FormData) {
     }
 
     const validatedFields = onboardingSchema.safeParse({
-        firstName: formData.get('firstName'),
-        lastName: formData.get('lastName'),
+        fullName: formData.get('fullName'),
         username: formData.get('username'),
         avatarUrl: formData.get('avatarUrl'),
     })
@@ -37,8 +35,7 @@ export async function completeOnboarding(formData: FormData) {
         const { error } = await supabase
             .from('profiles')
             .upsert({
-                first_name: validatedFields.data.firstName,
-                last_name: validatedFields.data.lastName,
+                full_name: validatedFields.data.fullName,
                 username: validatedFields.data.username,
                 avatar_url: validatedFields.data.avatarUrl,
                 updated_at: new Date().toISOString(),

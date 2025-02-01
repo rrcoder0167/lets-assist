@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { createClient } from '@/utils/supabase/server'
-import { logout } from '../logout/actions'
 import DemoClientComponent from "@/components/DemoClientComponent";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react"
+import CompleteProfileButton from "@/components/CompleteProfileButton"
 
 export default async function Home(){
     const supabase = await createClient()
@@ -11,15 +12,14 @@ export default async function Home(){
     return (
         <div>
             <main className="p-8">
+                
                 <div className="flex justify-between items-center mb-4">
+                    
                     <h1 className="text-3xl font-bold">Hello, {data?.user?.email ?? 'Guest'}</h1>
-                    <form>
-                    <Button type="submit" variant="outline" className="bg-red-500 hover:bg-red-600 text-white" formAction={logout}>
-                        Logout
-                    </Button>
-                    </form>
                 </div>
                 <p>Welcome to your volunteering platform dashboard.</p>
+                
+
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <Card>
                         <CardHeader>
@@ -38,7 +38,20 @@ export default async function Home(){
                         </CardContent>
                     </Card>
                 </div>
-                <Button className="mt-8">Create New Event</Button>
+                <div className="mt-8 mb-8">
+                    <Alert className="flex justify-between items-center">
+                        <div className="flex items-center">
+                            <AlertCircle className="h-4 w-4 mr-2" />
+                            <div>
+                                <AlertTitle>Heads up!</AlertTitle>
+                                <AlertDescription>
+                                    You need to complete your profile to start volunteering.
+                                </AlertDescription>
+                            </div>
+                        </div>
+                        <CompleteProfileButton />
+                    </Alert>
+                </div>
                 <DemoClientComponent />
             </main>
         </div>
