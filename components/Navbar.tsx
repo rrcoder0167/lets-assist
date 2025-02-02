@@ -58,18 +58,33 @@ interface NavbarProps {
 
 export default function Navbar({ initialUser }: NavbarProps) {
   const [user, setUser] = React.useState<SupabaseUser | null>(initialUser);
+  const [profile, setProfile] = React.useState<{ full_name: string } | null>(null);
 
   React.useEffect(() => {
-    async function getUser() {
+    async function getUserAndProfile() {
       const supabase = createClient();
-      const { data, error } = await supabase.auth.getUser();
-      if (!error && data?.user) {
-        setUser(data.user);
-      } else {
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      
+      if (userError || !user) {
         setUser(null);
+        setProfile(null);
+        return;
       }
+
+      setUser(user);
+      
+      // Fetch profile after confirming we have a user
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .single();
+      console.log(profileData);
+      
+      setProfile(profileData);
     }
-    getUser();
+
+    getUserAndProfile();
   }, []);
   return (
     <>
@@ -139,7 +154,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
                   <DropdownMenuContent className="w-64 pt-3 px-2 pb-2" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal mb-2">
                     <div className="flex flex-col space-y-2">
-                    <p className="text-sm font-medium leading-tight">Account</p>
+                    <p className="text-sm font-medium leading-tight">{profile?.full_name}</p>
                     <p className="text-sm leading-none text-muted-foreground">
                       {user.email}
                     </p>

@@ -10,6 +10,5 @@ export const GET = async (request: Request) => {
     }
 
     const result = await checkUsernameUnique(username)
-    console.log(result)
     return NextResponse.json(result)
 }

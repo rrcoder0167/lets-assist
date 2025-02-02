@@ -6,7 +6,6 @@ import { redirect } from 'next/navigation'
 // app/auth/confirm/route.ts
 
 export async function GET(request: NextRequest) {
-  console.log('confirm route')
   const { searchParams } = new URL(request.url)
   const token_hash = searchParams.get('token_hash')
   const type = searchParams.get('type') as EmailOtpType | null
@@ -29,5 +28,5 @@ export async function GET(request: NextRequest) {
     redirect('/error?message=' + encodeURIComponent(error.message))
   }
 
-  redirect(`${next}/home?confirmed=true`)
-}
+  redirect("/home?confirmed=true")
+}  
