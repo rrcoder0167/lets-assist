@@ -33,11 +33,12 @@ export async function signup(formData: FormData) {
             }
         })
       // check if user already exists
-      if (!user || !user.identities || user.identities.length === 0) {
-        return { error: { server: ['ACCEXISTS0'] } }
-      }
+      // if (!user || !user.identities || user.identities.length === 0) {
+      //   return { error: { server: ['ACCEXISTS0'] } }
+      // }
 
       if (authError || !user) {
+        console.log(authError)
         throw authError
       }
       // 2. Generate temporary username from user ID

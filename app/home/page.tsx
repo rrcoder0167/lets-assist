@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { createClient } from '@/utils/supabase/server'
-import DemoClientComponent from "@/components/DemoClientComponent";
+// import DemoClientComponent from "@/components/DemoClientComponent";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import CompleteProfileButton from "@/components/CompleteProfileButton"
@@ -52,7 +52,7 @@ export default async function Home(){
                         <CompleteProfileButton />
                     </Alert>
                 </div>
-                <DemoClientComponent />
+                {/* <DemoClientComponent /> */}
             </main>
         </div>
     );
