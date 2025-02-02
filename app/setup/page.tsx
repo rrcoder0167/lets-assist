@@ -15,6 +15,7 @@ import { z } from 'zod'
 import ImageCropper from '@/components/ImageCropper'
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 
+// --- Changed: update schema to use string for preview only ---
 const onboardingSchema = z.object({
     fullName: z.string().min(3, 'Full name must be at least 3 characters'),
     username: z.string().min(3, 'Username must be at least 3 characters'),
@@ -44,6 +45,7 @@ function Avatar({ url, onUpload }: AvatarProps) {
         setShowCropper(true)
     }
 
+    // --- Changed: just pass the cropped base64 image ---
     const handleCropComplete = (croppedImage: string) => {
         onUpload(croppedImage)
         setShowCropper(false)
@@ -72,7 +74,7 @@ function Avatar({ url, onUpload }: AvatarProps) {
                             type="file"
                             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                             onChange={handleUpload}
-                            accept="image/*"
+                            accept="image/jpeg,image/png,image/jpg"
                         />
                     </Button>
                 </div>
@@ -95,6 +97,7 @@ function Avatar({ url, onUpload }: AvatarProps) {
 }
 
 export default function NewUserOnboarding() {
+    // ...existing code...
     const [isLoading, setIsLoading] = useState(false)
     const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null)
     const [checkingUsername, setCheckingUsername] = useState(false)
@@ -103,11 +106,11 @@ export default function NewUserOnboarding() {
         defaultValues: {
             fullName: '',
             username: '',
-            avatarUrl: '',
+            avatarUrl: undefined,
         },
     })
 
-    // New handler to check username uniqueness
+    // ...existing code...
     async function handleUsernameBlur(e: React.FocusEvent<HTMLInputElement>) {
         const username = e.target.value.trim()
         if (username.length < 3) {
@@ -121,14 +124,18 @@ export default function NewUserOnboarding() {
         setCheckingUsername(false)
     }
 
+    // --- Changed: simply send avatarUrl as string ---
     async function onSubmit(data: OnboardingValues) {
         setIsLoading(true)
         const formData = new FormData()
+        // --- Changed: do not append avatarUrl so server doesn't get base64 ---
         Object.entries(data).forEach(([key, value]) => {
-            if (value) formData.append(key, value)
+            if (key !== 'avatarUrl' && value) formData.append(key, value as any)
         })
 
         const result = await completeOnboarding(formData)
+
+        if (!result) return
 
         if (result.error) {
             const errors = result.error
@@ -139,7 +146,7 @@ export default function NewUserOnboarding() {
                 })
             })
             toast.error('Failed to update profile. Please try again.')
-        } else if (result.success) {
+        } else {
             form.reset()
             toast.success('Profile updated successfully!')
         }
@@ -185,7 +192,6 @@ export default function NewUserOnboarding() {
                                                     placeholder="johndoe123" 
                                                     {...field} 
                                                     onChange={(e) => {
-                                                        // Remove spaces from input
                                                         const noSpaces = e.target.value.replace(/\s/g, '')
                                                         field.onChange(noSpaces)
                                                     }}
@@ -221,7 +227,10 @@ export default function NewUserOnboarding() {
                                     <FormItem>
                                         <FormLabel>Profile Picture</FormLabel>
                                         <FormControl>
-                                            <Avatar url={field.value ?? ''} onUpload={(url) => field.onChange(url)} />
+                                            <Avatar 
+                                              url={typeof field.value === 'string' ? field.value : ''} 
+                                              onUpload={(url) => field.onChange(url)}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -236,7 +245,7 @@ export default function NewUserOnboarding() {
             </Card>
             <Toaster position="bottom-right" theme="dark" richColors />
         </div>
-
+        {/* ...existing code... */}
         </>
     )
 }
