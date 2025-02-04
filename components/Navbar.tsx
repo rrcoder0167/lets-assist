@@ -3,7 +3,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Rocket, Menu, User, Settings, LogOut, LayoutDashboard, UserCog } from "lucide-react"
+import { Rocket, Menu, User, Settings, LogOut, LayoutDashboard, UserCog, Heart } from "lucide-react"
 import { createClient } from "@/utils/supabase/client"
 import { User as SupabaseUser } from '@supabase/supabase-js'
 import { logout } from '@/app/logout/actions'
@@ -161,18 +161,23 @@ export default function Navbar({ initialUser }: NavbarProps) {
                     </div>
                   </DropdownMenuLabel>
 
-                  <DropdownMenuItem className="py-2.5 text-muted-foreground cursor-pointer">
-                    <span>Dashboard</span>
-                  </DropdownMenuItem>
+                    <DropdownMenuItem className="py-2.5 text-muted-foreground cursor-pointer" asChild>
+                    <Link href="/home">
+                      <span>Dashboard</span>
+                    </Link>
+                    </DropdownMenuItem>
 
-                  <DropdownMenuItem className="py-2.5 text-muted-foreground cursor-pointer">
-                    <span>Account Settings</span>
-                  </DropdownMenuItem>
+                    <DropdownMenuItem className="py-2.5 text-muted-foreground cursor-pointer" asChild>
+                    <Link href="/account/profile">
+                      <span>Account Settings</span>
+                    </Link>
+                    </DropdownMenuItem>
 
-                  <DropdownMenuItem className="py-2.5 text-muted-foreground cursor-pointer">
-                    <span>Preferences</span>
+                  <DropdownMenuSeparator className="my-2" />
+                  <DropdownMenuItem className="text-chart-4 focus:text-chart-4 py-2.5 cursor-pointer flex justify-between">
+                  <span>Donate</span>
+                  <Heart className="h-4 w-4" />
                   </DropdownMenuItem>
-
                   <DropdownMenuSeparator className="my-2" />
                     <DropdownMenuItem
                     className="text-destructive focus:text-destructive py-2.5 cursor-pointer flex justify-between"
@@ -183,6 +188,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
             </DropdownMenu>
+
           </div>          
           ) : (
             <>
