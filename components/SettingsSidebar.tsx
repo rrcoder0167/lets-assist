@@ -1,10 +1,8 @@
 import Link from 'next/link'
-import { Button } from './button'
+import { Button } from '@/components/ui/button'
 import { 
   UserCircle, 
-  Bell, 
   Shield, 
-  Palette, 
   Mail, 
   Share2, 
   Database 
@@ -17,19 +15,9 @@ const sidebarItems = [
     href: '/settings/profile'
   },
   {
-    title: 'Notifications',
-    icon: <Bell className="w-4 h-4 mr-2" />,
-    href: '/settings/notifications'
-  },
-  {
     title: 'Privacy & Security',
     icon: <Shield className="w-4 h-4 mr-2" />,
     href: '/settings/privacy'
-  },
-  {
-    title: 'Appearance',
-    icon: <Palette className="w-4 h-4 mr-2" />,
-    href: '/settings/appearance'
   },
   {
     title: 'Email Settings',

@@ -14,7 +14,7 @@ import type { OnboardingValues } from './actions'
 import { z } from 'zod'
 import ImageCropper from '@/components/ImageCropper'
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
-import { SettingsSidebar } from '@/components/ui/SettingsSidebar'
+import { SettingsSidebar } from '@/components/SettingsSidebar'
 
 // Modified schema: preprocess empty strings into undefined so that non-updated values pass validation.
 const onboardingSchema = z.object({
