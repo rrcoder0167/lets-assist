@@ -8,8 +8,7 @@ import { redirect } from 'next/navigation'
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const token_hash = searchParams.get('token_hash')
-  const type = searchParams.get('type') as EmailOtpType | null
-  const next = process.env.NEXT_SITE_URL ?? '/'
+  const type = searchParams.get('type') as EmailOtpType | null // potentially issues here w the redirect
   
   if (!token_hash || !type) {
     redirect('/error?message=Missing confirmation parameters')
