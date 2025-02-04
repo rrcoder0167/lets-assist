@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { checkUsernameUnique } from '@/app/setup/actions'
+import { checkUsernameUnique } from '@/app/account/actions'
 
 // Modified export for GET request as an arrow function
 export const GET = async (request: Request) => {
