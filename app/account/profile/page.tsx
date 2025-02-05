@@ -67,7 +67,7 @@ function Avatar({ url, onUpload }: AvatarProps) {
         <>
             <div className="flex items-center space-x-4">
                 <AvatarUI className="w-20 h-20">
-                    <AvatarImage src={url} alt="Profile picture" />
+                    <AvatarImage src={url || undefined} alt="Profile picture" />
                     <AvatarFallback>
                         {url ? 'PIC' : 'ADD'}
                     </AvatarFallback>
@@ -129,11 +129,27 @@ export default function AccountSettings() {
         setCheckingUsername(false)
     }
 
+    function dataURLToFile(dataURL: string, filename: string): File {
+        const arr = dataURL.split(',')
+        const mimeMatch = arr[0].match(/:(.*?);/)
+        const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg'
+        const bstr = atob(arr[1])
+        let n = bstr.length
+        const u8arr = new Uint8Array(n)
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n)
+        }
+        return new File([u8arr], filename, { type: mime })
+    }
+
     // --- Changed: simply send avatarUrl as string ---
     async function onSubmit(data: OnboardingValues) {
         setIsLoading(true)
         const formData = new FormData()
-        // --- Changed: do not append avatarUrl so server doesn't get base64 ---
+        if (data.avatarUrl && typeof data.avatarUrl === 'string') {
+            const avatarFile = dataURLToFile(data.avatarUrl, 'cropped-avatar.jpg')
+            formData.append('avatarUrl', avatarFile) // Changed: must match actions.ts
+        }
         Object.entries(data).forEach(([key, value]) => {
             if (key !== 'avatarUrl' && value) formData.append(key, value as string)
         })
