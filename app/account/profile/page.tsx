@@ -1,9 +1,10 @@
 "use client"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { createClient } from "@/utils/supabase/client"
 import { Avatar as AvatarUI, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Upload, CircleCheck, XCircle } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,6 +15,7 @@ import type { OnboardingValues } from './actions'
 import { z } from 'zod'
 import ImageCropper from '@/components/ImageCropper'
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
+import { Skeleton } from "@/components/ui/skeleton"
 
 // Modified schema: preprocess empty strings into undefined so that non-updated values pass validation.
 const onboardingSchema = z.object({
@@ -106,14 +108,47 @@ export default function AccountSettings() {
     const [isLoading, setIsLoading] = useState(false)
     const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null)
     const [checkingUsername, setCheckingUsername] = useState(false)
+    const [defaultValues, setDefaultValues] = useState<OnboardingValues>({
+        fullName: '',
+        username: '',
+        avatarUrl: undefined,
+    });
+    const [isDataLoading, setIsDataLoading] = useState(true)
+
+    useEffect(() => {
+        async function fetchUserProfile() {
+            const supabase = createClient();
+            try {
+                const { data: { user } } = await supabase.auth.getUser(); // Add this line to get the current user
+                const { data: profileData } = await supabase
+                    .from('profiles')
+                    .select('full_name, avatar_url, username')
+                    .eq('id', user?.id)
+                    .single();
+                console.log(profileData);
+      
+             if (profileData) {
+                 setDefaultValues({
+                     fullName: profileData.full_name,
+                     username: profileData.username,
+                     avatarUrl: profileData.avatar_url,
+                 });
+             }
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+                toast.error('Failed to load profile data');
+            } finally {
+                setIsDataLoading(false)
+            }
+        }
+        fetchUserProfile();
+    }, []);
+
     const form = useForm<OnboardingValues>({
         resolver: zodResolver(onboardingSchema),
-        defaultValues: {
-            fullName: '',
-            username: '',
-            avatarUrl: undefined,
-        },
-    })
+        defaultValues,
+        values: defaultValues, // This ensures form updates when defaultValues change
+    });
 
     // ...existing code...
     async function handleUsernameBlur(e: React.FocusEvent<HTMLInputElement>) {
@@ -198,93 +233,101 @@ export default function AccountSettings() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                                <div className="space-y-8">
-                                    {/* Avatar Section */}
-                                    <FormField
-                                        control={form.control}
-                                        name="avatarUrl"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Profile Picture</FormLabel>
-                                                <FormControl>
-                                                    <Avatar 
-                                                        url={typeof field.value === 'string' ? field.value : ''} 
-                                                        onUpload={(url) => field.onChange(url)}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-
-                                    {/* Personal Info Section */}
-                                    <div className="grid gap-4 sm:grid-cols-2">
+                        {isDataLoading ? (
+                            <div className="space-y-6">
+                                <Skeleton className="h-20 w-20 rounded-full" />
+                                <Skeleton className="h-8 w-1/2" />
+                                <Skeleton className="h-8 w-1/3" />
+                            </div>
+                        ) : (
+                            <Form {...form}>
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                                    <div className="space-y-8">
+                                        {/* Avatar Section */}
                                         <FormField
                                             control={form.control}
-                                            name="fullName"
+                                            name="avatarUrl"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Full Name</FormLabel>
+                                                    <FormLabel>Profile Picture</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Your name" {...field} />
+                                                        <Avatar 
+                                                            url={typeof field.value === 'string' ? field.value : ''} 
+                                                            onUpload={(url) => field.onChange(url)}
+                                                        />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
 
-                                        <FormField
-                                            control={form.control}
-                                            name="username"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Username</FormLabel>
-                                                    <div className="relative">
+                                        {/* Personal Info Section */}
+                                        <div className="grid gap-4 sm:grid-cols-2">
+                                            <FormField
+                                                control={form.control}
+                                                name="fullName"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>Full Name</FormLabel>
                                                         <FormControl>
-                                                            <Input 
-                                                                placeholder="Choose a username" 
-                                                                {...field} 
-                                                                onChange={(e) => {
-                                                                    const noSpaces = e.target.value.replace(/\s/g, '')
-                                                                    field.onChange(noSpaces)
-                                                                }}
-                                                                onBlur={(e) => {
-                                                                    field.onBlur()
-                                                                    handleUsernameBlur(e)
-                                                                }}
-                                                            />
+                                                            <Input placeholder="Your name" {...field} />
                                                         </FormControl>
-                                                        {checkingUsername && (
-                                                            <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                                                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-foreground border-t-transparent" />
-                                                            </div>
-                                                        )}
-                                                        {usernameAvailable !== null && !checkingUsername && (
-                                                            <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                                                                {usernameAvailable ? (
-                                                                    <CircleCheck className="h-5 w-5 text-primary" />
-                                                                ) : (
-                                                                    <XCircle className="h-5 w-5 text-destructive" />
-                                                                )}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-                                </div>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
 
-                                <div className="flex justify-end">
-                                    <Button type="submit" disabled={isLoading || !form.formState.isDirty}>
-                                        {isLoading ? 'Saving Changes...' : 'Save Changes'}
-                                    </Button>
-                                </div>
-                            </form>
-                        </Form>
+                                            <FormField
+                                                control={form.control}
+                                                name="username"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>Username</FormLabel>
+                                                        <div className="relative">
+                                                            <FormControl>
+                                                                <Input 
+                                                                    placeholder="Choose a username" 
+                                                                    {...field} 
+                                                                    onChange={(e) => {
+                                                                        const noSpaces = e.target.value.replace(/\s/g, '')
+                                                                        field.onChange(noSpaces)
+                                                                    }}
+                                                                    onBlur={(e) => {
+                                                                        field.onBlur()
+                                                                        handleUsernameBlur(e)
+                                                                    }}
+                                                                />
+                                                            </FormControl>
+                                                            {checkingUsername && (
+                                                                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                                                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-foreground border-t-transparent" />
+                                                                </div>
+                                                            )}
+                                                            {usernameAvailable !== null && !checkingUsername && (
+                                                                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                                                    {usernameAvailable ? (
+                                                                        <CircleCheck className="h-5 w-5 text-primary" />
+                                                                    ) : (
+                                                                        <XCircle className="h-5 w-5 text-destructive" />
+                                                                    )}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-end">
+                                        <Button type="submit" disabled={isLoading || !form.formState.isDirty}>
+                                            {isLoading ? 'Saving Changes...' : 'Save Changes'}
+                                        </Button>
+                                    </div>
+                                </form>
+                            </Form>
+                        )}
                     </CardContent>
                 </Card>
             </div>
@@ -292,3 +335,5 @@ export default function AccountSettings() {
         </div>
     )
 }
+
+

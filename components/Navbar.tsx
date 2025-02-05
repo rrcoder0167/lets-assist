@@ -37,6 +37,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Skeleton } from "@/components/ui/skeleton"
 
 const features = [
   {
@@ -64,6 +65,7 @@ interface NavbarProps {
 export default function Navbar({ initialUser }: NavbarProps) {
   const [user, setUser] = React.useState<SupabaseUser | null>(initialUser);
   const [profile, setProfile] = React.useState<{ full_name: string; avatar_url: string } | null>(null);
+  const [isProfileLoading, setIsProfileLoading] = React.useState(true)
 
   React.useEffect(() => {
     async function getUserAndProfile() {
@@ -87,6 +89,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
       console.log(profileData);
       
       setProfile(profileData);
+      setIsProfileLoading(false)
     }
 
     getUserAndProfile();
@@ -149,6 +152,9 @@ export default function Navbar({ initialUser }: NavbarProps) {
             <div className="flex items-center space-x-8">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
+              {isProfileLoading ? (
+              <Skeleton className="w-9 h-9 rounded-full" />
+            ) : (
               <Avatar
                 className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center overflow-hidden cursor-pointer"
               >
@@ -160,7 +166,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
                       <User className="h-5 w-5" />
                     </AvatarFallback>
               </Avatar>
-
+            )}
               </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-64 pt-3 px-2 pb-2" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal mb-2">
