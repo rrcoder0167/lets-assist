@@ -10,6 +10,11 @@ import { logout } from '@/app/logout/actions'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
+import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
@@ -58,7 +63,7 @@ interface NavbarProps {
 
 export default function Navbar({ initialUser }: NavbarProps) {
   const [user, setUser] = React.useState<SupabaseUser | null>(initialUser);
-  const [profile, setProfile] = React.useState<{ full_name: string } | null>(null);
+  const [profile, setProfile] = React.useState<{ full_name: string; avatar_url: string } | null>(null);
 
   React.useEffect(() => {
     async function getUserAndProfile() {
@@ -76,7 +81,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
       // Fetch profile after confirming we have a user
       const { data: profileData } = await supabase
         .from('profiles')
-        .select('full_name')
+        .select('full_name, avatar_url')
         .eq('id', user.id)
         .single();
       console.log(profileData);
@@ -144,12 +149,18 @@ export default function Navbar({ initialUser }: NavbarProps) {
             <div className="flex items-center space-x-8">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center"
-                >
-                  <User className="h-5 w-5" />
-                </Button>
+              <Avatar
+                className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center overflow-hidden cursor-pointer"
+              >
+                    <AvatarImage
+                      src={profile?.avatar_url}
+                      alt="User Avatar"
+                    />
+                    <AvatarFallback>
+                      <User className="h-5 w-5" />
+                    </AvatarFallback>
+              </Avatar>
+
               </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-64 pt-3 px-2 pb-2" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal mb-2">
