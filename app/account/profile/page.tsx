@@ -14,7 +14,6 @@ import type { OnboardingValues } from './actions'
 import { z } from 'zod'
 import ImageCropper from '@/components/ImageCropper'
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
-import { SettingsSidebar } from '@/components/SettingsSidebar'
 
 // Modified schema: preprocess empty strings into undefined so that non-updated values pass validation.
 const onboardingSchema = z.object({
@@ -166,121 +165,112 @@ export default function AccountSettings() {
     // Changed: disable submit when form is not dirty
     return (
         <div className="container mx-auto py-6 max-w-7xl">
-            <div className="grid grid-cols-[250px_1fr] gap-6">
-                {/* Sidebar */}
-                <aside className="border-r min-h-screen">
-                    <SettingsSidebar />
-                </aside>
+            {/* Main Content Header */}
+            <div className="space-y-6">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight">Account Settings</h1>
+                    <p className="text-muted-foreground">
+                        Manage your account settings and preferences
+                    </p>
+                </div>
 
-                {/* Main Content */}
-                <main className="space-y-6">
-                    <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Account Settings</h1>
-                        <p className="text-muted-foreground">
-                            Manage your account settings and preferences
-                        </p>
-                    </div>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Profile Information</CardTitle>
+                        <CardDescription>
+                            Update your profile information and how others see you
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                                <div className="space-y-8">
+                                    {/* Avatar Section */}
+                                    <FormField
+                                        control={form.control}
+                                        name="avatarUrl"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Profile Picture</FormLabel>
+                                                <FormControl>
+                                                    <Avatar 
+                                                        url={typeof field.value === 'string' ? field.value : ''} 
+                                                        onUpload={(url) => field.onChange(url)}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
 
-                    <div className="grid gap-6">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Profile Information</CardTitle>
-                                <CardDescription>
-                                    Update your profile information and how others see you
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <Form {...form}>
-                                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                                        <div className="space-y-8">
-                                            {/* Avatar Section */}
-                                            <FormField
-                                                control={form.control}
-                                                name="avatarUrl"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>Profile Picture</FormLabel>
+                                    {/* Personal Info Section */}
+                                    <div className="grid gap-4 sm:grid-cols-2">
+                                        <FormField
+                                            control={form.control}
+                                            name="fullName"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Full Name</FormLabel>
+                                                    <FormControl>
+                                                        <Input placeholder="Your name" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+
+                                        <FormField
+                                            control={form.control}
+                                            name="username"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Username</FormLabel>
+                                                    <div className="relative">
                                                         <FormControl>
-                                                            <Avatar 
-                                                                url={typeof field.value === 'string' ? field.value : ''} 
-                                                                onUpload={(url) => field.onChange(url)}
+                                                            <Input 
+                                                                placeholder="Choose a username" 
+                                                                {...field} 
+                                                                onChange={(e) => {
+                                                                    const noSpaces = e.target.value.replace(/\s/g, '')
+                                                                    field.onChange(noSpaces)
+                                                                }}
+                                                                onBlur={(e) => {
+                                                                    field.onBlur()
+                                                                    handleUsernameBlur(e)
+                                                                }}
                                                             />
                                                         </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-
-                                            {/* Personal Info Section */}
-                                            <div className="grid gap-4 sm:grid-cols-2">
-                                                <FormField
-                                                    control={form.control}
-                                                    name="fullName"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Full Name</FormLabel>
-                                                            <FormControl>
-                                                                <Input placeholder="Your name" {...field} />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-
-                                                <FormField
-                                                    control={form.control}
-                                                    name="username"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Username</FormLabel>
-                                                            <div className="relative">
-                                                                <FormControl>
-                                                                    <Input 
-                                                                        placeholder="Choose a username" 
-                                                                        {...field} 
-                                                                        onChange={(e) => {
-                                                                            const noSpaces = e.target.value.replace(/\s/g, '')
-                                                                            field.onChange(noSpaces)
-                                                                        }}
-                                                                        onBlur={(e) => {
-                                                                            field.onBlur()
-                                                                            handleUsernameBlur(e)
-                                                                        }}
-                                                                    />
-                                                                </FormControl>
-                                                                {checkingUsername && (
-                                                                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                                                                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-foreground border-t-transparent" />
-                                                                    </div>
-                                                                )}
-                                                                {usernameAvailable !== null && !checkingUsername && (
-                                                                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                                                                        {usernameAvailable ? (
-                                                                            <CircleCheck className="h-5 w-5 text-primary" />
-                                                                        ) : (
-                                                                            <XCircle className="h-5 w-5 text-destructive" />
-                                                                        )}
-                                                                    </div>
+                                                        {checkingUsername && (
+                                                            <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                                                <div className="h-4 w-4 animate-spin rounded-full border-2 border-foreground border-t-transparent" />
+                                                            </div>
+                                                        )}
+                                                        {usernameAvailable !== null && !checkingUsername && (
+                                                            <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                                                {usernameAvailable ? (
+                                                                    <CircleCheck className="h-5 w-5 text-primary" />
+                                                                ) : (
+                                                                    <XCircle className="h-5 w-5 text-destructive" />
                                                                 )}
                                                             </div>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                            </div>
-                                        </div>
+                                                        )}
+                                                    </div>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                </div>
 
-                                        <div className="flex justify-end">
-                                            <Button type="submit" disabled={isLoading || !form.formState.isDirty}>
-                                                {isLoading ? 'Saving Changes...' : 'Save Changes'}
-                                            </Button>
-                                        </div>
-                                    </form>
-                                </Form>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </main>
+                                <div className="flex justify-end">
+                                    <Button type="submit" disabled={isLoading || !form.formState.isDirty}>
+                                        {isLoading ? 'Saving Changes...' : 'Save Changes'}
+                                    </Button>
+                                </div>
+                            </form>
+                        </Form>
+                    </CardContent>
+                </Card>
             </div>
             <Toaster position="bottom-right" theme="dark" richColors />
         </div>

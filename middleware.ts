@@ -12,6 +12,10 @@ export async function middleware(request: NextRequest) {
 
     const currentPath = request.nextUrl.pathname;
 
+    if (currentPath === '/account') {
+        return NextResponse.redirect(new URL('/account/profile', request.url));
+    }
+
     if (!user && !PUBLIC_PATHS.includes(currentPath)) {
         return NextResponse.redirect(new URL('/login', request.url));
     }
