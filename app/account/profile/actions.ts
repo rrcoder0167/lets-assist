@@ -38,11 +38,14 @@ export async function completeOnboarding(formData: FormData) {
     
     if (avatarFileInput) {
         const fileExt = avatarFileInput.name.split('.').pop()
-        // Fallback username if not provided.
-        const fileName = `${username || 'user'}_${Date.now()}.${fileExt}`
+        const fileName = `${userId}-${Date.now()}.${fileExt}`;
+
         const { error: uploadError } = await supabase.storage
             .from('avatars')
-            .upload(fileName, avatarFileInput)
+            .upload(fileName, avatarFileInput, {
+                upsert: false,
+                cacheControl: '0', // Disable caching on Supabase side
+            });
         
         if (uploadError) {
             console.log(uploadError)
@@ -52,7 +55,10 @@ export async function completeOnboarding(formData: FormData) {
         const { data: publicUrlData } = supabase.storage
             .from('avatars')
             .getPublicUrl(fileName)
-        updateFields.avatar_url = publicUrlData.publicUrl
+
+        // Add timestamp to URL to bust browser cache
+        const timestamp = Date.now()
+        updateFields.avatar_url = `${publicUrlData.publicUrl}?v=${timestamp}`
     }
     
     // Always update timestamp if any change is present.
