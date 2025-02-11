@@ -16,10 +16,6 @@ const sidebarItems = [
       href: '/account/security'
     },
     {
-      title: 'Email Settings',
-      href: '/account/email'
-    },
-    {
       title: 'Authentication',
       href: '/account/authentication'
     },
