@@ -61,7 +61,7 @@ export default async function RootLayout({
           <div className="bg-background text-foreground">
             {/* Pass server-fetched user to Navbar */}
             <Navbar initialUser={user} />
-            <main className="p-4">
+            <main>
               {children}
             </main>
             <SpeedInsights />

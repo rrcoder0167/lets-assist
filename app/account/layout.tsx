@@ -32,7 +32,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
     const pathname = usePathname()
 
     return (
-        <div className="flex flex-col h-screen">
+        <div className="h-[calc(100vh-64px)]">
             {/* Mobile Header */}
             <div className="lg:hidden flex items-center p-4 border-b">
                 <Button
@@ -54,14 +54,14 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                 </div>
             </div>
 
-            <div className="flex flex-1 overflow-hidden">
+            <div className="h-full flex">
                 {/* Sidebar - Hidden on mobile by default */}
                 <aside className={`
                     ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
                     lg:translate-x-0
                     fixed lg:relative
-                    top-0 left-0
-                    h-full w-64
+                    top-[64px] lg:top-0 left-0
+                    h-[calc(100vh-64px)] w-64
                     bg-background
                     border-r
                     transition-transform
@@ -69,6 +69,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                     ease-in-out
                     z-20
                     lg:block
+                    overflow-y-auto
                 `}>
                     <div className="w-full px-5 space-y-2 py-4">
                         {/* Search bar - Hidden on mobile */}
@@ -106,7 +107,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                 )}
 
                 {/* Main content */}
-                <main className="flex-1 p-4 lg:p-6 overflow-auto">
+                <main className="flex-1 p-4 lg:p-6 overflow-y-auto">
                     {children}
                 </main>
             </div>
