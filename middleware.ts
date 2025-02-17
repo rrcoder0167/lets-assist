@@ -1,8 +1,22 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/utils/supabase/middleware';
 
-const PUBLIC_PATHS = ['/login', '/', '/signup', '/error', '/auth/confirm', '/auth/callback']; // public paths that don't require authentication
+const PUBLIC_PATHS = [
+    '/login',
+    '/',
+    '/signup',
+    '/error',
+    '/auth/confirm',
+    '/auth/callback',
+    '/profile'  // Add the base profile path
+]; 
+
 const RESTRICTED_PATHS_FOR_LOGGED_IN_USERS = ['/', '/login', '/signup'];
+
+// Function to check if a path starts with any of the public paths
+function isPublicPath(path: string) {
+    return PUBLIC_PATHS.some(publicPath => path === publicPath || path.startsWith(`${publicPath}/`));
+}
 
 export async function middleware(request: NextRequest) {
     // Check for noRedirect parameter first
@@ -15,18 +29,17 @@ export async function middleware(request: NextRequest) {
     const {
         data: { user },
     } = await supabase.auth.getUser();
-
     const currentPath = request.nextUrl.pathname;
 
     if (currentPath === '/account') {
         return NextResponse.redirect(new URL('/account/profile', request.url));
     }
 
-    if (!user && !PUBLIC_PATHS.includes(currentPath)) {
+    if (!user && !isPublicPath(currentPath)) {
         return NextResponse.redirect(new URL('/login', request.url));
     }
 
-    if (user && RESTRICTED_PATHS_FOR_LOGGED_IN_USERS.includes(currentPath)) { // redirect to home if user is already logged in, you can't access those pages
+    if (user && RESTRICTED_PATHS_FOR_LOGGED_IN_USERS.includes(currentPath)) {
         return NextResponse.redirect(new URL('/home', request.url));
     }
 
