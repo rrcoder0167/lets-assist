@@ -47,7 +47,7 @@ export async function GET(request: Request) {
             'Unknown User'
 
           // Try to get the highest quality avatar URL available
-          let avatarUrl = 
+          const avatarUrl = 
             identityData?.avatar_url?.replace('=s96-c', '=s400-c') || // Upgrade Google avatar size
             identityData?.picture?.replace('=s96-c', '=s400-c') ||
             user.user_metadata?.avatar_url || 
