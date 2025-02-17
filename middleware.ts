@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createClient } from '@/utils/supabase/middleware';
 
-const PUBLIC_PATHS = ['/login', '/', '/signup', '/error', '/auth/confirm']; // public paths that don't require authentication
+const PUBLIC_PATHS = ['/login', '/', '/signup', '/error', '/auth/confirm', '/auth/callback']; // public paths that don't require authentication
 const RESTRICTED_PATHS_FOR_LOGGED_IN_USERS = ['/', '/login', '/signup'];
 
 export async function middleware(request: NextRequest) {

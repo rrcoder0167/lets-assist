@@ -3,6 +3,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Rocket, Menu, User, Settings, LogOut, LayoutDashboard, UserCog, Heart } from "lucide-react"
 import { createClient } from "@/utils/supabase/client"
 import { User as SupabaseUser } from '@supabase/supabase-js'
@@ -12,7 +13,6 @@ import { Button } from "@/components/ui/button"
 import {
   Avatar,
   AvatarFallback,
-  AvatarImage,
 } from "@/components/ui/avatar"
 import {
   NavigationMenu,
@@ -65,7 +65,7 @@ interface NavbarProps {
 export default function Navbar({ initialUser }: NavbarProps) {
   const [user, setUser] = React.useState<SupabaseUser | null>(initialUser);
   const [profile, setProfile] = React.useState<{ full_name: string; avatar_url: string } | null>(null);
-  const [isProfileLoading, setIsProfileLoading] = React.useState(true)
+  const [isProfileLoading, setIsProfileLoading] = React.useState(true);
 
   React.useEffect(() => {
     async function getUserAndProfile() {
@@ -75,21 +75,21 @@ export default function Navbar({ initialUser }: NavbarProps) {
       if (userError || !user) {
         setUser(null);
         setProfile(null);
+        setIsProfileLoading(false);
         return;
       }
 
       setUser(user);
       
-      // Fetch profile after confirming we have a user
       const { data: profileData } = await supabase
         .from('profiles')
         .select('full_name, avatar_url')
         .eq('id', user.id)
         .single();
-      console.log(profileData);
       
+      console.log('Profile data:', profileData);
       setProfile(profileData);
-      setIsProfileLoading(false)
+      setIsProfileLoading(false);
     }
 
     getUserAndProfile();
@@ -155,16 +155,16 @@ export default function Navbar({ initialUser }: NavbarProps) {
               {isProfileLoading ? (
               <Skeleton className="w-9 h-9 rounded-full" />
             ) : (
-              <Avatar
-                className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center overflow-hidden cursor-pointer"
-              >
-                    <AvatarImage
-                      src={profile?.avatar_url}
-                      alt="User Avatar"
-                    />
-                    <AvatarFallback>
-                      <User className="h-5 w-5" />
-                    </AvatarFallback>
+                <Avatar className="w-9 h-9 cursor-pointer">
+                  <Image
+                  src={profile?.avatar_url || ''}
+                  alt={profile?.full_name || 'User avatar'}
+                  layout="fill"
+                  objectFit="cover"
+                  />
+                <AvatarFallback>
+                  <User className="h-5 w-5" />
+                </AvatarFallback>
               </Avatar>
             )}
               </DropdownMenuTrigger>
@@ -266,7 +266,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
                 <Separator />
                 <Button 
                 variant="ghost" 
-                className="justify-start text-red-600 font-bold space-x-2 mt-4 w-full" 
+                className="justify-start text-destructive font-bold space-x-2 mt-4 w-full" 
                 onClick={async () => { setUser(null); await logout();}}
                 >
                 <LogOut className="mr-4 h-5 w-5" />
