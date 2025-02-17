@@ -41,7 +41,6 @@ export default function SignupForm() {
         setIsLoading(true)
         const formData = new FormData()
         Object.entries(data).forEach(([key, value]) => formData.append(key, value))
-
         const result = await signup(formData)
 
         

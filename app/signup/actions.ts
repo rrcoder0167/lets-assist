@@ -34,19 +34,19 @@ export async function signup(formData: FormData) {
             }
         })
 
-      if (authError || !user) {
-        console.log(authError)
+      if (authError) {
+        if (authError.message.includes('User already registered')) {
+          return { error: { server: ['ACCEXISTS0'] } }
+        }
         throw authError
       }
+
+      if (!user) {
+        throw new Error('No user returned')
+      }
+
       // 2. Create matching profile with full name
       const { error: profileError } = await supabase
-          .from('profiles')
-          .insert({
-              id: user.id,
-              full_name: validatedFields.data.fullName,
-              username: `user_${user.id?.slice(0, 8)}`, // --- Changed: default username
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString()
           })
 
       if (profileError) {
