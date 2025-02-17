@@ -25,9 +25,9 @@ export async function GET(request: Request) {
     if (!error && session) {
       try {
         const { user } = session
-        console.log('Full user object:', JSON.stringify(user, null, 2))
-        console.log('User metadata:', user.user_metadata)
-        console.log('User identities:', user.identities)
+        // console.log('Full user object:', JSON.stringify(user, null, 2))
+        // console.log('User metadata:', user.user_metadata)
+        // console.log('User identities:', user.identities)
         
         // Check if profile already exists
         const { data: existingProfile } = await supabase
@@ -53,8 +53,8 @@ export async function GET(request: Request) {
             user.user_metadata?.avatar_url || 
             user.user_metadata?.picture
 
-          console.log('Google identity data:', identityData)
-          console.log('Selected avatar URL:', avatarUrl)
+          // console.log('Google identity data:', identityData)
+          // console.log('Selected avatar URL:', avatarUrl)
 
           // Create profile
           const { error: profileError } = await supabase
@@ -73,7 +73,7 @@ export async function GET(request: Request) {
             throw profileError
           }
         } else {
-          console.log('Found existing profile:', existingProfile)
+          // console.log('Found existing profile:', existingProfile)
         }
 
         const forwardedHost = request.headers.get('x-forwarded-host')

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { createClient } from "@/utils/supabase/client"
@@ -9,17 +9,35 @@ import { motion } from "framer-motion"
 
 export default function AuthenticationPage() {
     const [isConnecting, setIsConnecting] = useState(false)
-    const [isConnected, setIsConnected] = useState(false)
+    const [isGoogleConnected, setIsGoogleConnected] = useState(false)
+    const supabase = createClient()
+
+    useEffect(() => {
+        checkGoogleConnection()
+    }, [])
+
+    const checkGoogleConnection = async () => {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+            const { identities } = user
+            const isGoogleLinked = identities?.some(identity => identity.provider === 'google') ?? false
+            setIsGoogleConnected(isGoogleLinked)
+        }
+    }
 
     const handleGoogleConnect = async () => {
         setIsConnecting(true)
-        const supabase = createClient()
-        
         try {
-            const { error } = await supabase.auth.signInWithOAuth({
+            if (isGoogleConnected) {
+                // Future: Implement disconnect functionality
+                toast.error('Disconnecting accounts is not yet supported')
+                return
+            }
+
+            const { data: { url }, error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: `${window.location.origin}/auth/callback`,
+                    redirectTo: `${window.location.origin}/auth/callback?from=authentication`,
                     queryParams: {
                         access_type: 'offline',
                         prompt: 'consent',
@@ -27,14 +45,12 @@ export default function AuthenticationPage() {
                 },
             })
 
-            if (error) {
-                throw error
-            }
-            setIsConnected(true)
+            if (error) throw error
+            if (url) window.location.href = url
+            
         } catch (error) {
             console.error('Error connecting Google account:', error)
             toast.error('Failed to connect Google account. Please try again.')
-            setIsConnected(false)
         } finally {
             setIsConnecting(false)
         }
@@ -46,7 +62,6 @@ export default function AuthenticationPage() {
             animate={{ opacity: 1, y: 0 }}
         >
             <div className="container mx-auto py-6 max-w-7xl">
-                {/* Main Content Header */}
                 <div className="space-y-6">
                     <div>
                         <h1 className="text-3xl font-bold tracking-tight">Authentication</h1>
@@ -63,7 +78,6 @@ export default function AuthenticationPage() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6">
-                            {/* Google Account Connection */}
                             <div className="flex items-center justify-between p-4 border rounded-lg">
                                 <div className="flex items-center space-x-4">
                                     <svg 
@@ -84,23 +98,23 @@ export default function AuthenticationPage() {
                                     <div>
                                         <h4 className="text-sm font-semibold">Google Account</h4>
                                         <p className="text-sm text-muted-foreground">
-                                            Access your account using your Google credentials
+                                            {isGoogleConnected 
+                                                ? "Your account is connected with Google" 
+                                                : "Connect your account with Google for easier sign-in"}
                                         </p>
                                     </div>
                                 </div>
                                 <div className="flex items-center">
-                                    
                                     <Button 
-                                        variant={isConnected ? "outline" : "default"}
+                                        variant={isGoogleConnected ? "outline" : "default"}
                                         onClick={handleGoogleConnect}
                                         disabled={isConnecting}
                                     >
                                         {isConnecting ? "Connecting..." : 
-                                         isConnected ? "Disconnect" : "Connect"}
+                                         isGoogleConnected ? "Connected" : "Connect"}
                                     </Button>
                                 </div>
                             </div>
-                            {/* Future auth providers can be added here */}
                         </CardContent>
                     </Card>
 
