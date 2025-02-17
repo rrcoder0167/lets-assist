@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -17,28 +17,36 @@ import {
 import { toast } from "sonner"
 import { motion } from "framer-motion"
 import { deleteAccount } from "./actions"
+import { createClient } from "@/utils/supabase/client"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export default function SecurityPage() {
     const [isDeleting, setIsDeleting] = useState(false)
     const [countdown, setCountdown] = useState(5)
-    const [isLoadingEmail, setIsLoadingEmail] = useState(false)
-    const [isLoadingPassword, setIsLoadingPassword] = useState(false)
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [deleteConfirmation, setDeleteConfirmation] = useState("")
     const [countdownInterval, setCountdownInterval] = useState<NodeJS.Timeout | null>(null)
+    const [currentEmail, setCurrentEmail] = useState("")
+
+    useEffect(() => {
+        const fetchUserEmail = async () => {
+            const supabase = createClient()
+            const { data: { session } } = await supabase.auth.getSession()
+            if (session?.user?.email) {
+                setCurrentEmail(session.user.email)
+            }
+        }
+        fetchUserEmail()
+    }, [])
 
     const handleEmailChange = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setIsLoadingEmail(true)
-        // TODO: Implement email change
-        setIsLoadingEmail(false)
+        // Functionality coming in future release
     }
 
     const handlePasswordChange = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setIsLoadingPassword(true)
-        // TODO: Implement password change
-        setIsLoadingPassword(false)
+        // Functionality coming in future release
     }
 
     const handleDeleteAccount = async () => {
@@ -108,34 +116,46 @@ export default function SecurityPage() {
                 </div>
 
                 <div className="space-y-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Card className="h-full">
+                    <Card className="h-full relative">
+                        <div className="absolute inset-0 z-10 rounded-lg"/>
                         <CardHeader>
                             <CardTitle>Email Address</CardTitle>
                             <CardDescription>Change your email address</CardDescription>
                         </CardHeader>
                         <CardContent>
+                            <Alert className="mb-4">
+                                <AlertDescription>
+                                    Email changes will be available in a future release.
+                                </AlertDescription>
+                            </Alert>
                             <form onSubmit={handleEmailChange} className="space-y-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="current-email">Current Email</Label>
-                                    <Input id="current-email" type="email" disabled />
+                                    <Input id="current-email" type="email" value={currentEmail} disabled />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="new-email">New Email</Label>
                                     <Input id="new-email" type="email" required />
                                 </div>
-                                <Button type="submit" disabled={isLoadingEmail}>
-                                    {isLoadingEmail ? "Updating..." : "Update Email"}
+                                <Button type="submit" disabled={true}>
+                                    Coming Soon
                                 </Button>
                             </form>
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="relative">
+                        <div className="absolute inset-0 z-10 rounded-lg"/>
                         <CardHeader>
                             <CardTitle>Password</CardTitle>
                             <CardDescription>Change your password</CardDescription>
                         </CardHeader>
                         <CardContent>
+                            <Alert className="mb-4">
+                                <AlertDescription>
+                                    Password changes will be available in a future release.
+                                </AlertDescription>
+                            </Alert>
                             <form onSubmit={handlePasswordChange} className="space-y-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="current-password">Current Password</Label>
@@ -149,8 +169,8 @@ export default function SecurityPage() {
                                     <Label htmlFor="confirm-password">Confirm New Password</Label>
                                     <Input id="confirm-password" type="password" required />
                                 </div>
-                                <Button type="submit" disabled={isLoadingPassword}>
-                                    {isLoadingPassword ? "Updating..." : "Update Password"}
+                                <Button type="submit" disabled={true}>
+                                    Coming Soon
                                 </Button>
                             </form>
                         </CardContent>
