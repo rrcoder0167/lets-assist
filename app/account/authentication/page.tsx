@@ -14,7 +14,7 @@ export default function AuthenticationPage() {
 
     useEffect(() => {
         checkGoogleConnection()
-    }, [])
+    })
 
     const checkGoogleConnection = async () => {
         const { data: { user } } = await supabase.auth.getUser()
