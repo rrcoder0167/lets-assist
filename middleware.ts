@@ -5,6 +5,12 @@ const PUBLIC_PATHS = ['/login', '/', '/signup', '/error', '/auth/confirm', '/aut
 const RESTRICTED_PATHS_FOR_LOGGED_IN_USERS = ['/', '/login', '/signup'];
 
 export async function middleware(request: NextRequest) {
+    // Check for noRedirect parameter first
+    const searchParams = request.nextUrl.searchParams;
+    if (searchParams.get('noRedirect') === '1') {
+        return NextResponse.next();
+    }
+
     const { supabase, response } = createClient(request);
     const {
         data: { user },
