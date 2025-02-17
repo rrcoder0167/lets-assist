@@ -3,7 +3,6 @@
 
 import * as React from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { Rocket, Menu, User, Settings, LogOut, LayoutDashboard, UserCog, Heart } from "lucide-react"
 import { createClient } from "@/utils/supabase/client"
 import { User as SupabaseUser } from '@supabase/supabase-js'
@@ -13,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import {
   Avatar,
   AvatarFallback,
+  AvatarImage
 } from "@/components/ui/avatar"
 import {
   NavigationMenu,
@@ -156,11 +156,8 @@ export default function Navbar({ initialUser }: NavbarProps) {
               <Skeleton className="w-9 h-9 rounded-full" />
             ) : (
                 <Avatar className="w-9 h-9 cursor-pointer">
-                  <Image
-                  src={profile?.avatar_url || ''}
-                  alt={profile?.full_name || 'User avatar'}
-                  layout="fill"
-                  objectFit="cover"
+                  <AvatarImage
+                  src={profile?.avatar_url}
                   />
                 <AvatarFallback>
                   <User className="h-5 w-5" />

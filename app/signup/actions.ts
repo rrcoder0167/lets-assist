@@ -47,6 +47,13 @@ export async function signup(formData: FormData) {
 
       // 2. Create matching profile with full name
       const { error: profileError } = await supabase
+          .from('profiles')
+          .insert({
+              id: user.id,
+              full_name: validatedFields.data.fullName,
+              username: `user_${user.id?.slice(0, 8)}`, // --- Changed: default username
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString()
           })
 
       if (profileError) {
@@ -56,6 +63,9 @@ export async function signup(formData: FormData) {
 
       return { success: true }
   } catch (error) {
+      if (error instanceof Error && error.message.includes('User already registered')) {
+        return { error: { server: ['ACCEXISTS0'] } }
+      }
       return { error: { server: [(error as Error).message] } }
   }
 }
