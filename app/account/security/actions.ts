@@ -1,6 +1,7 @@
 "use server"
 
 import { createClient } from '@/utils/supabase/server'
+import { createClient as createAdminClient } from '@supabase/supabase-js'
 
 export async function deleteAccount() {
     try {
@@ -21,18 +22,27 @@ export async function deleteAccount() {
             throw new Error(`Failed to delete profile: ${profileError.message}`)
         }
 
-        // Sign out first to invalidate session
-        await supabase.auth.signOut()
+        // Create admin client with service role
+        const supabaseAdmin = createAdminClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.SUPABASE_SERVICE_ROLE_KEY!
+        )
 
-        // Delete user account
-        const { error: userError } = await supabase.rpc('delete_user')
+        // Delete from auth schema using admin client
+        const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(
+            user.id
+        )
 
-        if (userError) {
-            throw new Error(`Failed to delete user: ${userError.message}`)
+        if (authError) {
+            throw new Error(`Failed to delete user: ${authError.message}`)
         }
+
+        // Clear auth session
+        await supabase.auth.signOut()
         
         return { success: true }
     } catch (error) {
+        console.error('Delete account error:', error)
         throw error
     }
 }
