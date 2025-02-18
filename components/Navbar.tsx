@@ -64,7 +64,7 @@ interface NavbarProps {
 
 export default function Navbar({ initialUser }: NavbarProps) {
   const [user, setUser] = React.useState<SupabaseUser | null>(initialUser);
-  const [profile, setProfile] = React.useState<{ full_name: string; avatar_url: string } | null>(null);
+  const [profile, setProfile] = React.useState<{ full_name: string; avatar_url: string; username: string } | null>(null);
   const [isProfileLoading, setIsProfileLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -83,11 +83,10 @@ export default function Navbar({ initialUser }: NavbarProps) {
       
       const { data: profileData } = await supabase
         .from('profiles')
-        .select('full_name, avatar_url')
+        .select('full_name, avatar_url, username')
         .eq('id', user.id)
         .single();
       
-      console.log('Profile data:', profileData);
       setProfile(profileData);
       setIsProfileLoading(false);
     }
@@ -184,6 +183,11 @@ export default function Navbar({ initialUser }: NavbarProps) {
                     <DropdownMenuItem className="py-2.5 text-muted-foreground cursor-pointer" asChild>
                     <Link href="/account/profile">
                       <span>Account Settings</span>
+                    </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="py-2.5 text-muted-foreground cursor-pointer" asChild>
+                    <Link href={`/profile/${profile?.username}`}>
+                      <span>My Profile</span>
                     </Link>
                     </DropdownMenuItem>
 
