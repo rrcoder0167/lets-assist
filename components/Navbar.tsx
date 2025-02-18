@@ -3,7 +3,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Rocket, Menu, User, Settings, LogOut, LayoutDashboard, UserCog, Heart } from "lucide-react"
+import { Rocket, Menu, User, Settings, LogOut, LayoutDashboard, UserCog, Heart, Bug } from "lucide-react"
 import { createClient } from "@/utils/supabase/client"
 import { User as SupabaseUser } from '@supabase/supabase-js'
 import { logout } from '@/app/logout/actions'
@@ -38,6 +38,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
+import { ReportBugDialog } from "@/components/ReportBugDialog"
+import { useState } from "react"
 
 const features = [
   {
@@ -66,6 +68,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
   const [user, setUser] = React.useState<SupabaseUser | null>(initialUser);
   const [profile, setProfile] = React.useState<{ full_name: string; avatar_url: string; username: string } | null>(null);
   const [isProfileLoading, setIsProfileLoading] = React.useState(true);
+  const [showBugDialog, setShowBugDialog] = useState(false);
 
   React.useEffect(() => {
     async function getUserAndProfile() {
@@ -192,6 +195,17 @@ export default function Navbar({ initialUser }: NavbarProps) {
                     </DropdownMenuItem>
 
                   <DropdownMenuSeparator className="my-2" />
+                  <DropdownMenuItem 
+                    className="text-chart-3 focus:text-chart-3 py-2.5 cursor-pointer flex justify-between"
+                    onSelect={(e) => {
+                      e.preventDefault();
+                      setShowBugDialog(true);
+                    }}
+                  >
+                    
+                    Report a Bug
+                    <Bug className="h-4 w-4" />
+                  </DropdownMenuItem>
                   <DropdownMenuItem className="text-chart-4 focus:text-chart-4 py-2.5 cursor-pointer flex justify-between">
                   <span>Donate</span>
                   <Heart className="h-4 w-4" />
@@ -266,6 +280,14 @@ export default function Navbar({ initialUser }: NavbarProps) {
                 </Link>
                 <Separator />
                 <Button 
+                  variant="ghost" 
+                  className="justify-start space-x-2 w-full"
+                  onClick={() => setShowBugDialog(true)}
+                >
+                  <Bug className="mr-4 h-5 w-5" />
+                  Report a Bug
+                </Button>
+                <Button 
                 variant="ghost" 
                 className="justify-start text-destructive font-bold space-x-2 mt-4 w-full" 
                 onClick={async () => { setUser(null); await logout();}}
@@ -290,6 +312,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
     </nav>
     </div>
     <Separator />
+    {showBugDialog && <ReportBugDialog onOpenChangeAction={setShowBugDialog} />}
     </>
   )
 }
