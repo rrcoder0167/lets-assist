@@ -7,8 +7,7 @@ const PUBLIC_PATHS = [
     '/signup',
     '/error',
     '/auth/confirm',
-    '/auth/callback',
-    '/profile'  // Add the base profile path
+    '/auth/callback'
 ]; 
 
 const RESTRICTED_PATHS_FOR_LOGGED_IN_USERS = ['/', '/login', '/signup'];
@@ -31,14 +30,22 @@ export async function middleware(request: NextRequest) {
     } = await supabase.auth.getUser();
     const currentPath = request.nextUrl.pathname;
 
+    // Handle /account redirect
     if (currentPath === '/account') {
         return NextResponse.redirect(new URL('/account/profile', request.url));
     }
 
+    // Special handling for profile paths - allow both public and private access
+    if (currentPath.startsWith('/profile')) {
+        return response;
+    }
+
+    // Handle non-public paths for non-authenticated users
     if (!user && !isPublicPath(currentPath)) {
         return NextResponse.redirect(new URL('/login', request.url));
     }
 
+    // Handle restricted paths for authenticated users
     if (user && RESTRICTED_PATHS_FOR_LOGGED_IN_USERS.includes(currentPath)) {
         return NextResponse.redirect(new URL('/home', request.url));
     }
