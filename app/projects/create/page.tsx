@@ -1,21 +1,24 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
-import { MapPin, ImagePlus, Plus, ChevronRight, ChevronLeft, Calendar as CalendarIcon, CalendarClock, UsersRound, Trash2, PlusCircle, AlertCircle, Loader2 } from "lucide-react"
-import { useEventForm } from "@/hooks/use-event-form"
-import { Progress } from "@/components/ui/progress"
-import { Calendar } from "@/components/ui/calendar"
-import { TimePicker } from "@/components/ui/time-picker"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
-import { format } from "date-fns"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog"
 import { useState, useEffect, useCallback } from "react"
+import { useEventForm } from "@/hooks/use-event-form"
+import BasicInfo from "./BasicInfo"
+import EventType from "./EventType"
+import Schedule from "./Schedule"
+import Finalize from "./Finalize"
+
+// shadcn components
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Progress } from "@/components/ui/progress"
+
+// icon components
+import { Loader2, ChevronLeft, ChevronRight, AlertCircle } from "lucide-react"
+
+// utility
+import { cn } from "@/lib/utils"
 
 interface LocationResult {
   display_name: string;
@@ -40,14 +43,14 @@ export default function CreateProject() {
     canProceed
   } = useEventForm()
 
-  // New state for Map Dialog and search functionality
+  // Map Dialog state
   const [mapDialogOpen, setMapDialogOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
-  const [results, setResults] = useState([])
+  const [results, setResults] = useState<LocationResult[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [userCoords, setUserCoords] = useState<{ lat: number; lon: number } | null>(null)
 
-  // New useEffect: Only request user location when mapDialogOpen is true
+  // Request user location only when Map dialog is open
   useEffect(() => {
     if (mapDialogOpen && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -64,11 +67,10 @@ export default function CreateProject() {
     }
   }, [mapDialogOpen]);
 
-  // Helper function to format location results
+  // Function to format location results (simplified)
   const formatLocation = (displayName: string) => {
-    const parts = displayName.split(',').map(part => part.trim());
+    const parts = displayName.split(',').map(p => p.trim());
     const title = parts[0] || '';
-    // Use next few parts to form a simplified address
     const address = parts.slice(1, 4).join(', ');
     return (
       <div>
@@ -78,666 +80,89 @@ export default function CreateProject() {
     );
   };
 
+  // Search function using userCoords if available
   const searchLocation = useCallback(async () => {
     if (!searchQuery) {
-      setResults([])
-      return
+      setResults([]);
+      return;
     }
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      // Base query
       const baseURL = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}`;
-      // If user location is available, add a bounding box around user's coordinates to bias results
       const url = userCoords
         ? `${baseURL}&viewbox=${userCoords.lon - 0.1},${userCoords.lat - 0.1},${userCoords.lon + 0.1},${userCoords.lat + 0.1}&bounded=1`
         : baseURL;
-
       const res = await fetch(url);
       const data = await res.json();
       setResults(data);
     } catch (error) {
-      // console.error('Error searching location:', error);
+      console.error('Error searching location:', error);
     } finally {
       setIsLoading(false);
     }
   }, [searchQuery, userCoords]);
 
-  // New effect to trigger search suggestions while typing
+  // Debounce search on query change
   useEffect(() => {
     const timer = setTimeout(() => {
       searchLocation();
-    }, 500); // 500ms debounce delay
-
+    }, 500);
     return () => clearTimeout(timer);
   }, [searchQuery, searchLocation]);
 
   const handleSelectLocation = (displayName: string) => {
-    updateBasicInfo('location', displayName)
-    setMapDialogOpen(false)
-  }
+    updateBasicInfo('location', displayName);
+    setMapDialogOpen(false);
+  };
 
   const getValidationMessage = () => {
     if (!canProceed()) {
       switch (state.step) {
         case 1:
-          return "Please fill in all required fields"
+          return "Please fill in all required fields";
         case 3:
           if (state.eventType === 'oneTime') {
-            return "Please select a date, time, and number of volunteers"
+            return "Please select a date, time, and number of volunteers";
           }
           if (state.eventType === 'multiDay') {
-            return "Please ensure all days have valid dates, times, and volunteer counts"
+            return "Please ensure all days have valid dates, times, and volunteer counts";
           }
           if (state.eventType === 'sameDayMultiArea') {
-            return "Please ensure all roles have names, valid times, and volunteer counts"
+            return "Please ensure all roles have names, valid times, and volunteer counts";
           }
         default:
-          return ""
+          return "";
       }
     }
-    return ""
-  }
+    return "";
+  };
 
-  const isTimeRangeInvalid = (startTime: string, endTime: string) => {
-    if (!startTime || !endTime) return false
-    const [startHour, startMinute] = startTime.split(":").map(Number)
-    const [endHour, endMinute] = endTime.split(":").map(Number)
-    
-    if (endHour < startHour) return true
-    if (endHour === startHour && endMinute <= startMinute) return true
-    return false
-  }
-
-  const getCounterColor = (current: number, max: number) => {
-    const percentage = (current / max) * 100
-    if (percentage >= 90) return "text-destructive"
-    if (percentage >= 75) return "text-amber-500 dark:text-amber-400"
-    return "text-muted-foreground"
-  }
-
+  // Render step based on current state.step
   const renderStep = () => {
     switch (state.step) {
       case 1:
-        return (
-          <Card>
-            <CardHeader>
-              <CardTitle>Basic Information</CardTitle>
-              <p className="text-sm text-muted-foreground">Let&apos;s start with the essential details of your project</p>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <div className="flex justify-between items-baseline">
-                  <Label htmlFor="title">Project Title</Label>
-                  <span className={cn(
-                    "text-xs transition-colors",
-                    getCounterColor(state.basicInfo.title.length, 75)
-                  )}>
-                    {state.basicInfo.title.length}/75
-                  </span>
-                </div>
-                <Input 
-                  id="title" 
-                  placeholder="e.g., Santa Cruz Beach Cleanup" 
-                  value={state.basicInfo.title}
-                  onChange={(e) => {
-                    if (e.target.value.length <= 75) {
-                      updateBasicInfo('title', e.target.value)
-                    }
-                  }}
-                  className={cn(
-                    "w-full",
-                    state.basicInfo.title.length >= 70 && "border-amber-500",
-                    state.basicInfo.title.length >= 75 && "border-destructive"
-                  )}
-                  maxLength={75}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex justify-between items-baseline">
-                  <Label htmlFor="location">Location</Label>
-                  <span className={cn(
-                    "text-xs transition-colors",
-                    getCounterColor(state.basicInfo.location.length, 200)
-                  )}>
-                    {state.basicInfo.location.length}/200
-                  </span>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <Input 
-                    id="location" 
-                    placeholder="e.g., Room 3201" 
-                    className={cn(
-                      "flex-1",
-                      state.basicInfo.location.length >= 190 && "border-amber-500",
-                      state.basicInfo.location.length >= 200 && "border-destructive"
-                    )}
-                    value={state.basicInfo.location}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      if (value.length <= 200) {
-                        updateBasicInfo('location', value);
-                      }
-                    }}
-                    maxLength={200}
-                  />
-                  <Button 
-                    variant="outline" 
-                    type="button" 
-                    className="w-full sm:w-auto"
-                    onClick={() => setMapDialogOpen(true)}
-                  >
-                    <MapPin className="h-4 w-4 mr-2" />
-                    Map
-                  </Button>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex justify-between items-baseline">
-                  <Label htmlFor="description">Description</Label>
-                  <span className={cn(
-                    "text-xs transition-colors",
-                    getCounterColor(state.basicInfo.description.length, 1000)
-                  )}>
-                    {state.basicInfo.description.length}/1000
-                  </span>
-                </div>
-                <Textarea 
-                  id="description" 
-                  placeholder="Describe your project (max 1000 characters)"
-                  className={cn(
-                    "min-h-[120px]",
-                    state.basicInfo.description.length >= 900 && "border-amber-500",
-                    state.basicInfo.description.length >= 1000 && "border-destructive"
-                  )}
-                  value={state.basicInfo.description}
-                  onChange={(e) => {
-                    if (e.target.value.length <= 1000) {
-                      updateBasicInfo('description', e.target.value)
-                    }
-                  }}
-                  maxLength={1000}
-                />
-              </div>
-            </CardContent>
-          </Card>
-        )
-
+        return <BasicInfo state={state} updateBasicInfoAction={updateBasicInfo} onMapClickAction={() => setMapDialogOpen(true)} />
       case 2:
-        return (
-          <Card>
-            <CardHeader>
-              <CardTitle>Choose Event Type</CardTitle>
-              <p className="text-sm text-muted-foreground">Select the format that best fits your event</p>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div 
-                className={`p-6 rounded-lg border-2 cursor-pointer transition-all ${
-                  state.eventType === 'oneTime' ? 'border-primary bg-primary/5' : 'hover:bg-muted/50'
-                }`}
-                onClick={() => setEventType('oneTime')}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="flex-1">
-                    <h3 className="font-medium mb-1">Single Event</h3>
-                    <p className="text-sm text-muted-foreground">A one-time event on a specific date</p>
-                  </div>
-                  <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-primary/10">
-                    <CalendarIcon className="h-6 w-6 text-primary" />
-                  </div>
-                </div>
-                {state.eventType === 'oneTime' && (
-                  <div className="mt-4 p-4 bg-card rounded-md">
-                    <p className="text-sm">Example: Beach cleanup event on February 20th, 2024 from 4 PM to 9 PM</p>
-                  </div>
-                )}
-              </div>
-
-              <div 
-                className={`p-6 rounded-lg border-2 cursor-pointer transition-all ${
-                  state.eventType === 'multiDay' ? 'border-primary bg-primary/5' : 'hover:bg-muted/50'
-                }`}
-                onClick={() => setEventType('multiDay')}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="flex-1">
-                    <h3 className="font-medium mb-1">Multiple Day Event</h3>
-                    <p className="text-sm text-muted-foreground">Event spans across multiple days with different time slots</p>
-                  </div>
-                  <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-primary/10">
-                    <CalendarClock className="h-6 w-6 text-primary" />
-                  </div>
-                </div>
-                {state.eventType === 'multiDay' && (
-                  <div className="mt-4 p-4 bg-card rounded-md">
-                    <p className="text-sm">Example: Workshop series with morning and afternoon sessions across different days</p>
-                  </div>
-                )}
-              </div>
-
-              <div 
-                className={`p-6 rounded-lg border-2 cursor-pointer transition-all ${
-                  state.eventType === 'sameDayMultiArea' ? 'border-primary bg-primary/5' : 'hover:bg-muted/50'
-                }`}
-                onClick={() => setEventType('sameDayMultiArea')}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="flex-1">
-                    <h3 className="font-medium mb-1">Multi-Role Event</h3>
-                    <p className="text-sm text-muted-foreground">Single day event with different volunteer roles</p>
-                  </div>
-                  <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-primary/10">
-                    <UsersRound className="h-6 w-6 text-primary" />
-                  </div>
-                </div>
-                {state.eventType === 'sameDayMultiArea' && (
-                  <div className="mt-4 p-4 bg-card rounded-md">
-                    <p className="text-sm">Example: Community festival needing decorators, cooks, and cleaners at different times</p>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        )
-
+        return <EventType eventType={state.eventType} setEventTypeAction={setEventType} />
       case 3:
-        return (
-          <Card>
-            <CardHeader>
-              <CardTitle>Schedule Your Event</CardTitle>
-              <p className="text-sm text-muted-foreground">
-                {state.eventType === 'oneTime' && "Pick a date and time for your event"}
-                {state.eventType === 'multiDay' && "Set up your event schedule across multiple days"}
-                {state.eventType === 'sameDayMultiArea' && "Define different roles and their timings"}
-              </p>
-            </CardHeader>
-            <CardContent>
-              {renderScheduleStep()}
-            </CardContent>
-          </Card>
-        )
-
+        return <Schedule 
+                  state={state} 
+                  updateOneTimeScheduleAction={updateOneTimeSchedule}
+                  updateMultiDayScheduleAction={updateMultiDaySchedule}
+                  updateMultiRoleScheduleAction={updateMultiRoleSchedule}
+                  addMultiDaySlotAction={addMultiDaySlot}
+                  addMultiDayEventAction={addMultiDayEvent}
+                  addRoleAction={addRole}
+                  removeDayAction={removeDay}
+                  removeSlotAction={removeSlot}
+                  removeRoleAction={removeRole}
+               />
       case 4:
-        return (
-          <Card>
-            <CardHeader>
-              <CardTitle>Finalize Your Project</CardTitle>
-              <p className="text-sm text-muted-foreground">Add any additional materials to help volunteers understand the project better</p>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <Label>Cover Image</Label>
-                <div className="mt-2 border-2 border-dashed rounded-lg p-6 text-center hover:bg-muted/50 cursor-pointer">
-                  <ImagePlus className="mx-auto h-8 w-8 text-muted-foreground" />
-                  <p className="mt-2 text-sm text-muted-foreground">Upload a cover image for your project</p>
-                  <p className="text-xs text-muted-foreground">PNG, JPG up to 10MB</p>
-                </div>
-              </div>
-
-              <div>
-                <Label>Additional Files (Optional)</Label>
-                <div className="mt-2 border-2 border-dashed rounded-lg p-6 text-center hover:bg-muted/50 cursor-pointer">
-                  <Plus className="mx-auto h-8 w-8 text-muted-foreground" />
-                  <p className="mt-2 text-sm text-muted-foreground">Add any supporting documents</p>
-                  <p className="text-xs text-muted-foreground">PDF, DOC, DOCX up to 10MB</p>
-                </div>
-              </div>
-
-              <div className="p-4 bg-muted/50 rounded-lg">
-                <h3 className="font-medium mb-2">Project Summary</h3>
-                <div className="space-y-2 text-sm">
-                  <p><strong>Title:</strong> {state.basicInfo.title || 'Not set'}</p>
-                  <p><strong>Location:</strong> {state.basicInfo.location || 'Not set'}</p>
-                  <p><strong>Event Type:</strong> {state.eventType === 'oneTime' ? 'Single Event' : 
-                    state.eventType === 'multiDay' ? 'Multiple Day Event' : 'Multi-Role Event'}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )
-
+        return <Finalize state={state} />
       default:
-        return null
+        return null;
     }
-  }
-
-  const renderScheduleStep = () => {
-    if (state.eventType === 'oneTime') {
-      const timeRangeInvalid = isTimeRangeInvalid(state.schedule.oneTime.startTime, state.schedule.oneTime.endTime)
-
-      return (
-        <div className="space-y-6">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div>
-              <Label>Event Date</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-normal mt-1.5",
-                      !state.schedule.oneTime.date && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {state.schedule.oneTime.date ? 
-                      format(new Date(state.schedule.oneTime.date), "PPP") : 
-                      "Pick a date"
-                    }
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={state.schedule.oneTime.date ? new Date(state.schedule.oneTime.date) : undefined}
-                    onSelect={(date) => 
-                      updateOneTimeSchedule('date', date ? format(date, 'yyyy-MM-dd') : '')
-                    }
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-            <div>
-              <Label>Volunteers Needed</Label>
-              <Input 
-                type="number" 
-                min="1" 
-                className="mt-1.5"
-                value={state.schedule.oneTime.volunteers}
-                onChange={(e) => updateOneTimeSchedule('volunteers', parseInt(e.target.value))}
-              />
-            </div>
-          </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-            <TimePicker
-              label="Start Time"
-              value={state.schedule.oneTime.startTime}
-              onChangeAction={(time: string) => updateOneTimeSchedule('startTime', time)}
-              error={timeRangeInvalid}
-              errorMessage={timeRangeInvalid ? "Start time must be before end time" : undefined}
-            />
-            <TimePicker
-              label="End Time"
-              value={state.schedule.oneTime.endTime}
-              onChangeAction={(time: string) => updateOneTimeSchedule('endTime', time)}
-              error={timeRangeInvalid}
-              errorMessage={timeRangeInvalid ? "End time must be after start time" : undefined}
-            />
-            </div>
-        </div>
-      )
-    }
-
-    if (state.eventType === 'multiDay') {
-      return (
-        <div className="space-y-6">
-          {state.schedule.multiDay.map((day, dayIndex) => (
-            <div key={dayIndex} className="p-4 border rounded-lg">
-              <div className="flex items-center justify-between mb-4">
-                <Label className="text-base sm:text-lg font-medium">Day {dayIndex + 1}</Label>
-                {dayIndex > 0 && (
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    onClick={() => removeDay(dayIndex)}
-                    className="h-8 w-8 hover:bg-muted/80"
-                  >
-                    <Trash2 className="h-4 w-4 text-destructive" />
-                  </Button>
-                )}
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !day.date && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4 shrink-0" />
-                        <span className="truncate">
-                          {day.date ? 
-                            format(new Date(day.date), "PPP") : 
-                            "Pick a date"
-                          }
-                        </span>
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={day.date ? new Date(day.date) : undefined}
-                        onSelect={(date) => 
-                          updateMultiDaySchedule(dayIndex, 'date', date ? format(date, 'yyyy-MM-dd') : '')
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-                {day.slots.map((slot, slotIndex) => {
-                  const timeRangeInvalid = isTimeRangeInvalid(slot.startTime, slot.endTime)
-                  return (
-                    <div key={slotIndex} className="p-4 bg-muted/50 rounded-lg space-y-4">
-                      <div className="flex items-center justify-between">
-                        <Label className="text-sm font-medium">Time Slot {slotIndex + 1}</Label>
-                        {slotIndex > 0 && (
-                          <Button 
-                            variant="ghost" 
-                            size="icon"
-                            onClick={() => removeSlot(dayIndex, slotIndex)}
-                            className="h-8 w-8 hover:bg-muted/80"
-                          >
-                            <Trash2 className="h-4 w-4 text-destructive" />
-                          </Button>
-                        )}
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div className="col-span-1 sm:col-span-2 grid grid-cols-2 gap-2">
-                          <TimePicker
-                            value={slot.startTime}
-                            onChangeAction={(time: string) => updateMultiDaySchedule(dayIndex, 'startTime', time, slotIndex)}
-                            error={timeRangeInvalid}
-                            errorMessage={timeRangeInvalid ? "Invalid time" : undefined}
-                          />
-                          <TimePicker
-                            value={slot.endTime}
-                            onChangeAction={(time: string) => updateMultiDaySchedule(dayIndex, 'endTime', time, slotIndex)}
-                            error={timeRangeInvalid}
-                            errorMessage={timeRangeInvalid ? "Invalid time" : undefined}
-                          />
-                        </div>
-                        <div>
-                          <Label className="sr-only">Volunteers</Label>
-                          <Input 
-                            type="number" 
-                            min="1" 
-                            placeholder="Number of volunteers"
-                            value={slot.volunteers}
-                            onChange={(e) => updateMultiDaySchedule(dayIndex, 'volunteers', e.target.value, slotIndex)}
-                            className="h-10"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="w-full"
-                  onClick={() => addMultiDaySlot(dayIndex)}
-                >
-                  <PlusCircle className="h-4 w-4 mr-2" />
-                  Add Time Slot
-                </Button>
-              </div>
-            </div>
-          ))}
-          <Button 
-            variant="outline" 
-            className="w-full"
-            onClick={addMultiDayEvent}
-          >
-            <PlusCircle className="h-4 w-4 mr-2" />
-            Add Another Day
-          </Button>
-        </div>
-      )
-    }
-
-    if (state.eventType === 'sameDayMultiArea') {
-      const overallTimeInvalid = isTimeRangeInvalid(state.schedule.multiRole.overallStart, state.schedule.multiRole.overallEnd)
-
-      return (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <Label>Event Date</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-normal mt-1.5",
-                      !state.schedule.multiRole.date && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4 shrink-0" />
-                    <span className="truncate">
-                      {state.schedule.multiRole.date ? 
-                        format(new Date(state.schedule.multiRole.date), "PPP") : 
-                        "Pick a date"
-                      }
-                    </span>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={state.schedule.multiRole.date ? new Date(state.schedule.multiRole.date) : undefined}
-                    onSelect={(date) => 
-                      updateMultiRoleSchedule('date', date ? format(date, 'yyyy-MM-dd') : '')
-                    }
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-            <div>
-              <Label>Overall Event Hours</Label>
-              <div className="grid grid-cols-2 gap-2 mt-1.5">
-                <TimePicker
-                  value={state.schedule.multiRole.overallStart}
-                  onChangeAction={(time: string) => updateMultiRoleSchedule('overallStart', time)}
-                  error={overallTimeInvalid}
-                  errorMessage={overallTimeInvalid ? "Invalid time" : undefined}
-                />
-                <TimePicker
-                  value={state.schedule.multiRole.overallEnd}
-                  onChangeAction={(time: string) => updateMultiRoleSchedule('overallEnd', time)}
-                  error={overallTimeInvalid}
-                  errorMessage={overallTimeInvalid ? "Invalid time" : undefined}
-                />
-              </div>
-            </div>
-          </div>
-
-          {state.schedule.multiRole.roles.map((role, roleIndex) => {
-            const roleTimeInvalid = isTimeRangeInvalid(role.startTime, role.endTime)
-            return (
-              <div key={roleIndex} className="p-4 border rounded-lg space-y-4">
-                <div className="flex items-center justify-between">
-                  <Label className="text-base sm:text-lg font-medium">Role {roleIndex + 1}</Label>
-                  {roleIndex > 0 && (
-                    <Button 
-                      variant="ghost" 
-                      size="icon"
-                      onClick={() => removeRole(roleIndex)}
-                      className="h-8 w-8 hover:bg-muted/80"
-                    >
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
-                  )}
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between items-baseline mb-1.5">
-                      <Label>Role Name</Label>
-                      <span className={cn(
-                        "text-xs transition-colors",
-                        getCounterColor(role.name.length, 75)
-                      )}>
-                        {role.name.length}/75
-                      </span>
-                    </div>
-                    <Input 
-                      placeholder="Role name (e.g., Event Decoration)"
-                      value={role.name}
-                      onChange={(e) => {
-                        if (e.target.value.length <= 75) {
-                          updateMultiRoleSchedule('name', e.target.value, roleIndex)
-                        }
-                      }}
-                      className={cn(
-                        role.name.length >= 70 && "border-amber-500",
-                        role.name.length >= 75 && "border-destructive"
-                      )}
-                      maxLength={75}
-                    />
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <Label>Time Slot</Label>
-                      <div className="grid grid-cols-2 gap-2 mt-1.5">
-                        <TimePicker
-                          value={role.startTime}
-                          onChangeAction={(time: string) => updateMultiRoleSchedule('startTime', time, roleIndex)}
-                          error={roleTimeInvalid}
-                          errorMessage={roleTimeInvalid ? "Invalid time" : undefined}
-                        />
-                        <TimePicker
-                          value={role.endTime}
-                          onChangeAction={(time: string) => updateMultiRoleSchedule('endTime', time, roleIndex)}
-                          error={roleTimeInvalid}
-                          errorMessage={roleTimeInvalid ? "Invalid time" : undefined}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <Label>Volunteers Needed</Label>
-                      <Input 
-                        type="number" 
-                        min="1" 
-                        className="mt-1.5"
-                        value={role.volunteers}
-                        onChange={(e) => updateMultiRoleSchedule('volunteers', parseInt(e.target.value), roleIndex)}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-          <Button 
-            variant="outline" 
-            className="w-full"
-            onClick={addRole}
-          >
-            <PlusCircle className="h-4 w-4 mr-2" />
-            Add Another Role
-          </Button>
-        </div>
-      )
-    }
-
-    return null
-  }
+  };
 
   return (
     <div className="container mx-auto p-4 sm:p-8 max-w-3xl">
@@ -745,22 +170,10 @@ export default function CreateProject() {
         <h1 className="text-3xl sm:text-4xl font-bold mb-4">Create a Volunteering Project</h1>
         <Progress value={(state.step / 4) * 100} className="h-2" />
         <div className="grid grid-cols-4 mt-2 text-xs sm:text-sm text-muted-foreground">
-          <span className={cn(
-            "text-center sm:text-left truncate",
-            state.step === 1 ? "text-primary font-medium" : ""
-          )}>Basic Info</span>
-          <span className={cn(
-            "text-center sm:text-left truncate",
-            state.step === 2 ? "text-primary font-medium" : ""
-          )}>Event Type</span>
-          <span className={cn(
-            "text-center sm:text-left truncate",
-            state.step === 3 ? "text-primary font-medium" : ""
-          )}>Schedule</span>
-          <span className={cn(
-            "text-center sm:text-left truncate",
-            state.step === 4 ? "text-primary font-medium" : ""
-          )}>Finalize</span>
+          <span className={cn("text-center sm:text-left truncate", state.step === 1 && "text-primary font-medium")}>Basic Info</span>
+          <span className={cn("text-center sm:text-left truncate", state.step === 2 && "text-primary font-medium")}>Event Type</span>
+          <span className={cn("text-center sm:text-left truncate", state.step === 3 && "text-primary font-medium")}>Schedule</span>
+          <span className={cn("text-center sm:text-left truncate", state.step === 4 && "text-primary font-medium")}>Finalize</span>
         </div>
       </div>
 
@@ -770,9 +183,7 @@ export default function CreateProject() {
         {getValidationMessage() && (
           <Alert variant="destructive" className="animate-in fade-in">
             <AlertCircle className="h-4 w-4" />
-            <AlertDescription>
-              {getValidationMessage()}
-            </AlertDescription>
+            <AlertDescription>{getValidationMessage()}</AlertDescription>
           </Alert>
         )}
 
@@ -818,7 +229,7 @@ export default function CreateProject() {
             </div>
             <div className="max-h-64 overflow-y-auto">
               {results.length > 0 ? (
-                results.map((result: LocationResult, index: number) => (
+                results.map((result, index) => (
                   <div
                     key={index}
                     className="p-2 cursor-pointer hover:bg-muted rounded-md flex flex-col"
@@ -840,5 +251,5 @@ export default function CreateProject() {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }
