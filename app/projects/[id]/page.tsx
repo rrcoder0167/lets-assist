@@ -5,10 +5,15 @@ import { CalendarDays, MapPin, Users, Share2, Clock } from "lucide-react"
 // import Link from "next/link"
 // import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-export default function ProjectDetails({ params }: { params: { id: string } }) {
+type Props = {
+  params: Promise<{ id: string }>
+}
+
+export default async function ProjectDetails(params: Props): Promise<React.ReactElement> {
+  const { id } = await params.params;
   // Mock data - will be replaced with real data from backend
   const project = {
-    id: params.id,
+    id: id,
     title: 'Community Festival Support',
     location: 'Central Community Center',
     description: 'Join us for our annual community festival. We need volunteers for various roles throughout the day to make this event successful.',
