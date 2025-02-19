@@ -66,6 +66,13 @@ export default function CreateProject() {
     return false
   }
 
+  const getCounterColor = (current: number, max: number) => {
+    const percentage = (current / max) * 100
+    if (percentage >= 90) return "text-destructive"
+    if (percentage >= 75) return "text-amber-500 dark:text-amber-400"
+    return "text-muted-foreground"
+  }
+
   const renderStep = () => {
     switch (state.step) {
       case 1:
@@ -77,26 +84,61 @@ export default function CreateProject() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="title">Project Title</Label>
+                <div className="flex justify-between items-baseline">
+                  <Label htmlFor="title">Project Title</Label>
+                  <span className={cn(
+                    "text-xs transition-colors",
+                    getCounterColor(state.basicInfo.title.length, 75)
+                  )}>
+                    {state.basicInfo.title.length}/75
+                  </span>
+                </div>
                 <Input 
                   id="title" 
                   placeholder="e.g., Santa Cruz Beach Cleanup" 
                   value={state.basicInfo.title}
-                  onChange={(e) => updateBasicInfo('title', e.target.value)}
+                  onChange={(e) => {
+                    if (e.target.value.length <= 75) {
+                      updateBasicInfo('title', e.target.value)
+                    }
+                  }}
+                  className={cn(
+                    "w-full",
+                    state.basicInfo.title.length >= 70 && "border-amber-500",
+                    state.basicInfo.title.length >= 75 && "border-destructive"
+                  )}
+                  maxLength={75}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
-                <div className="flex gap-2">
+                <div className="flex justify-between items-baseline">
+                  <Label htmlFor="location">Location</Label>
+                  <span className={cn(
+                    "text-xs transition-colors",
+                    getCounterColor(state.basicInfo.location.length, 100)
+                  )}>
+                    {state.basicInfo.location.length}/100
+                  </span>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-2">
                   <Input 
                     id="location" 
                     placeholder="Enter location" 
-                    className="flex-1"
+                    className={cn(
+                      "flex-1",
+                      state.basicInfo.location.length >= 90 && "border-amber-500",
+                      state.basicInfo.location.length >= 100 && "border-destructive"
+                    )}
                     value={state.basicInfo.location}
-                    onChange={(e) => updateBasicInfo('location', e.target.value)}
+                    onChange={(e) => {
+                      if (e.target.value.length <= 100) {
+                        updateBasicInfo('location', e.target.value)
+                      }
+                    }}
+                    maxLength={100}
                   />
-                  <Button variant="outline" type="button">
+                  <Button variant="outline" type="button" className="w-full sm:w-auto">
                     <MapPin className="h-4 w-4 mr-2" />
                     Map
                   </Button>
@@ -104,14 +146,30 @@ export default function CreateProject() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <div className="flex justify-between items-baseline">
+                  <Label htmlFor="description">Description</Label>
+                  <span className={cn(
+                    "text-xs transition-colors",
+                    getCounterColor(state.basicInfo.description.length, 1000)
+                  )}>
+                    {state.basicInfo.description.length}/1000
+                  </span>
+                </div>
                 <Textarea 
                   id="description" 
                   placeholder="Describe your project (max 1000 characters)"
-                  className="h-32"
-                  maxLength={1000}
+                  className={cn(
+                    "min-h-[120px]",
+                    state.basicInfo.description.length >= 900 && "border-amber-500",
+                    state.basicInfo.description.length >= 1000 && "border-destructive"
+                  )}
                   value={state.basicInfo.description}
-                  onChange={(e) => updateBasicInfo('description', e.target.value)}
+                  onChange={(e) => {
+                    if (e.target.value.length <= 1000) {
+                      updateBasicInfo('description', e.target.value)
+                    }
+                  }}
+                  maxLength={1000}
                 />
               </div>
             </CardContent>
@@ -330,14 +388,15 @@ export default function CreateProject() {
           {state.schedule.multiDay.map((day, dayIndex) => (
             <div key={dayIndex} className="p-4 border rounded-lg">
               <div className="flex items-center justify-between mb-4">
-                <Label>Day {dayIndex + 1}</Label>
+                <Label className="text-base sm:text-lg font-medium">Day {dayIndex + 1}</Label>
                 {dayIndex > 0 && (
                   <Button 
                     variant="ghost" 
                     size="icon"
                     onClick={() => removeDay(dayIndex)}
+                    className="h-8 w-8 hover:bg-muted/80"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4 text-destructive" />
                   </Button>
                 )}
               </div>
@@ -352,11 +411,13 @@ export default function CreateProject() {
                           !day.date && "text-muted-foreground"
                         )}
                       >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {day.date ? 
-                          format(new Date(day.date), "PPP") : 
-                          "Pick a date"
-                        }
+                        <CalendarIcon className="mr-2 h-4 w-4 shrink-0" />
+                        <span className="truncate">
+                          {day.date ? 
+                            format(new Date(day.date), "PPP") : 
+                            "Pick a date"
+                          }
+                        </span>
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -374,40 +435,47 @@ export default function CreateProject() {
                 {day.slots.map((slot, slotIndex) => {
                   const timeRangeInvalid = isTimeRangeInvalid(slot.startTime, slot.endTime)
                   return (
-                    <div key={slotIndex} className="p-4 bg-muted/50 rounded-lg">
-                      <div className="flex items-center justify-between mb-4">
-                        <Label>Time Slot {slotIndex + 1}</Label>
+                    <div key={slotIndex} className="p-4 bg-muted/50 rounded-lg space-y-4">
+                      <div className="flex items-center justify-between">
+                        <Label className="text-sm font-medium">Time Slot {slotIndex + 1}</Label>
                         {slotIndex > 0 && (
                           <Button 
                             variant="ghost" 
                             size="icon"
                             onClick={() => removeSlot(dayIndex, slotIndex)}
+                            className="h-8 w-8 hover:bg-muted/80"
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-4 w-4 text-destructive" />
                           </Button>
                         )}
                       </div>
-                        <div className="grid sm:grid-cols-3 gap-4">
-                        <TimePicker
-                          value={slot.startTime}
-                          onChangeAction={(time: string) => updateMultiDaySchedule(dayIndex, 'startTime', time, slotIndex)}
-                          error={timeRangeInvalid}
-                          errorMessage={timeRangeInvalid ? "Invalid time" : undefined}
-                        />
-                        <TimePicker
-                          value={slot.endTime}
-                          onChangeAction={(time: string) => updateMultiDaySchedule(dayIndex, 'endTime', time, slotIndex)}
-                          error={timeRangeInvalid}
-                          errorMessage={timeRangeInvalid ? "Invalid time" : undefined}
-                        />
-                        <Input 
-                          type="number" 
-                          min="1" 
-                          placeholder="Volunteers"
-                          value={slot.volunteers}
-                          onChange={(e) => updateMultiDaySchedule(dayIndex, 'volunteers', e.target.value, slotIndex)}
-                        />
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div className="col-span-1 sm:col-span-2 grid grid-cols-2 gap-2">
+                          <TimePicker
+                            value={slot.startTime}
+                            onChangeAction={(time: string) => updateMultiDaySchedule(dayIndex, 'startTime', time, slotIndex)}
+                            error={timeRangeInvalid}
+                            errorMessage={timeRangeInvalid ? "Invalid time" : undefined}
+                          />
+                          <TimePicker
+                            value={slot.endTime}
+                            onChangeAction={(time: string) => updateMultiDaySchedule(dayIndex, 'endTime', time, slotIndex)}
+                            error={timeRangeInvalid}
+                            errorMessage={timeRangeInvalid ? "Invalid time" : undefined}
+                          />
                         </div>
+                        <div>
+                          <Label className="sr-only">Volunteers</Label>
+                          <Input 
+                            type="number" 
+                            min="1" 
+                            placeholder="Number of volunteers"
+                            value={slot.volunteers}
+                            onChange={(e) => updateMultiDaySchedule(dayIndex, 'volunteers', e.target.value, slotIndex)}
+                            className="h-10"
+                          />
+                        </div>
+                      </div>
                     </div>
                   )
                 })}
@@ -440,7 +508,7 @@ export default function CreateProject() {
 
       return (
         <div className="space-y-6">
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label>Event Date</Label>
               <Popover>
@@ -452,11 +520,13 @@ export default function CreateProject() {
                       !state.schedule.multiRole.date && "text-muted-foreground"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {state.schedule.multiRole.date ? 
-                      format(new Date(state.schedule.multiRole.date), "PPP") : 
-                      "Pick a date"
-                    }
+                    <CalendarIcon className="mr-2 h-4 w-4 shrink-0" />
+                    <span className="truncate">
+                      {state.schedule.multiRole.date ? 
+                        format(new Date(state.schedule.multiRole.date), "PPP") : 
+                        "Pick a date"
+                      }
+                    </span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
@@ -473,7 +543,7 @@ export default function CreateProject() {
             </div>
             <div>
               <Label>Overall Event Hours</Label>
-                <div className="grid grid-cols-2 gap-2 mt-1.5">
+              <div className="grid grid-cols-2 gap-2 mt-1.5">
                 <TimePicker
                   value={state.schedule.multiRole.overallStart}
                   onChangeAction={(time: string) => updateMultiRoleSchedule('overallStart', time)}
@@ -486,36 +556,57 @@ export default function CreateProject() {
                   error={overallTimeInvalid}
                   errorMessage={overallTimeInvalid ? "Invalid time" : undefined}
                 />
-                </div>
+              </div>
             </div>
           </div>
 
           {state.schedule.multiRole.roles.map((role, roleIndex) => {
             const roleTimeInvalid = isTimeRangeInvalid(role.startTime, role.endTime)
             return (
-              <div key={roleIndex} className="p-4 border rounded-lg">
-                <div className="flex items-center justify-between mb-4">
-                  <Label>Role {roleIndex + 1}</Label>
+              <div key={roleIndex} className="p-4 border rounded-lg space-y-4">
+                <div className="flex items-center justify-between">
+                  <Label className="text-base sm:text-lg font-medium">Role {roleIndex + 1}</Label>
                   {roleIndex > 0 && (
                     <Button 
                       variant="ghost" 
                       size="icon"
                       onClick={() => removeRole(roleIndex)}
+                      className="h-8 w-8 hover:bg-muted/80"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>
                   )}
                 </div>
                 <div className="space-y-4">
-                  <Input 
-                    placeholder="Role name (e.g., Event Decoration)"
-                    value={role.name}
-                    onChange={(e) => updateMultiRoleSchedule('name', e.target.value, roleIndex)}
-                  />
-                  <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <div className="flex justify-between items-baseline mb-1.5">
+                      <Label>Role Name</Label>
+                      <span className={cn(
+                        "text-xs transition-colors",
+                        getCounterColor(role.name.length, 75)
+                      )}>
+                        {role.name.length}/75
+                      </span>
+                    </div>
+                    <Input 
+                      placeholder="Role name (e.g., Event Decoration)"
+                      value={role.name}
+                      onChange={(e) => {
+                        if (e.target.value.length <= 75) {
+                          updateMultiRoleSchedule('name', e.target.value, roleIndex)
+                        }
+                      }}
+                      className={cn(
+                        role.name.length >= 70 && "border-amber-500",
+                        role.name.length >= 75 && "border-destructive"
+                      )}
+                      maxLength={75}
+                    />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <Label>Time Slot</Label>
-                        <div className="grid grid-cols-2 gap-2 mt-1.5">
+                      <div className="grid grid-cols-2 gap-2 mt-1.5">
                         <TimePicker
                           value={role.startTime}
                           onChangeAction={(time: string) => updateMultiRoleSchedule('startTime', time, roleIndex)}
@@ -528,7 +619,7 @@ export default function CreateProject() {
                           error={roleTimeInvalid}
                           errorMessage={roleTimeInvalid ? "Invalid time" : undefined}
                         />
-                        </div>
+                      </div>
                     </div>
                     <div>
                       <Label>Volunteers Needed</Label>
@@ -561,23 +652,35 @@ export default function CreateProject() {
   }
 
   return (
-    <div className="container mx-auto p-8 max-w-3xl">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">Create a Volunteering Project</h1>
+    <div className="container mx-auto p-4 sm:p-8 max-w-3xl">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-4">Create a Volunteering Project</h1>
         <Progress value={(state.step / 4) * 100} className="h-2" />
-        <div className="flex justify-between mt-2 text-sm text-muted-foreground">
-          <span className={state.step === 1 ? "text-primary font-medium" : ""}>Basic Info</span>
-          <span className={state.step === 2 ? "text-primary font-medium" : ""}>Event Type</span>
-          <span className={state.step === 3 ? "text-primary font-medium" : ""}>Schedule</span>
-          <span className={state.step === 4 ? "text-primary font-medium" : ""}>Finalize</span>
+        <div className="grid grid-cols-4 mt-2 text-xs sm:text-sm text-muted-foreground">
+          <span className={cn(
+            "text-center sm:text-left truncate",
+            state.step === 1 ? "text-primary font-medium" : ""
+          )}>Basic Info</span>
+          <span className={cn(
+            "text-center sm:text-left truncate",
+            state.step === 2 ? "text-primary font-medium" : ""
+          )}>Event Type</span>
+          <span className={cn(
+            "text-center sm:text-left truncate",
+            state.step === 3 ? "text-primary font-medium" : ""
+          )}>Schedule</span>
+          <span className={cn(
+            "text-center sm:text-left truncate",
+            state.step === 4 ? "text-primary font-medium" : ""
+          )}>Finalize</span>
         </div>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-6 sm:space-y-8">
         {renderStep()}
 
         {getValidationMessage() && (
-          <Alert variant="destructive">
+          <Alert variant="destructive" className="animate-in fade-in">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>
               {getValidationMessage()}
@@ -590,6 +693,7 @@ export default function CreateProject() {
             variant="outline" 
             onClick={prevStep}
             disabled={state.step === 1}
+            className="w-[120px]"
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
             Back
@@ -597,8 +701,9 @@ export default function CreateProject() {
           <Button 
             onClick={nextStep}
             disabled={!canProceed()}
+            className="w-[120px]"
           >
-            {state.step === 4 ? 'Create Project' : 'Continue'}
+            {state.step === 4 ? 'Create' : 'Continue'}
             <ChevronRight className="h-4 w-4 ml-2" />
           </Button>
         </div>
