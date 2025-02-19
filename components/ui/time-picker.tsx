@@ -100,7 +100,12 @@ export function TimePicker({ value, onChangeAction, label, error, errorMessage }
             {value ? formatTime(value) : "Select time"}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[280px] p-4" align="start">
+        <PopoverContent 
+          align="start"
+          side="bottom"
+          sideOffset={4}
+          className="w-[280px] p-4 sm:w-auto"
+        >
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-3 gap-2">
               <Select
@@ -111,10 +116,13 @@ export function TimePicker({ value, onChangeAction, label, error, errorMessage }
                   handleTimeChange(newHour, selectedMinute, selectedPeriod)
                 }}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Hour" />
                 </SelectTrigger>
-                <SelectContent position="popper" className="h-[200px]">
+                <SelectContent 
+                  position="popper" 
+                  className="h-[180px] min-w-[80px]"
+                >
                   {Array.from({ length: 12 }, (_, i) => i + 1).map((h) => (
                     <SelectItem key={h} value={h.toString()}>
                       {h}
@@ -131,10 +139,13 @@ export function TimePicker({ value, onChangeAction, label, error, errorMessage }
                   handleTimeChange(selectedHour, newMinute, selectedPeriod)
                 }}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="Min" />
                 </SelectTrigger>
-                <SelectContent position="popper" className="h-[200px]">
+                <SelectContent 
+                  position="popper" 
+                  className="h-[180px] min-w-[80px]"
+                >
                   {Array.from({ length: 60 }, (_, i) => i).map((m) => (
                     <SelectItem key={m} value={m.toString()}>
                       {m.toString().padStart(2, "0")}
@@ -150,10 +161,13 @@ export function TimePicker({ value, onChangeAction, label, error, errorMessage }
                   handleTimeChange(selectedHour, selectedMinute, value)
                 }}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-9">
                   <SelectValue placeholder="AM/PM" />
                 </SelectTrigger>
-                <SelectContent position="popper">
+                <SelectContent 
+                  position="popper"
+                  className="min-w-[80px]"
+                >
                   <SelectItem value="AM">AM</SelectItem>
                   <SelectItem value="PM">PM</SelectItem>
                 </SelectContent>
