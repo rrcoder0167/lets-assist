@@ -115,7 +115,7 @@ export function useEventForm() {
     setState(prev => {
       // Add character limit validation
       if ((field === 'title' && value.length > 75) ||
-          (field === 'location' && value.length > 100) ||
+          (field === 'location' && value.length > 250) ||
           (field === 'description' && value.length > 1000)) {
         return prev
       }

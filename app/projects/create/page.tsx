@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { MapPin, ImagePlus, Plus, ChevronRight, ChevronLeft, Calendar as CalendarIcon, CalendarClock, UsersRound, Trash2, PlusCircle, AlertCircle } from "lucide-react"
+import { MapPin, ImagePlus, Plus, ChevronRight, ChevronLeft, Calendar as CalendarIcon, CalendarClock, UsersRound, Trash2, PlusCircle, AlertCircle, Loader2 } from "lucide-react"
 import { useEventForm } from "@/hooks/use-event-form"
 import { Progress } from "@/components/ui/progress"
 import { Calendar } from "@/components/ui/calendar"
@@ -14,6 +14,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog"
+import { useState, useEffect, useCallback } from "react"
+
+interface LocationResult {
+  display_name: string;
+}
 
 export default function CreateProject() {
   const { 
@@ -33,6 +39,82 @@ export default function CreateProject() {
     removeRole,
     canProceed
   } = useEventForm()
+
+  // New state for Map Dialog and search functionality
+  const [mapDialogOpen, setMapDialogOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [results, setResults] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [userCoords, setUserCoords] = useState<{ lat: number; lon: number } | null>(null)
+
+  // New useEffect: Only request user location when mapDialogOpen is true
+  useEffect(() => {
+    if (mapDialogOpen && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserCoords({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude
+          });
+        },
+        (error) => {
+          console.error('Error getting user location:', error);
+        }
+      );
+    }
+  }, [mapDialogOpen]);
+
+  // Helper function to format location results
+  const formatLocation = (displayName: string) => {
+    const parts = displayName.split(',').map(part => part.trim());
+    const title = parts[0] || '';
+    // Use next few parts to form a simplified address
+    const address = parts.slice(1, 4).join(', ');
+    return (
+      <div>
+        <div className="font-medium">{title}</div>
+        {address && <div className="text-sm text-muted-foreground">{address}</div>}
+      </div>
+    );
+  };
+
+  const searchLocation = useCallback(async () => {
+    if (!searchQuery) {
+      setResults([])
+      return
+    }
+    setIsLoading(true)
+    try {
+      // Base query
+      const baseURL = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}`;
+      // If user location is available, add a bounding box around user's coordinates to bias results
+      const url = userCoords
+        ? `${baseURL}&viewbox=${userCoords.lon - 0.1},${userCoords.lat - 0.1},${userCoords.lon + 0.1},${userCoords.lat + 0.1}&bounded=1`
+        : baseURL;
+
+      const res = await fetch(url);
+      const data = await res.json();
+      setResults(data);
+    } catch (error) {
+      // console.error('Error searching location:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [searchQuery, userCoords]);
+
+  // New effect to trigger search suggestions while typing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      searchLocation();
+    }, 500); // 500ms debounce delay
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, searchLocation]);
+
+  const handleSelectLocation = (displayName: string) => {
+    updateBasicInfo('location', displayName)
+    setMapDialogOpen(false)
+  }
 
   const getValidationMessage = () => {
     if (!canProceed()) {
@@ -116,29 +198,35 @@ export default function CreateProject() {
                   <Label htmlFor="location">Location</Label>
                   <span className={cn(
                     "text-xs transition-colors",
-                    getCounterColor(state.basicInfo.location.length, 100)
+                    getCounterColor(state.basicInfo.location.length, 200)
                   )}>
-                    {state.basicInfo.location.length}/100
+                    {state.basicInfo.location.length}/200
                   </span>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2">
                   <Input 
                     id="location" 
-                    placeholder="Enter location" 
+                    placeholder="e.g., Room 3201" 
                     className={cn(
                       "flex-1",
-                      state.basicInfo.location.length >= 90 && "border-amber-500",
-                      state.basicInfo.location.length >= 100 && "border-destructive"
+                      state.basicInfo.location.length >= 190 && "border-amber-500",
+                      state.basicInfo.location.length >= 200 && "border-destructive"
                     )}
                     value={state.basicInfo.location}
                     onChange={(e) => {
-                      if (e.target.value.length <= 100) {
-                        updateBasicInfo('location', e.target.value)
+                      const value = e.target.value;
+                      if (value.length <= 200) {
+                        updateBasicInfo('location', value);
                       }
                     }}
-                    maxLength={100}
+                    maxLength={200}
                   />
-                  <Button variant="outline" type="button" className="w-full sm:w-auto">
+                  <Button 
+                    variant="outline" 
+                    type="button" 
+                    className="w-full sm:w-auto"
+                    onClick={() => setMapDialogOpen(true)}
+                  >
                     <MapPin className="h-4 w-4 mr-2" />
                     Map
                   </Button>
@@ -708,6 +796,49 @@ export default function CreateProject() {
           </Button>
         </div>
       </div>
+
+      {/* Map Dialog for location search */}
+      <Dialog open={mapDialogOpen} onOpenChange={setMapDialogOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Search Location</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="flex">
+              <Input
+                placeholder="Enter location..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') searchLocation() }}
+                className="flex-grow"
+              />
+              <Button onClick={searchLocation} className="ml-2 shrink-0">
+                {isLoading ? <Loader2 className="animate-spin h-4 w-4" /> : 'Search'}
+              </Button>
+            </div>
+            <div className="max-h-64 overflow-y-auto">
+              {results.length > 0 ? (
+                results.map((result: LocationResult, index: number) => (
+                  <div
+                    key={index}
+                    className="p-2 cursor-pointer hover:bg-muted rounded-md flex flex-col"
+                    onClick={() => handleSelectLocation(result.display_name)}
+                  >
+                    {formatLocation(result.display_name)}
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-muted-foreground">No results found.</p>
+              )}
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
