@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import { format } from "date-fns"
 import { notFound } from "next/navigation"
+import { NoAvatar } from "@/components/NoAvatar"
 
 interface Profile {
   username: string
@@ -37,7 +38,7 @@ export default async function ProfilePage(params: Props): Promise<React.ReactEle
           <Avatar className="h-20 w-20">
             <AvatarImage src={profile.avatar_url || undefined} alt={profile.full_name} />
             <AvatarFallback>
-              {profile.full_name?.split(" ").map((n: string) => n[0]).join("")}
+              <NoAvatar fullName={profile?.full_name} />
             </AvatarFallback>
           </Avatar>
           <div>
