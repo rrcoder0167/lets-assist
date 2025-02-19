@@ -9,9 +9,9 @@ interface EventFormState {
   step: number
   eventType: EventType
   basicInfo: {
-    title: string
-    location: string
-    description: string
+    title: string // max 75 chars
+    location: string // max 100 chars
+    description: string // max 1000 chars
   }
   schedule: {
     oneTime: {
@@ -33,7 +33,7 @@ interface EventFormState {
       overallStart: string
       overallEnd: string
       roles: Array<{
-        name: string
+        name: string // max 75 chars
         volunteers: number
         startTime: string
         endTime: string
@@ -112,23 +112,39 @@ export function useEventForm() {
   }
 
   const updateBasicInfo = (field: keyof EventFormState["basicInfo"], value: string) => {
-    setState(prev => ({
-      ...prev,
-      basicInfo: {
-        ...prev.basicInfo,
-        [field]: value
+    setState(prev => {
+      // Add character limit validation
+      if ((field === 'title' && value.length > 75) ||
+          (field === 'location' && value.length > 100) ||
+          (field === 'description' && value.length > 1000)) {
+        return prev
       }
-    }))
+
+      return {
+        ...prev,
+        basicInfo: {
+          ...prev.basicInfo,
+          [field]: value
+        }
+      }
+    })
   }
 
   const addMultiDaySlot = (dayIndex: number) => {
     setState(prev => {
       const newMultiDay = [...prev.schedule.multiDay]
-      newMultiDay[dayIndex].slots.push({
-        startTime: "",
-        endTime: "",
-        volunteers: 1
-      })
+      // Add only one new slot with default times
+      newMultiDay[dayIndex] = {
+        ...newMultiDay[dayIndex],
+        slots: [
+          ...newMultiDay[dayIndex].slots,
+          {
+            startTime: "09:00",
+            endTime: "17:00",
+            volunteers: 1
+          }
+        ]
+      }
       return {
         ...prev,
         schedule: {
@@ -244,12 +260,18 @@ export function useEventForm() {
       if (roleIndex !== undefined) {
         const newRoles = [...prev.schedule.multiRole.roles]
         const currentRole = newRoles[roleIndex]
+        
+        // Add character limit validation for role names
+        if (field === 'name' && typeof value === 'string' && value.length > 75) {
+          return prev
+        }
+
         const newRole = {
           ...currentRole,
           [field]: value
         }
 
-        // Validate role time is within overall event time
+        // Validate time range for roles
         if ((field === 'startTime' || field === 'endTime') && 
             !validateTimeRange(newRole.startTime, newRole.endTime)) {
           return prev
