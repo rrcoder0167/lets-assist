@@ -31,7 +31,9 @@ export function ReportBugDialog({ onOpenChangeAction }: ReportBugDialogProps) {
                     </div>
                     <div className="mt-4 text-sm text-muted-foreground">
                         Have a feature request or idea?&nbsp;
-                        <Link className="text-primary font-medium" href="https://letsassist.featurebase.app">Submit it here!</Link>
+                        <Link className="text-primary font-medium" href="https://letsassist.featurebase.app">
+                            Submit it here!
+                        </Link>
                     </div>
                 </DialogHeader>
                 <DialogFooter>
