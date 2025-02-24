@@ -164,7 +164,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
                   src={profile?.avatar_url}
                   />
                 <AvatarFallback>
-                  <NoAvatar fullName={profile?.full_name} classNames="h-5 w-5" />
+                  <NoAvatar fullName={profile?.full_name} />
                 </AvatarFallback>
               </Avatar>
             )}
@@ -259,7 +259,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
                 <>
                 <div className="flex items-center space-x-4 px-4 py-2">
                 <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                  <NoAvatar fullName={profile?.full_name} className="h-5 w-5" />
+                  <NoAvatar fullName={profile?.full_name} />
                 </div>
                 <span className="text-sm">{user.email}</span>
                 </div>
@@ -320,7 +320,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
 }
 
 const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
+  React.ComponentRef<"a">,
   React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
   return (
