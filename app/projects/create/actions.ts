@@ -29,12 +29,7 @@ export async function createProject(formData: FormData) {
       verification_method: projectData.verificationMethod,
       require_login: projectData.requireLogin,
       schedule: {
-        // Store the entire schedule object based on the event type
-        [projectData.eventType]: projectData.eventType === 'oneTime' 
-          ? projectData.schedule.oneTime 
-          : projectData.eventType === 'multiDay'
-            ? projectData.schedule.multiDay
-            : projectData.schedule.multiRole
+        [projectData.eventType]: projectData.schedule[projectData.eventType]
       },
       status: 'active'
     })

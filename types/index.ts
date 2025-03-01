@@ -18,21 +18,21 @@ export interface MultiDayScheduleDay {
   slots: MultiDaySlot[]
 }
 
-export interface MultiAreaRole extends BaseScheduleSlot {
+export interface SameDayMultiAreaRole extends BaseScheduleSlot {
   name: string
 }
 
-export interface MultiAreaSchedule {
+export interface SameDayMultiAreaSchedule {
   date: string
   overallStart: string
   overallEnd: string
-  roles: MultiAreaRole[]
+  roles: SameDayMultiAreaRole[]
 }
 
 export interface ProjectSchedule {
   oneTime?: OneTimeSchedule
   multiDay?: MultiDayScheduleDay[]
-  multiRole?: MultiAreaSchedule
+  sameDayMultiArea?: SameDayMultiAreaSchedule
 }
 
 export interface Profile {

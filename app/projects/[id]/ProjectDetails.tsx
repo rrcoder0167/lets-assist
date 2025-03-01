@@ -1,12 +1,12 @@
 'use client'
 
+import { EventType, Project, MultiDayScheduleDay, SameDayMultiAreaSchedule, OneTimeSchedule, Profile } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { CalendarDays, MapPin, Users, Share2, Clock } from "lucide-react"
 import { format } from 'date-fns'
 import { useToast } from "@/hooks/use-toast"
-import { EventType, Project, MultiDayScheduleDay, MultiAreaSchedule, OneTimeSchedule, Profile } from '@/types'
 import { signUpForProject } from './actions'
 import { formatTimeTo12Hour } from '@/lib/utils'
 
@@ -15,7 +15,7 @@ type Props = {
   creator: Profile | null
 }
 
-type ScheduleData = OneTimeSchedule | MultiDayScheduleDay[] | MultiAreaSchedule | undefined
+type ScheduleData = OneTimeSchedule | MultiDayScheduleDay[] | SameDayMultiAreaSchedule | undefined
 
 export default function ProjectDetails({ project, creator }: Props): React.ReactElement {
   const { toast } = useToast()
@@ -27,8 +27,7 @@ export default function ProjectDetails({ project, creator }: Props): React.React
     } else if (project.event_type === 'multiDay') {
       return project.schedule.multiDay as MultiDayScheduleDay[];
     } else if (project.event_type === 'sameDayMultiArea') {
-      // Check both possible property names (multiRole or sameDayMultiArea)
-      return project.schedule.multiRole || project.schedule.sameDayMultiArea as MultiAreaSchedule;
+      return project.schedule.sameDayMultiArea as SameDayMultiAreaSchedule;
     }
     return undefined;
   }
@@ -102,7 +101,7 @@ export default function ProjectDetails({ project, creator }: Props): React.React
       }
       
       case 'sameDayMultiArea': {
-        const multiAreaData = scheduleData as MultiAreaSchedule
+        const multiAreaData = scheduleData as SameDayMultiAreaSchedule;
         return (
           <div className="mt-4 space-y-4">
             <div className="flex flex-wrap gap-2">
@@ -116,7 +115,7 @@ export default function ProjectDetails({ project, creator }: Props): React.React
               </Badge>
             </div>
             <div className="space-y-3">
-              {multiAreaData.roles?.map((role, index) => (
+              {multiAreaData.roles?.map((role, index: number) => (
                 <Card key={index}>
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
@@ -213,10 +212,10 @@ export default function ProjectDetails({ project, creator }: Props): React.React
       }
 
       case 'sameDayMultiArea': {
-        const multiAreaData = scheduleData as MultiAreaSchedule
+        const multiAreaData = scheduleData as SameDayMultiAreaSchedule;
         return (
           <div className="space-y-4">
-            {multiAreaData.roles?.map((role, index) => (
+            {multiAreaData.roles?.map((role, index: number) => (
               <div key={index} className="border rounded-lg p-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -243,7 +242,7 @@ export default function ProjectDetails({ project, creator }: Props): React.React
               </div>
             ))}
           </div>
-        )
+        );
       }
     }
   }
