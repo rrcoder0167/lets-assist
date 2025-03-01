@@ -26,7 +26,7 @@ interface FinalizeProps {
         volunteers: number
       }
       multiDay: { date: string; slots: { startTime: string; endTime: string; volunteers: number }[] }[]
-      multiRole: {
+      sameDayMultiArea: {
         date: string
         overallStart: string
         overallEnd: string
@@ -186,8 +186,8 @@ export default function Finalize({ state }: FinalizeProps) {
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm">
-                  {state.schedule.multiRole.date ? 
-                    format(new Date(state.schedule.multiRole.date), "EEEE, MMMM d, yyyy") : 
+                  {state.schedule.sameDayMultiArea.date ? 
+                    format(new Date(state.schedule.sameDayMultiArea.date), "EEEE, MMMM d, yyyy") : 
                     "Date not set"
                   }
                 </span>
@@ -195,13 +195,13 @@ export default function Finalize({ state }: FinalizeProps) {
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm">
-                  Overall hours: {state.schedule.multiRole.overallStart} - {state.schedule.multiRole.overallEnd}
+                  Overall hours: {state.schedule.sameDayMultiArea.overallStart} - {state.schedule.sameDayMultiArea.overallEnd}
                 </span>
               </div>
               <Separator className="my-2" />
               <h5 className="font-medium text-sm">Roles:</h5>
               <div className="space-y-4">
-                {state.schedule.multiRole.roles.map((role, roleIndex) => (
+                {state.schedule.sameDayMultiArea.roles.map((role, roleIndex) => (
                   <div key={roleIndex} className="space-y-1 border-l-2 pl-3">
                     <span className="text-sm font-medium">{role.name || `Role ${roleIndex + 1}`}</span>
                     <div className="flex items-center gap-2">

@@ -29,7 +29,7 @@ interface EventFormState {
         volunteers: number
       }>
     }>
-    multiRole: {
+    sameDayMultiArea: {
       date: string
       overallStart: string
       overallEnd: string
@@ -74,7 +74,7 @@ export function useEventForm() {
           volunteers: 1
         }]
       }],
-      multiRole: {
+      sameDayMultiArea: {
         date: formatInitialDate(),
         overallStart: "09:00",
         overallEnd: "17:00",
@@ -191,10 +191,10 @@ export function useEventForm() {
       ...prev,
       schedule: {
         ...prev.schedule,
-        multiRole: {
-          ...prev.schedule.multiRole,
+        sameDayMultiArea: {
+          ...prev.schedule.sameDayMultiArea,
           roles: [
-            ...prev.schedule.multiRole.roles,
+            ...prev.schedule.sameDayMultiArea.roles,
             {
               name: "",
               volunteers: 1,
@@ -269,7 +269,7 @@ export function useEventForm() {
   const updateMultiRoleSchedule = (field: string, value: string | number, roleIndex?: number) => {
     setState(prev => {
       if (roleIndex !== undefined) {
-        const newRoles = [...prev.schedule.multiRole.roles]
+        const newRoles = [...prev.schedule.sameDayMultiArea.roles]
         const currentRole = newRoles[roleIndex]
         
         // Add character limit validation for role names
@@ -293,8 +293,8 @@ export function useEventForm() {
           ...prev,
           schedule: {
             ...prev.schedule,
-            multiRole: {
-              ...prev.schedule.multiRole,
+            sameDayMultiArea: {
+              ...prev.schedule.sameDayMultiArea,
               roles: newRoles
             }
           }
@@ -304,8 +304,8 @@ export function useEventForm() {
       // Validate overall event time range
       if ((field === 'overallStart' || field === 'overallEnd') && 
           !validateTimeRange(
-            field === 'overallStart' ? value as string : prev.schedule.multiRole.overallStart,
-            field === 'overallEnd' ? value as string : prev.schedule.multiRole.overallEnd
+            field === 'overallStart' ? value as string : prev.schedule.sameDayMultiArea.overallStart,
+            field === 'overallEnd' ? value as string : prev.schedule.sameDayMultiArea.overallEnd
           )) {
         return prev
       }
@@ -314,8 +314,8 @@ export function useEventForm() {
         ...prev,
         schedule: {
           ...prev.schedule,
-          multiRole: {
-            ...prev.schedule.multiRole,
+          sameDayMultiArea: {
+            ...prev.schedule.sameDayMultiArea,
             [field]: value
           }
         }
@@ -352,9 +352,9 @@ export function useEventForm() {
       ...prev,
       schedule: {
         ...prev.schedule,
-        multiRole: {
-          ...prev.schedule.multiRole,
-          roles: prev.schedule.multiRole.roles.filter((_, index) => index !== roleIndex)
+        sameDayMultiArea: {
+          ...prev.schedule.sameDayMultiArea,
+          roles: prev.schedule.sameDayMultiArea.roles.filter((_, index) => index !== roleIndex)
         }
       }
     }))
@@ -385,10 +385,10 @@ export function useEventForm() {
           )
         }
         if (state.eventType === 'sameDayMultiArea') {
-          return state.schedule.multiRole.date && 
-                 state.schedule.multiRole.overallStart && 
-                 state.schedule.multiRole.overallEnd && 
-                 state.schedule.multiRole.roles.every(role => 
+          return state.schedule.sameDayMultiArea.date && 
+                 state.schedule.sameDayMultiArea.overallStart && 
+                 state.schedule.sameDayMultiArea.overallEnd && 
+                 state.schedule.sameDayMultiArea.roles.every(role => 
                    role.name && 
                    role.startTime && 
                    role.endTime && 
