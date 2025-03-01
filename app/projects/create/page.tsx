@@ -6,6 +6,7 @@ import BasicInfo from "./BasicInfo"
 import EventType from "./EventType"
 import Schedule from "./Schedule"
 import Finalize from "./Finalize"
+import VerificationSettings from "./VerificationSettings"
 
 // shadcn components
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog"
@@ -43,6 +44,7 @@ export default function CreateProject() {
     updateMultiDaySchedule,
     updateMultiRoleSchedule,
     updateVerificationMethod,
+    updateRequireLogin,
     removeDay,
     removeSlot,
     removeRole,
@@ -139,6 +141,8 @@ export default function CreateProject() {
           if (state.eventType === 'sameDayMultiArea') {
             return "Please ensure all roles have names, valid times, and volunteer counts";
           }
+        case 4:
+          return "Please select a verification method";
         default:
           return "";
       }
@@ -148,7 +152,7 @@ export default function CreateProject() {
 
   // Add submit function
   const handleSubmit = async () => {
-    if (state.step !== 4) {
+    if (state.step !== 5) {
       nextStep()
       return
     }
@@ -200,7 +204,6 @@ export default function CreateProject() {
                   updateOneTimeScheduleAction={updateOneTimeSchedule}
                   updateMultiDayScheduleAction={updateMultiDaySchedule}
                   updateMultiRoleScheduleAction={updateMultiRoleSchedule}
-                  updateVerificationMethodAction={updateVerificationMethod}
                   addMultiDaySlotAction={addMultiDaySlot}
                   addMultiDayEventAction={addMultiDayEvent}
                   addRoleAction={addRole}
@@ -209,6 +212,13 @@ export default function CreateProject() {
                   removeRoleAction={removeRole}
                />
       case 4:
+        return <VerificationSettings
+                  verificationMethod={state.verificationMethod}
+                  requireLogin={state.requireLogin}
+                  updateVerificationMethodAction={updateVerificationMethod}
+                  updateRequireLoginAction={updateRequireLogin}
+               />
+      case 5:
         return <Finalize state={state} />
       default:
         return null;
@@ -219,12 +229,13 @@ export default function CreateProject() {
     <div className="container mx-auto p-4 sm:p-8 max-w-3xl">
       <div className="mb-6 sm:mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold mb-4">Create a Volunteering Project</h1>
-        <Progress value={(state.step / 4) * 100} className="h-2" />
-        <div className="grid grid-cols-4 mt-2 text-xs sm:text-sm text-muted-foreground">
+        <Progress value={(state.step / 5) * 100} className="h-2" />
+        <div className="grid grid-cols-5 mt-2 text-xs sm:text-sm text-muted-foreground">
           <span className={cn("text-center sm:text-left truncate", state.step === 1 && "text-primary font-medium")}>Basic Info</span>
           <span className={cn("text-center sm:text-left truncate", state.step === 2 && "text-primary font-medium")}>Event Type</span>
           <span className={cn("text-center sm:text-left truncate", state.step === 3 && "text-primary font-medium")}>Schedule</span>
-          <span className={cn("text-center sm:text-left truncate", state.step === 4 && "text-primary font-medium")}>Finalize</span>
+          <span className={cn("text-center sm:text-left truncate", state.step === 4 && "text-primary font-medium")}>Settings</span>
+          <span className={cn("text-center sm:text-left truncate", state.step === 5 && "text-primary font-medium")}>Finalize</span>
         </div>
       </div>
 
@@ -255,7 +266,7 @@ export default function CreateProject() {
           >
             {isSubmitting ? (
               <Loader2 className="h-4 w-4 animate-spin" />
-            ) : state.step === 4 ? (
+            ) : state.step === 5 ? (
               'Create'
             ) : (
               <>

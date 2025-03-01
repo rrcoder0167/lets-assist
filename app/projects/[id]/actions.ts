@@ -20,7 +20,7 @@ export async function getProject(id: string): Promise<{ project: Project | null,
 
     return { project: project as Project, error: null }
   } catch (error) {
-    console.error('Error fetching project:', error)
+    // console.error('Error fetching project:', error)
     return { project: null, error: 'Failed to fetch project' }
   }
 }

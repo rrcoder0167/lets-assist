@@ -27,6 +27,7 @@ export async function createProject(formData: FormData) {
       description: projectData.basicInfo.description,
       event_type: projectData.eventType,
       verification_method: projectData.verificationMethod,
+      require_login: projectData.requireLogin,
       schedule: {
         // Store the entire schedule object based on the event type
         [projectData.eventType]: projectData.eventType === 'oneTime' 
