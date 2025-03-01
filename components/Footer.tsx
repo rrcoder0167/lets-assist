@@ -15,7 +15,7 @@ export function Footer() {
                         height={32}
                     />
                     <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-                    © 2025 Lets Assist, LLC. All rights reserved.
+                    © 2025 Let&apos;s Assist, LLC. All rights reserved.
                         {/* Built by{" "}
                         <Link
                             href="https://rrcoder0167.is-a.dev"

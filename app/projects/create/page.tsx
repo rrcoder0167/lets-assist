@@ -20,6 +20,11 @@ import { Loader2, ChevronLeft, ChevronRight, AlertCircle } from "lucide-react"
 // utility
 import { cn } from "@/lib/utils"
 
+// Add these imports
+import { createProject } from './actions'
+import { useToast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
+
 interface LocationResult {
   display_name: string;
 }
@@ -37,11 +42,15 @@ export default function CreateProject() {
     updateOneTimeSchedule,
     updateMultiDaySchedule,
     updateMultiRoleSchedule,
+    updateVerificationMethod,
     removeDay,
     removeSlot,
     removeRole,
     canProceed
   } = useEventForm()
+  const { toast } = useToast()
+  const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Map Dialog state
   const [mapDialogOpen, setMapDialogOpen] = useState(false)
@@ -137,6 +146,47 @@ export default function CreateProject() {
     return "";
   };
 
+  // Add submit function
+  const handleSubmit = async () => {
+    if (state.step !== 4) {
+      nextStep()
+      return
+    }
+    
+    try {
+      setIsSubmitting(true)
+      
+      // Create form data for the server action
+      const formData = new FormData()
+      formData.append('projectData', JSON.stringify(state))
+      
+      const result = await createProject(formData)
+      
+      if (result.error) {
+        toast({
+          title: "Error",
+          description: result.error,
+          variant: "destructive"
+        })
+      } else if (result.id) {
+        toast({
+          title: "Success!",
+          description: "Your project has been created successfully.",
+        })
+        router.push(`/projects/${result.id}`)
+      }
+    } catch (error) {
+      console.error('Error submitting project:', error)
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive"
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   // Render step based on current state.step
   const renderStep = () => {
     switch (state.step) {
@@ -150,6 +200,7 @@ export default function CreateProject() {
                   updateOneTimeScheduleAction={updateOneTimeSchedule}
                   updateMultiDayScheduleAction={updateMultiDaySchedule}
                   updateMultiRoleScheduleAction={updateMultiRoleSchedule}
+                  updateVerificationMethodAction={updateVerificationMethod}
                   addMultiDaySlotAction={addMultiDaySlot}
                   addMultiDayEventAction={addMultiDayEvent}
                   addRoleAction={addRole}
@@ -191,19 +242,27 @@ export default function CreateProject() {
           <Button 
             variant="outline" 
             onClick={prevStep}
-            disabled={state.step === 1}
+            disabled={state.step === 1 || isSubmitting}
             className="w-[120px]"
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
             Back
           </Button>
           <Button 
-            onClick={nextStep}
-            disabled={!canProceed()}
+            onClick={handleSubmit}
+            disabled={!canProceed() || isSubmitting}
             className="w-[120px]"
           >
-            {state.step === 4 ? 'Create' : 'Continue'}
-            <ChevronRight className="h-4 w-4 ml-2" />
+            {isSubmitting ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : state.step === 4 ? (
+              'Create'
+            ) : (
+              <>
+                Continue
+                <ChevronRight className="h-4 w-4 ml-2" />
+              </>
+            )}
           </Button>
         </div>
       </div>

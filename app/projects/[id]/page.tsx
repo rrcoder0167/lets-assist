@@ -1,55 +1,39 @@
+import { createClient } from '@/utils/supabase/server'
+import { notFound } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { CalendarDays, MapPin, Users, Share2, Clock } from "lucide-react"
-// import Link from "next/link"
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { format } from 'date-fns'
 
 type Props = {
   params: Promise<{ id: string }>
 }
 
 export default async function ProjectDetails(params: Props): Promise<React.ReactElement> {
-  const { id } = await params.params;
-  // Mock data - will be replaced with real data from backend
-  const project = {
-    id: id,
-    title: 'Community Festival Support',
-    location: 'Central Community Center',
-    description: 'Join us for our annual community festival. We need volunteers for various roles throughout the day to make this event successful.',
-    eventType: 'sameDayMultiArea', // oneTime, multiDay, or sameDayMultiArea
-    date: '2025-02-20',
-    overallStartTime: '10:00 AM',
-    overallEndTime: '7:30 PM',
-    areas: [
-      {
-        name: 'Event Decoration',
-        startTime: '10:00 AM',
-        endTime: '6:00 PM',
-        capacity: 15,
-        registered: 8
-      },
-      {
-        name: 'Event Cooking',
-        startTime: '10:00 AM',
-        endTime: '6:00 PM',
-        capacity: 10,
-        registered: 4
-      },
-      {
-        name: 'Event Cleaning',
-        startTime: '6:30 PM',
-        endTime: '7:30 PM',
-        capacity: 5,
-        registered: 2
-      }
-    ],
-    coordinator: {
-      name: "Sarah Johnson",
-      contact: "sarah@example.com"
-    }
+  const { id } = await params.params
+  const supabase = await createClient()
+  
+  // Fetch project data
+  const { data: project, error } = await supabase
+    .from('projects')
+    .select(`
+      *,
+      profiles(full_name, avatar_url, username)
+    `)
+    .eq('id', id)
+    .single()
+  
+  if (error || !project) {
+    notFound()
   }
 
+  // Get the creator profile data
+  const creator = project.profiles
+  
+  // Get the schedule data based on event type
+  const scheduleData = project.schedule[project.event_type]
+  
   return (
     <div className="container mx-auto p-8">
       <div className="mb-8">
@@ -76,16 +60,22 @@ export default async function ProjectDetails(params: Props): Promise<React.React
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">{project.description}</p>
-              <div className="mt-4">
-                <Badge variant="secondary" className="mr-2">
-                  <CalendarDays className="h-4 w-4 mr-1" />
-                  {project.date}
-                </Badge>
-                <Badge variant="secondary">
-                  <Clock className="h-4 w-4 mr-1" />
-                  {project.overallStartTime} - {project.overallEndTime}
-                </Badge>
-              </div>
+              
+              {/* Render different content based on event type */}
+              {project.event_type === 'oneTime' && (
+                <div className="mt-4">
+                  <Badge variant="secondary" className="mr-2">
+                    <CalendarDays className="h-4 w-4 mr-1" />
+                    {format(new Date(scheduleData.date), 'EEEE, MMMM d, yyyy')}
+                  </Badge>
+                  <Badge variant="secondary">
+                    <Clock className="h-4 w-4 mr-1" />
+                    {scheduleData.startTime} - {scheduleData.endTime}
+                  </Badge>
+                </div>
+              )}
+              
+              {/* Add rendering for multiDay and sameDayMultiArea types */}
             </CardContent>
           </Card>
 
@@ -94,36 +84,31 @@ export default async function ProjectDetails(params: Props): Promise<React.React
               <CardTitle>Volunteer Opportunities</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-6">
-                {project.areas.map((area, index) => (
-                  <div key={index} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <div>
-                        <h3 className="font-medium text-lg">{area.name}</h3>
-                        <div className="flex items-center gap-2 text-muted-foreground mt-1">
-                          <Clock className="h-4 w-4" />
-                          <span>{area.startTime} - {area.endTime}</span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-end gap-2">
-                        <Badge variant="secondary">
-                          <Users className="h-4 w-4 mr-1" />
-                          {area.capacity - area.registered} spots left
-                        </Badge>
-                        <Button variant="secondary" size="sm">
-                          Sign Up
-                        </Button>
+              {/* Render opportunities based on event type */}
+              {project.event_type === 'oneTime' && (
+                <div className="border rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="font-medium text-lg">One-time Event</h3>
+                      <div className="flex items-center gap-2 text-muted-foreground mt-1">
+                        <Clock className="h-4 w-4" />
+                        <span>{scheduleData.startTime} - {scheduleData.endTime}</span>
                       </div>
                     </div>
-                    <div className="bg-muted/50 rounded p-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        <Users className="h-4 w-4 text-muted-foreground" />
-                        <span>{area.registered} of {area.capacity} volunteers registered</span>
-                      </div>
+                    <div className="flex flex-col items-end gap-2">
+                      <Badge variant="secondary">
+                        <Users className="h-4 w-4 mr-1" />
+                        {scheduleData.volunteers} spots available
+                      </Badge>
+                      <Button variant="secondary" size="sm">
+                        Sign Up
+                      </Button>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
+              
+              {/* Add rendering for multiDay and sameDayMultiArea types */}
             </CardContent>
           </Card>
         </div>
@@ -134,8 +119,8 @@ export default async function ProjectDetails(params: Props): Promise<React.React
               <CardTitle>Project Coordinator</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="font-medium">{project.coordinator.name}</p>
-              <p className="text-muted-foreground">{project.coordinator.contact}</p>
+              <p className="font-medium">{creator.full_name || 'Anonymous'}</p>
+              <p className="text-muted-foreground">@{creator.username || 'user'}</p>
             </CardContent>
           </Card>
 
