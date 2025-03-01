@@ -2,12 +2,12 @@
 
 import { useState } from "react"
 import { format } from "date-fns"
-
-type EventType = "oneTime" | "multiDay" | "sameDayMultiArea"
+import { EventType, VerificationMethod } from "@/types"
 
 interface EventFormState {
   step: number
   eventType: EventType
+  verificationMethod: VerificationMethod
   basicInfo: {
     title: string // max 75 chars
     location: string // max 100 chars
@@ -51,6 +51,7 @@ export function useEventForm() {
   const [state, setState] = useState<EventFormState>({
     step: 1,
     eventType: "oneTime",
+    verificationMethod: "qr-code", // Default to QR code method
     basicInfo: {
       title: "",
       location: "",
@@ -109,6 +110,10 @@ export function useEventForm() {
 
   const setEventType = (type: EventType) => {
     setState(prev => ({ ...prev, eventType: type }))
+  }
+
+  const updateVerificationMethod = (method: VerificationMethod) => {
+    setState(prev => ({ ...prev, verificationMethod: method }))
   }
 
   const updateBasicInfo = (field: keyof EventFormState["basicInfo"], value: string) => {
@@ -358,6 +363,9 @@ export function useEventForm() {
       case 2:
         return true // Event type selection is always valid
       case 3:
+        // Require a verification method to be selected
+        if (!state.verificationMethod) return false
+        
         if (state.eventType === 'oneTime') {
           return state.schedule.oneTime.date && 
                  state.schedule.oneTime.startTime && 
@@ -395,6 +403,7 @@ export function useEventForm() {
     nextStep,
     prevStep,
     setEventType,
+    updateVerificationMethod,
     updateBasicInfo,
     addMultiDaySlot,
     addMultiDayEvent,
