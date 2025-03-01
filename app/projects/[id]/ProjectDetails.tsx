@@ -8,6 +8,7 @@ import { format } from 'date-fns'
 import { useToast } from "@/hooks/use-toast"
 import { EventType, Project, MultiDayScheduleDay, MultiAreaSchedule, OneTimeSchedule, Profile } from '@/types'
 import { signUpForProject } from './actions'
+import { formatTimeTo12Hour } from '@/lib/utils'
 
 type Props = {
   project: Project
@@ -18,7 +19,21 @@ type ScheduleData = OneTimeSchedule | MultiDayScheduleDay[] | MultiAreaSchedule 
 
 export default function ProjectDetails({ project, creator }: Props): React.ReactElement {
   const { toast } = useToast()
-  const scheduleData = project.schedule[project.event_type === 'sameDayMultiArea' ? 'multiRole' : project.event_type] as ScheduleData
+  
+  // Handle different schedule types properly
+  const getScheduleData = (): ScheduleData => {
+    if (project.event_type === 'oneTime') {
+      return project.schedule.oneTime as OneTimeSchedule;
+    } else if (project.event_type === 'multiDay') {
+      return project.schedule.multiDay as MultiDayScheduleDay[];
+    } else if (project.event_type === 'sameDayMultiArea') {
+      // Check both possible property names (multiRole or sameDayMultiArea)
+      return project.schedule.multiRole || project.schedule.sameDayMultiArea as MultiAreaSchedule;
+    }
+    return undefined;
+  }
+  
+  const scheduleData = getScheduleData();
 
   const handleSignUp = async (scheduleId: string) => {
     const result = await signUpForProject(project.id, scheduleId)
@@ -50,7 +65,7 @@ export default function ProjectDetails({ project, creator }: Props): React.React
             </Badge>
             <Badge variant="secondary">
               <Clock className="h-4 w-4 mr-1" />
-              {oneTimeData.startTime} - {oneTimeData.endTime}
+              {formatTimeTo12Hour(oneTimeData.startTime)} - {formatTimeTo12Hour(oneTimeData.endTime)}
             </Badge>
           </div>
         )
@@ -71,7 +86,7 @@ export default function ProjectDetails({ project, creator }: Props): React.React
                     <div key={slotIndex} className="flex items-center gap-4">
                       <Badge variant="secondary">
                         <Clock className="h-4 w-4 mr-1" />
-                        {slot.startTime} - {slot.endTime}
+                        {formatTimeTo12Hour(slot.startTime)} - {formatTimeTo12Hour(slot.endTime)}
                       </Badge>
                       <Badge variant="outline">
                         <Users className="h-4 w-4 mr-1" />
@@ -90,18 +105,18 @@ export default function ProjectDetails({ project, creator }: Props): React.React
         const multiAreaData = scheduleData as MultiAreaSchedule
         return (
           <div className="mt-4 space-y-4">
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <Badge variant="secondary">
                 <CalendarDays className="h-4 w-4 mr-1" />
                 {format(new Date(multiAreaData.date), 'EEEE, MMMM d, yyyy')}
               </Badge>
               <Badge variant="secondary">
                 <Clock className="h-4 w-4 mr-1" />
-                {multiAreaData.overallStart} - {multiAreaData.overallEnd}
+                Event Hours: {formatTimeTo12Hour(multiAreaData.overallStart)} - {formatTimeTo12Hour(multiAreaData.overallEnd)}
               </Badge>
             </div>
             <div className="space-y-3">
-              {multiAreaData.roles.map((role, index) => (
+              {multiAreaData.roles?.map((role, index) => (
                 <Card key={index}>
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
@@ -109,7 +124,7 @@ export default function ProjectDetails({ project, creator }: Props): React.React
                         <h4 className="font-medium mb-1">{role.name}</h4>
                         <div className="flex items-center gap-2 text-muted-foreground">
                           <Clock className="h-4 w-4" />
-                          <span>{role.startTime} - {role.endTime}</span>
+                          <span>{formatTimeTo12Hour(role.startTime)} - {formatTimeTo12Hour(role.endTime)}</span>
                         </div>
                       </div>
                       <div className="flex flex-col items-end gap-2">
@@ -117,13 +132,6 @@ export default function ProjectDetails({ project, creator }: Props): React.React
                           <Users className="h-4 w-4 mr-1" />
                           {role.volunteers} spots
                         </Badge>
-                        <Button 
-                          variant="secondary" 
-                          size="sm"
-                          onClick={() => handleSignUp(role.name)}
-                        >
-                          Sign Up
-                        </Button>
                       </div>
                     </div>
                   </CardContent>
@@ -149,7 +157,7 @@ export default function ProjectDetails({ project, creator }: Props): React.React
                 <h3 className="font-medium text-lg">One-time Event</h3>
                 <div className="flex items-center gap-2 text-muted-foreground mt-1">
                   <Clock className="h-4 w-4" />
-                  <span>{oneTimeData.startTime} - {oneTimeData.endTime}</span>
+                  <span>{formatTimeTo12Hour(oneTimeData.startTime)} - {formatTimeTo12Hour(oneTimeData.endTime)}</span>
                 </div>
               </div>
               <div className="flex flex-col items-end gap-2">
@@ -182,7 +190,7 @@ export default function ProjectDetails({ project, creator }: Props): React.React
                 <div key={slotIndex} className="flex items-center justify-between border-t pt-4 first:border-t-0 first:pt-0">
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <Clock className="h-4 w-4" />
-                    <span>{slot.startTime} - {slot.endTime}</span>
+                    <span>{formatTimeTo12Hour(slot.startTime)} - {formatTimeTo12Hour(slot.endTime)}</span>
                   </div>
                   <div className="flex flex-col items-end gap-2">
                     <Badge variant="secondary">
@@ -208,14 +216,14 @@ export default function ProjectDetails({ project, creator }: Props): React.React
         const multiAreaData = scheduleData as MultiAreaSchedule
         return (
           <div className="space-y-4">
-            {multiAreaData.roles.map((role, index) => (
+            {multiAreaData.roles?.map((role, index) => (
               <div key={index} className="border rounded-lg p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-medium text-lg">{role.name}</h3>
                     <div className="flex items-center gap-2 text-muted-foreground mt-1">
                       <Clock className="h-4 w-4" />
-                      <span>{role.startTime} - {role.endTime}</span>
+                      <span>{formatTimeTo12Hour(role.startTime)} - {formatTimeTo12Hour(role.endTime)}</span>
                     </div>
                   </div>
                   <div className="flex flex-col items-end gap-2">
@@ -241,11 +249,11 @@ export default function ProjectDetails({ project, creator }: Props): React.React
   }
   
   return (
-    <div className="container mx-auto p-8">
+    <div className="container mx-auto p-4 sm:p-8">
       <div className="mb-8">
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-4xl font-bold mb-2">{project.title}</h1>
+            <h1 className="text-2xl sm:text-4xl font-bold mb-2">{project.title}</h1>
             <div className="flex items-center gap-2 text-muted-foreground">
               <MapPin className="h-4 w-4" />
               <span>{project.location}</span>
@@ -292,20 +300,29 @@ export default function ProjectDetails({ project, creator }: Props): React.React
 
           <Card>
             <CardHeader>
-              <CardTitle>Location</CardTitle>
+              <CardTitle>Verification Method</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                Map placeholder
+              <div className="flex items-center gap-2">
+                {project.verification_method === 'qr-code' && (
+                  <>
+                    <Badge variant="outline">QR Code Check-in</Badge>
+                    <p className="text-sm text-muted-foreground">Volunteers will check-in by scanning a QR code</p>
+                  </>
+                )}
+                {project.verification_method === 'manual' && (
+                  <>
+                    <Badge variant="outline">Manual Check-in</Badge>
+                    <p className="text-sm text-muted-foreground">Organizer will check-in volunteers manually</p>
+                  </>
+                )}
+                {project.verification_method === 'auto' && (
+                  <>
+                    <Badge variant="outline">Automatic Check-in</Badge>
+                    <p className="text-sm text-muted-foreground">System will handle check-ins automatically</p>
+                  </>
+                )}
               </div>
-              <Button 
-                variant="outline" 
-                className="w-full mt-4" 
-                onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(project.location)}`)}
-              >
-                <MapPin className="h-4 w-4 mr-2" />
-                Open in Google Maps
-              </Button>
             </CardContent>
           </Card>
         </div>

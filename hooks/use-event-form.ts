@@ -8,6 +8,7 @@ interface EventFormState {
   step: number
   eventType: EventType
   verificationMethod: VerificationMethod
+  requireLogin: boolean
   basicInfo: {
     title: string // max 75 chars
     location: string // max 100 chars
@@ -52,6 +53,7 @@ export function useEventForm() {
     step: 1,
     eventType: "oneTime",
     verificationMethod: "qr-code", // Default to QR code method
+    requireLogin: true, // Default to requiring login
     basicInfo: {
       title: "",
       location: "",
@@ -97,7 +99,7 @@ export function useEventForm() {
   }
 
   const nextStep = () => {
-    if (state.step < 4 && canProceed()) {
+    if (state.step < 5 && canProceed()) {
       setState(prev => ({ ...prev, step: prev.step + 1 }))
     }
   }
@@ -114,6 +116,10 @@ export function useEventForm() {
 
   const updateVerificationMethod = (method: VerificationMethod) => {
     setState(prev => ({ ...prev, verificationMethod: method }))
+  }
+  
+  const updateRequireLogin = (requireLogin: boolean) => {
+    setState(prev => ({ ...prev, requireLogin }))
   }
 
   const updateBasicInfo = (field: keyof EventFormState["basicInfo"], value: string) => {
@@ -363,9 +369,6 @@ export function useEventForm() {
       case 2:
         return true // Event type selection is always valid
       case 3:
-        // Require a verification method to be selected
-        if (!state.verificationMethod) return false
-        
         if (state.eventType === 'oneTime') {
           return state.schedule.oneTime.date && 
                  state.schedule.oneTime.startTime && 
@@ -393,6 +396,9 @@ export function useEventForm() {
                  )
         }
         return false
+      case 4:
+        // Require a verification method to be selected
+        return !!state.verificationMethod
       default:
         return true
     }
@@ -404,6 +410,7 @@ export function useEventForm() {
     prevStep,
     setEventType,
     updateVerificationMethod,
+    updateRequireLogin,
     updateBasicInfo,
     addMultiDaySlot,
     addMultiDayEvent,

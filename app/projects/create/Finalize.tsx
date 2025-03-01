@@ -6,12 +6,13 @@ import { format } from "date-fns"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2, MapPin, Calendar, Clock, Users, QrCode, UserCheck } from "lucide-react"
+import { CheckCircle2, MapPin, Calendar, Clock, Users, QrCode, UserCheck, Lock, User } from "lucide-react"
 
 interface FinalizeProps {
   state: {
     eventType: string
     verificationMethod: string
+    requireLogin: boolean
     basicInfo: {
       title: string
       location: string
@@ -103,6 +104,28 @@ export default function Finalize({ state }: FinalizeProps) {
             </Badge>
           </div>
           <p className="text-xs text-muted-foreground">{verificationMethod.description}</p>
+
+          <h4 className="font-medium pt-2">Sign-up Requirements</h4>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="text-xs flex items-center gap-1">
+              {state.requireLogin ? (
+                <>
+                  <Lock className="h-4 w-4 mr-1" />
+                  Account Required
+                </>
+              ) : (
+                <>
+                  <User className="h-4 w-4 mr-1" />
+                  Anonymous Sign-ups Allowed
+                </>
+              )}
+            </Badge>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            {state.requireLogin 
+              ? "Volunteers must create an account to sign up for your event."
+              : "Anyone can sign up without creating an account (anonymous volunteers)."}
+          </p>
 
           {state.eventType === 'oneTime' && (
             <div className="space-y-2 pt-2">
