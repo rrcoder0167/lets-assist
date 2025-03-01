@@ -3,11 +3,12 @@ import { getProject, getCreatorProfile } from './actions'
 import ProjectDetails from './ProjectDetails'
 
 type Props = {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
-export default async function ProjectPage({ params }: Props): Promise<React.ReactElement> {
-  const { project, error: projectError } = await getProject(params.id)
+export default async function ProjectPage(params: Props): Promise<React.ReactElement> {
+  const { id } = await params.params
+  const { project, error: projectError } = await getProject(id)
   
   if (projectError || !project) {
     notFound()

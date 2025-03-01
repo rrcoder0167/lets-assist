@@ -73,7 +73,7 @@ export default function BasicInfo({ state, updateBasicInfoAction, onMapClickActi
           <div className="flex flex-col sm:flex-row gap-2">
             <Input 
               id="location" 
-              placeholder="e.g., Room 3201"
+              placeholder="e.g., Room 3201, Riverside Community Center"
               value={state.basicInfo.location}
               onChange={(e) => {
                 if (e.target.value.length <= 200) {

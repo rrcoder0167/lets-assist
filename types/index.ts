@@ -48,6 +48,7 @@ export interface Project {
   location: string
   event_type: EventType
   verification_method: VerificationMethod
+  require_login: boolean
   creator_id: string
   schedule: ProjectSchedule
   status: 'active' | 'completed' | 'cancelled'
