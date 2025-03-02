@@ -220,7 +220,7 @@ export default function Finalize({ state }: FinalizeProps) {
         </div>
 
         <div className="rounded-lg border p-4 flex items-start gap-4">
-          <CheckCircle2 className="h-5 w-5 text-primary mt-0.5" />
+          <CheckCircle2 className="h-8 w-8 text-primary mt-0.5" />
           <div>
             <h4 className="font-semibold">Ready to create your project</h4>
             <p className="text-sm text-muted-foreground">

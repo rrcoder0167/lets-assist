@@ -37,7 +37,7 @@ export default function VerificationSettings({
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-[350px]">
-                  <p>Choose how volunteers will check in and record their hours at your event.</p>
+                  Choose how volunteers will check in and record their hours at your event.
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
