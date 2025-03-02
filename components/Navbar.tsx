@@ -27,6 +27,7 @@ import {
   Sheet,
   SheetContent,
   SheetTrigger,
+  SheetTitle,
 } from "@/components/ui/sheet"
 import { ModeToggle } from "@/components/theme-toggle"
 import { Separator } from "@/components/ui/separator"
@@ -241,74 +242,112 @@ export default function Navbar({ initialUser }: NavbarProps) {
 
       {/* Mobile Navigation */}
       <Sheet>
-      <div className="sm:hidden flex ml-auto mr-4">
-            <ModeToggle />
+      <SheetTitle className="hidden">
+      </SheetTitle>
+        <div className="sm:hidden flex items-center ml-auto">
+          <ModeToggle />
         </div>
         <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <Menu className="h-6 w-6" />
+          <Button variant="ghost" size="icon" className="md:hidden ml-2">
+            <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="right">
-          <nav className="flex flex-col space-y-6">
-            <Button variant="ghost" className="justify-start">Volunteering Near Me</Button>
-            <Button variant="ghost" className="justify-start">Connected Organizations</Button>
-            <hr className="my-4" />
+        <SheetContent side="right" className="w-[85%] sm:w-[380px] pt-6">
+          <div className="flex flex-col h-full">
+            <div className="space-y-4 flex-1">
+              {user && (
+                <div className="flex items-center space-x-3 mb-6 pb-4 border-b">
+                  {isProfileLoading ? (
+                    <Skeleton className="w-12 h-12 rounded-full" />
+                  ) : (
+                    <Avatar className="w-12 h-12">
+                      <AvatarImage src={profile?.avatar_url} />
+                      <AvatarFallback>
+                        <NoAvatar fullName={profile?.full_name} />
+                      </AvatarFallback>
+                    </Avatar>
+                  )}
+                  <div className="flex flex-col">
+                    <p className="font-medium">{profile?.full_name}</p>
+                    <p className="text-sm text-muted-foreground">{user.email}</p>
+                  </div>
+                </div>
+              )}
+              
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-muted-foreground px-1 mb-2">Navigation</p>
+                <Button variant="ghost" className="w-full justify-start" asChild>
+                  <Link href="/">Home</Link>
+                </Button>
+                <Button variant="ghost" className="w-full justify-start">Volunteering Near Me</Button>
+                <Button variant="ghost" className="w-full justify-start">Connected Organizations</Button>
+              </div>
+              
+              {user && (
+                <div className="space-y-1 mt-6">
+                  <p className="text-sm font-medium text-muted-foreground px-1 mb-2">Account</p>
+                  <Button variant="ghost" className="w-full justify-start" asChild>
+                    <Link href="/home">
+                      <LayoutDashboard className="mr-2 h-4 w-4" />
+                      Dashboard
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start" asChild>
+                    <Link href="/account/profile">
+                      <UserCog className="mr-2 h-4 w-4" />
+                      Account Settings
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start" asChild>
+                    <Link href={`/profile/${profile?.username}`}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      My Profile
+                    </Link>
+                  </Button>
+                </div>
+              )}
+            </div>
+            
             {user ? (
-                <>
-                <div className="flex items-center space-x-4 px-4 py-2">
-                <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                  <NoAvatar fullName={profile?.full_name} />
-                </div>
-                <span className="text-sm">{user.email}</span>
-                </div>
-                <Link href="/dashboard"></Link>
-                <Button variant="ghost" className="justify-start space-x-2 w-full">
-                  <LayoutDashboard className="mr-4 h-5 w-5" />
-                  Dashboard
-                </Button>
-                <Link href="/account-settings">
-                <Button variant="ghost" className="justify-start space-x-2 w-full">
-                  <UserCog className="mr-4 h-5 w-5" />
-                  Account settings
-                </Button>
-                </Link>
-                <Link href="/preferences">
-                <Button variant="ghost" className="justify-start space-x-2 w-full">
-                  <Settings className="mr-4 h-5 w-5" />
-                  Preferences
-                </Button>
-                </Link>
-                <Separator />
+              <div className="border-t pt-4 mt-auto">
                 <Button 
                   variant="ghost" 
-                  className="justify-start space-x-2 w-full"
+                  className="w-full justify-start mb-2"
                   onClick={() => setShowBugDialog(true)}
                 >
-                  <Bug className="mr-4 h-5 w-5" />
+                  <Bug className="mr-2 h-4 w-4" />
                   Report a Bug
                 </Button>
                 <Button 
-                variant="ghost" 
-                className="justify-start text-destructive font-bold space-x-2 mt-4 w-full" 
-                onClick={async () => { setUser(null); await logout();}}
+                  variant="ghost"
+                  className="w-full justify-start mb-2"
                 >
-                <LogOut className="mr-4 h-5 w-5" />
-                Log Out
+                  <Heart className="mr-2 h-4 w-4" />
+                  Donate
                 </Button>
-              </>
+                <Button 
+                  variant="destructive" 
+                  className="w-full mt-2" 
+                  onClick={async () => { setUser(null); await logout();}}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Log Out
+                </Button>
+              </div>
             ) : (
-              <>
-                <Link href="/login">
-                  <Button variant="ghost" className="justify-start">Login</Button>
-                </Link>
-                <Link href="/signup">
-                  <Button className="justify-start">Sign Up</Button>
-                </Link>
-              </>
+              <div className="border-t pt-4 mt-auto">
+                <div className="grid gap-2">
+                  <Link href="/login" className="w-full">
+                    <Button variant="outline" className="w-full">Login</Button>
+                  </Link>
+                  <Link href="/signup" className="w-full">
+                    <Button className="w-full">Sign Up</Button>
+                  </Link>
+                </div>
+              </div>
             )}
-          </nav>
+          </div>
         </SheetContent>
       </Sheet>
     </nav>

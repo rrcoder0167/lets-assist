@@ -124,7 +124,7 @@ function Avatar({ url, onUpload, onRemove }: AvatarProps) {
                 <div className="flex items-center space-x-2">
                     <Button variant="outline" className="relative" disabled={isUploading}>
                         <Upload className="w-5 h-5 mr-2" />
-                        {isUploading ? "Uploading..." : "Upload Picture"}
+                        {isUploading ? "Uploading..." : "Upload"}
                         <input
                             type="file"
                             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -138,10 +138,11 @@ function Avatar({ url, onUpload, onRemove }: AvatarProps) {
                             variant="ghost"
                             onClick={onRemove}
                             disabled={isRemoving || isUploading}
-                            className="text-destructive bg-destructive/10 hover:bg-destructive/10"
+                            className="text-destructive bg-destructive/10 hover:bg-destructive/10 flex items-center space-x-2"
                             title="Remove Picture"
                         >
-                            <Trash2 className="w-5 h-5" /> Remove
+                            <Trash2 className="w-5 h-5" />
+                            <span className="hidden sm:inline">Remove</span>
                         </Button>
                     )}
                 </div>
