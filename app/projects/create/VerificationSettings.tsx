@@ -36,7 +36,7 @@ export default function VerificationSettings({
                     <Info className="h-4 w-4" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-[350px]">
+                <TooltipContent className="text-xs font-normal">
                   Choose how volunteers will check in and record their hours at your event.
                 </TooltipContent>
               </Tooltip>
@@ -60,7 +60,7 @@ export default function VerificationSettings({
                 <div className="flex items-center space-x-3">
                   <RadioGroupItem value="qr-code" id="qr-code" />
                   <div className="flex items-center space-x-2">
-                    <QrCode className="h-5 w-5 text-primary" />
+                  <QrCode className="flex-shrink-0 h-5 w-5 text-primary mt-0.5" />
                     <span className="font-medium">QR Code Self Check-in</span>
                   </div>
                 </div>
@@ -83,7 +83,7 @@ export default function VerificationSettings({
               <div className="flex items-center space-x-3">
                 <RadioGroupItem value="manual" id="manual" />
                 <div className="flex items-center space-x-2">
-                  <UserCheck className="h-5 w-5 text-primary" />
+                <UserCheck className="flex-shrink-0 h-5 w-5 text-primary mt-0.5" />
                   <span className="font-medium">Manual Check-in by Organizer</span>
                 </div>
               </div>
@@ -104,7 +104,7 @@ export default function VerificationSettings({
                 <div className="flex items-center space-x-3">
                   <RadioGroupItem value="auto" id="auto" />
                   <div className="flex items-center space-x-2">
-                    <Clock className="h-5 w-5 text-primary" />
+                  <Clock className="flex-shrink-0 h-5 w-5 text-primary mt-0.5" />
                     <span className="font-medium">Automatic Check-in/out</span>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export default function VerificationSettings({
                     <Info className="h-4 w-4" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-[350px]">
+                <TooltipContent className="text-xs font-normal">
                   <p>Control whether volunteers need to create an account to sign up for your event.</p>
                 </TooltipContent>
               </Tooltip>

@@ -104,8 +104,8 @@ export default function BasicInfo({ state, updateBasicInfoAction, onMapClickActi
             </span>
           </div>
           <Textarea 
-            id="description" 
-            placeholder="Describe your project (max 1000 characters)"
+            id="description"
+            placeholder="e.g., Join us for a day of fun and community service..."
             value={state.basicInfo.description}
             onChange={(e) => {
               if (e.target.value.length <= 1000) {

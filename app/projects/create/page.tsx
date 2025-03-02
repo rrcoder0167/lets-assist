@@ -235,7 +235,7 @@ export default function CreateProject() {
           <span className={cn("text-center sm:text-left truncate", state.step === 2 && "text-primary font-medium")}>Event Type</span>
           <span className={cn("text-center sm:text-left truncate", state.step === 3 && "text-primary font-medium")}>Schedule</span>
           <span className={cn("text-center sm:text-left truncate", state.step === 4 && "text-primary font-medium")}>Settings</span>
-          <span className={cn("text-center sm:text-left truncate", state.step === 5 && "text-primary font-medium")}>Finalize</span>
+          <span className={cn("text-center sm:text-left ", state.step === 5 && "text-primary font-medium")}>Finalize</span>
         </div>
       </div>
 
