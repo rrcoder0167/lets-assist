@@ -3,13 +3,15 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Menu, Settings, LogOut, LayoutDashboard, UserCog, Heart, Bug } from "lucide-react"
+import { Menu, UserRound, LogOut, LayoutDashboard, Settings, Heart, Bug, ChevronDown, ChevronUp } from "lucide-react"
 import { NoAvatar } from "@/components/NoAvatar"
 import { createClient } from "@/utils/supabase/client"
 import { User as SupabaseUser } from '@supabase/supabase-js'
 import { logout } from '@/app/logout/actions'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+
+
 import {
   Avatar,
   AvatarFallback,
@@ -43,6 +45,29 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ReportBugDialog } from "@/components/ReportBugDialog"
 import { useState } from "react"
 import Image from "next/image"
+
+interface SectionProps {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+}
+
+const CollapsibleSection = ({ title, children, defaultOpen = false }: SectionProps) => {
+  const [isOpen, setIsOpen] = React.useState(defaultOpen);
+  
+  return (
+    <div className="mb-4">
+      <button 
+        className="flex w-full items-center justify-between py-2"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="text-base font-bold">{title}</span>
+        {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+      </button>
+      {isOpen && <div className="mt-1 space-y-1">{children}</div>}
+    </div>
+  );
+};
 
 const features = [
   {
@@ -275,45 +300,53 @@ export default function Navbar({ initialUser }: NavbarProps) {
                 </div>
               )}
               
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground px-1 mb-2">Navigation</p>
-                <Button variant="ghost" className="w-full justify-start" asChild>
+              <CollapsibleSection title="Navigation" defaultOpen={true}>
+                <Button variant="ghost" className="w-full justify-start text-muted-foreground" asChild>
                   <Link href="/">Home</Link>
                 </Button>
-                <Button variant="ghost" className="w-full justify-start">Volunteering Near Me</Button>
-                <Button variant="ghost" className="w-full justify-start">Connected Organizations</Button>
-              </div>
+                <Button variant="ghost" className="w-full justify-start text-muted-foreground">
+                  Volunteering Near Me
+                </Button>
+                <Button variant="ghost" className="w-full justify-start text-muted-foreground">
+                  Connected Organizations
+                </Button>
+              </CollapsibleSection>
               
               {user && (
-                <div className="space-y-1 mt-6">
-                  <p className="text-sm font-medium text-muted-foreground px-1 mb-2">Account</p>
-                  <Button variant="ghost" className="w-full justify-start" asChild>
+                <>
+                <CollapsibleSection title="Dashboard" defaultOpen={true}>
+                  <Button variant="ghost" className="w-full justify-start text-muted-foreground" asChild>
                     <Link href="/home">
                       <LayoutDashboard className="mr-2 h-4 w-4" />
                       Dashboard
                     </Link>
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start" asChild>
+                </CollapsibleSection>
+                
+                <CollapsibleSection title="Account" defaultOpen={true}>
+                  <Button variant="ghost" className="w-full justify-start text-muted-foreground" asChild>
                     <Link href="/account/profile">
-                      <UserCog className="mr-2 h-4 w-4" />
+                      <Settings className="mr-2 h-4 w-4" />
                       Account Settings
                     </Link>
                   </Button>
-                  <Button variant="ghost" className="w-full justify-start" asChild>
+                  <Button variant="ghost" className="w-full justify-start text-muted-foreground" asChild>
                     <Link href={`/profile/${profile?.username}`}>
-                      <Settings className="mr-2 h-4 w-4" />
+                      <UserRound className="mr-2 h-4 w-4" />
                       My Profile
                     </Link>
                   </Button>
-                </div>
+                </CollapsibleSection>
+                </>
               )}
             </div>
             
             {user ? (
               <div className="border-t pt-4 mt-auto">
+                <p className="text-base font-bold mb-2 pl-2">Support</p>
                 <Button 
                   variant="ghost" 
-                  className="w-full justify-start mb-2"
+                  className="w-full justify-start mb-2 text-muted-foreground"
                   onClick={() => setShowBugDialog(true)}
                 >
                   <Bug className="mr-2 h-4 w-4" />
@@ -321,7 +354,7 @@ export default function Navbar({ initialUser }: NavbarProps) {
                 </Button>
                 <Button 
                   variant="ghost"
-                  className="w-full justify-start mb-2"
+                  className="w-full justify-start mb-2 text-muted-foreground"
                 >
                   <Heart className="mr-2 h-4 w-4" />
                   Donate
